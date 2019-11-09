@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodsPublic.dao.CreateLabelMapper">
+ 	<select id="selectPreviewCRSPDF" resultType="goodsPublic.entity.PreviewCRSPDF">
+ 		select * from preview_crs_pdf
+ 	</select>
+ 	<select id="getAirBottleById" resultType="goodsPublic.entity.AirBottle">
+ 		select * from air_bottle where id=#{id}
+ 	</select>
+ 	<select id="selectCRSPdfSet" resultType="goodsPublic.entity.PreviewCRSPDFSet">
+ 		select * from preview_crs_pdf_set where label_type=#{labelType} and accountNumber=#{accountNumber}
+ 	</select>
+ 	<select id="queryAirBottleForInt" resultType="java.lang.Integer">
+		select count(*) from air_bottle where 1=1
+		<if test="qpbh!=null&amp;qpbh!=''">
+			and qpbh like'%${qpbh}%'
+		</if>
+	</select>
+	<select id="queryAirBottleList" resultType="goodsPublic.entity.AirBottle">
+		select * from air_bottle where 1=1
+		<if test="qpbh!=null&amp;qpbh!=''">
+			and qpbh like'%${qpbh}%'
+		</if>
+		limit ${param2},${param3}
+	</select>
+	<select id="getAirBottleCountByQpbh" resultType="java.lang.Integer">
+		select count(*) from air_bottle where qpbh=#{qpbh}
+	</select>
+ 	<insert id="insertPreviewCRSPDFSet" parameterType="goodsPublic.entity.PreviewCRSPDFSet">
+ 		insert into preview_crs_pdf_set 
+ 		<trim prefix="(" suffix=")" suffixOverrides=",">
+	 		<if test="cpxh_left!=null">
+	 			cpxh_left,
+	 		</if>
+	 		<if test="cpxh_top!=null">
+	 			cpxh_top,
+	 		</if>
+	 		<if test="qpbh_left!=null">
+	 			qpbh_left,
+	 		</if>
+	 		<if test="qpbh_top!=null">
+	 			qpbh_top,
+	 		</if>
+	 		<if test="gcrj_left!=null">
+	 			gcrj_left,
+	 		</if>
+	 		<if test="gcrj_top!=null">
+	 			gcrj_top,
+	 		</if>
+	 		<if test="ndbh_left!=null">
+	 			ndbh_left,
+	 		</if>
+	 		<if test="ndbh_top!=null">
+	 			ndbh_top,
+	 		</if>
+	 		<if test="zzrq_left!=null">
+	 			zzrq_left,
+	 		</if>
+	 		<if test="zzrq_top!=null">
+	 			zzrq_top,
+	 		</if>
+	 		<if test="qrcode_left!=null">
+	 			qrcode_left,
+	 		</if>
+	 		<if test="qrcode_top!=null">
+	 			qrcode_top,
+	 		</if>
+	 		<if test="label_type!=null">
+	 			label_type,
+	 		</if>
+	 		<if test="accountNumber!=null">
+	 			accountNumber,
+	 		</if>
+ 		</trim>
+ 		values
+ 		<trim prefix="(" suffix=")" suffixOverrides=",">
+	 		<if test="cpxh_left!=null">
+	 			#{cpxh_left},
+	 		</if>
+	 		<if test="cpxh_top!=null">
+	 			#{cpxh_top},
+	 		</if>
+	 		<if test="qpbh_left!=null">
+	 			#{qpbh_left},
+	 		</if>
+	 		<if test="qpbh_top!=null">
+	 			#{qpbh_top},
+	 		</if>
+	 		<if test="gcrj_left!=null">
+	 			#{gcrj_left},
+	 		</if>
+	 		<if test="gcrj_top!=null">
+	 			#{gcrj_top},
+	 		</if>
+	 		<if test="ndbh_left!=null">
+	 			#{ndbh_left},
+	 		</if>
+	 		<if test="ndbh_top!=null">
+	 			#{ndbh_top},
+	 		</if>
+	 		<if test="zzrq_left!=null">
+	 			#{zzrq_left},
+	 		</if>
+	 		<if test="zzrq_top!=null">
+	 			#{zzrq_top},
+	 		</if>
+	 		<if test="qrcode_left!=null">
+	 			#{qrcode_left},
+	 		</if>
+	 		<if test="qrcode_top!=null">
+	 			#{qrcode_top},
+	 		</if>
+	 		<if test="label_type!=null">
+	 			#{label_type},
+	 		</if>
+	 		<if test="accountNumber!=null">
+	 			#{accountNumber},
+	 		</if>
+ 		</trim>
+ 	</insert>
+ 	<insert id="insertAirBottleRecord" parameterType="goodsPublic.entity.AirBottle">
+ 		insert into air_bottle
+ 		<trim prefix="(" suffix=")" suffixOverrides=",">
+ 			<if test="cpxh!=null">
+	 			cpxh,
+	 		</if>
+ 			<if test="qpbh!=null">
+	 			qpbh,
+	 		</if>
+ 			<if test="gcrj!=null">
+	 			gcrj,
+	 		</if>
+ 			<if test="ndbh!=null">
+	 			ndbh,
+	 		</if>
+ 			<if test="zzrq!=null">
+	 			zzrq,
+	 		</if>
+ 			<if test="input!=null">
+	 			input,
+	 		</if>
+ 		</trim>
+ 		values
+ 		<trim prefix="(" suffix=")" suffixOverrides=",">
+ 			<if test="cpxh!=null">
+	 			#{cpxh},
+	 		</if>
+ 			<if test="qpbh!=null">
+	 			#{qpbh},
+	 		</if>
+ 			<if test="gcrj!=null">
+	 			#{gcrj},
+	 		</if>
+ 			<if test="ndbh!=null">
+	 			#{ndbh},
+	 		</if>
+ 			<if test="zzrq!=null">
+	 			#{zzrq},
+	 		</if>
+ 			<if test="input!=null">
+	 			0,
+	 		</if>
+ 		</trim>
+ 	</insert>
+ 	<update id="updateAirBottle" parameterType="goodsPublic.entity.AirBottle">
+ 		update air_bottle set 
+ 		<if test="zl!=null">
+ 			zl=#{zl},
+ 		</if>
+ 		<if test="scrj!=null">
+ 			scrj=#{scrj},
+ 		</if>
+ 		<if test="qpzjxh!=null">
+ 			qpzjxh=#{qpzjxh},
+ 		</if>
+ 		<if test="qpzzdw!=null">
+ 			qpzzdw=#{qpzzdw},
+ 		</if>
+ 		input=1
+ 		where qpbh=#{qpbh}
+ 	</update>
+ 	<update id="editAirBottle" parameterType="goodsPublic.entity.AirBottle">
+ 		update air_bottle set 
+ 		<if test="zl!=null">
+ 			zl=#{zl},
+ 		</if>
+ 		<if test="scrj!=null">
+ 			scrj=#{scrj},
+ 		</if>
+ 		<if test="qpzjxh!=null">
+ 			qpzjxh=#{qpzjxh}
+ 		</if>
+ 		where id=#{id}
+ 	</update>
+ 	<delete id="deleteAirBottle" parameterType="java.util.List">
+		delete from air_bottle where 1=1
+		<foreach collection="list" item="id" open=" and cast(id as char) in (" separator="," close=")">
+		#{id}
+		</foreach> 
+	</delete>
+</mapper>

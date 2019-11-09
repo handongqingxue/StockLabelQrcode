@@ -1,0 +1,313 @@
+@charset "UTF-8";
+body{
+	background-color: #fbfbfb;
+}
+.embed1ModBg_div{
+	width:100%;
+	height:100%;
+	position: fixed;
+	background:rgba(0,0,0,0.5);
+	display:none;
+	z-index: 1;
+}
+.embed1Mod_div{
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 100px;
+	background-color: #fff;
+}
+.embed1Mod_div .title_div{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	border-bottom: #999 solid 1px;
+}
+.embed1Mod_div .title_span{
+	margin-left: 20px;
+}
+.embed1Mod_div .close_span{
+	float: right;
+	margin-right: 20px;
+	cursor: pointer;
+}
+.embed1Mod_div .embedShow_div{
+	width: 550px;
+	margin:0 auto;
+	margin-top: 20px;
+	border: #eee solid 1px;
+}
+.embed1Mod_div .embedShow_div .item_embed{
+	width: 100%;
+	height: 300px;
+}
+.embed1Mod_div .reupload_div{
+	width:100px;
+	height:33px;
+	line-height:33px;
+	text-align:center;
+	color:#999;
+	margin:0 auto;
+	margin-top: 15px;
+	border: #999 solid 1px;
+	border-radius:5px;
+	cursor: pointer;
+}
+.embed1Mod_div .uploadFile2_div{
+	display: none;
+}
+.embed1Mod_div .but_div{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	margin-top: 20px;
+	border-top: #999 solid 1px;
+}
+.embed1Mod_div .confirm_div{
+	width:80px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	color:#fff;
+	float:right;
+	margin-top: 7px;
+	margin-right:13px;
+	background-color: #4caf50;
+	border-radius:5px;
+	cursor: pointer;
+}
+.embed1Mod_div .cancel_div{
+	width:80px;
+	height:33px;
+	line-height:33px;
+	text-align:center;
+	color:#999;
+	float:right;
+	margin-top: 7px;
+	margin-right:13px;
+	border: #999 solid 1px;
+	border-radius:5px;
+	cursor: pointer;
+}
+
+.image1ModBg_div{
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,0.5);
+	position: fixed;
+	display:none;
+	z-index: 1;
+}
+.image1Mod_div{
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 100px;
+	background-color: #fff;
+}
+.image1Mod_div .title_div{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	border-bottom: #999 solid 1px;
+}
+.image1Mod_div .title_span{
+	margin-left: 20px;
+}
+.image1Mod_div .close_span{
+	float: right;
+	margin-right: 20px;
+	cursor: pointer;
+}
+.image1Mod_div table{
+	width: 550px;
+	margin:0 auto;
+	margin-top: 20px;
+	border: #eee solid 1px;
+}
+.image1Mod_div table .file_td{
+	width: 25%;
+}
+.image1Mod_div table .delete_img{
+	margin-top: 5px;
+	margin-left: 80px;
+	position: absolute;
+	cursor: pointer;
+}
+.image1Mod_div table .item_img{
+	width: 120px;
+	height: 120px;
+}
+.image1Mod_div .upload_img{
+	cursor:pointer;
+}
+.image1Mod_div .uploadFile1_div{
+	display: none;
+}
+.image1Mod_div .but_div{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	margin-top: 20px;
+	border-top: #999 solid 1px;
+}
+.image1Mod_div .confirm_div{
+	width:80px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	color:#fff;
+	float:right;
+	margin-top: 7px;
+	margin-right:13px;
+	background-color: #4caf50;
+	border-radius:5px;
+	cursor: pointer;
+}
+.image1Mod_div .cancel_div{
+	width:80px;
+	height:33px;
+	line-height:33px;
+	text-align:center;
+	color:#999;
+	float:right;
+	margin-top: 7px;
+	margin-right:13px;
+	border: #999 solid 1px;
+	border-radius:5px;
+	cursor: pointer;
+}
+
+.top_div{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	background-color: #fff;
+}
+.top_div .return_div{
+	float:left;
+	width: 70px;
+	height: 30px;
+	line-height: 30px;
+	text-align:center;
+	margin-top:10px;
+	margin-left:20px;
+	border:1px solid #eee;
+	cursor:pointer;
+	border-radius:3px;
+}
+.top_div .title_div{
+	width:200px;
+	margin:0 auto;
+	font-size:18px;
+	font-weight: bold;
+	text-align: center;
+}
+.top_div .myQrcode_div{
+	float:right;
+	height: 30px;
+	line-height: 30px;
+	text-align:center;
+	margin-top:-40px;
+	margin-right:20px;
+	border-radius:3px;
+}
+.middle_div{
+	width: 650px;
+	margin: 0 auto;
+	margin-top: 25px;
+	background-color: #fff;
+}
+.title_input{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+.memo1_div{
+	margin-top: 25px;
+}
+.memo1_ta{
+	width:650px;
+	height:150px;
+	visibility:hidden;
+}
+.embed1_div{
+	width: 650px;
+	text-align: center;
+}
+.embed1_div .option_div{
+	width:650px;
+	position:absolute;
+}
+.embed1_div .but_div{
+	width:100px;
+	height:30px;
+	line-height:30px;
+	margin:0 auto;
+	margin-top: 50px;
+	text-align:center;
+	z-index: 1;
+	background-color: #fff;
+	border-radius:5px;
+	display:none;
+}
+.embed1_div .list_div .item_embed{
+	width: 600px;
+	height: 300px;
+	margin-top: 25px;
+}
+.memo2_div{
+	margin-top: 20px;
+}
+.memo2_ta{
+	width:650px;
+	height:220px;
+	visibility:hidden;
+}
+.image1_div{
+	width: 650px;
+	text-align: center;
+}
+.image1_div .option_div{
+	width:650px;
+	position:absolute;
+}
+.image1_div .but_div{
+	width:100px;
+	height:30px;
+	line-height:30px;
+	margin:0 auto;
+	margin-top: 50px;
+	text-align:center;
+	z-index: 1;
+	background-color: #fff;
+	border-radius:5px;
+	display:none;
+}
+.image1_div .list_div .item_img{
+	width: 600px;
+	height: 600px;
+	margin-top: 25px;
+}
+.right_div{
+	width: 150px;
+	height: 200px;
+	text-align: center;
+}
+.uncreate_img{
+	width: 120px;
+	height: 120px;
+}
+.createQrcode_div{
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	text-align:center;
+	margin:0 auto;
+	margin-top:15px;
+	color:#fff;
+	background-color:#4caf50;
+	cursor:pointer;
+	border-radius:3px;
+}

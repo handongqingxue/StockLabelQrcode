@@ -1,0 +1,10 @@
+@charset "UTF-8";
+body{background-color: #eee;}
+.main_div{width: 1020px;height:300px;margin: 0 auto;margin-top: 30px;background-color: #fff;}
+.payTypeTit_div{margin-left: 50px;height: 40px;line-height:40px;font-size: 20px;}
+.payType_div{margin-left: 50px;}
+.alipay_div{width: 150px;height: 60px;line-height:60px;text-align: center;display: table-cell;vertical-align: middle;border: 1px solid #eceeef;background-color: #fff;border-radius: 3px;}
+.wechatpay_div{width: 150px;height: 60px;line-height:60px;left:20px;position:relative; text-align: center;display: table-cell;vertical-align: middle;border: 1px solid #eceeef;background-color: #fff;border-radius: 3px;}
+.chosen{border-color: #F57C00;border-width: 2px;}
+.agree_div{height: 60px;line-height:60px;}
+.goPay_div{width: 150px;height: 40px;line-height:40px;text-align: center;color:#fff;background-color: #ef6c00;cursor:pointer;border-radius: 3px;}

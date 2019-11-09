@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodsPublic.dao.UserMapper">
+	<insert id="saveUser">
+		insert into account_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userName!=null">
+				userName,
+			</if>
+			<if test="passWord!=null">
+				passWord,
+			</if>
+			<if test="nickName!=null">
+				nickName,
+			</if>
+			<if test="phone!=null">
+				phone,
+			</if>
+			<if test="email!=null">
+				email,
+			</if>
+			gmt_create
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userName!=null">
+				#{userName},
+			</if>
+			<if test="passWord!=null">
+				#{passWord},
+			</if>
+			<if test="nickName!=null">
+				#{nickName},
+			</if>
+			<if test="phone!=null">
+				#{phone},
+			</if>
+			<if test="email!=null">
+				#{email},
+			</if>
+			now()
+		</trim>
+	</insert>
+	<update id="updateAccountStatus">
+		update account_info set 
+		<if test="param2==-2|param2==0">
+			accountStatus=1
+		</if>
+		<if test="param2==1">
+			accountStatus=0
+		</if>
+		where id=${param1}
+	</update>
+	<select id="getUser" resultType="goodsPublic.entity.AccountMsg">
+		select * from
+		account_info
+		where
+		<trim prefix="" suffix="" suffixOverrides="and">
+			<if test="userName!=null">
+				userName=#{userName} and
+			</if>
+			<if test="nickName!=null">
+				nickName=#{nickName} and
+			</if>
+			<if test="phone!=null">
+				phone=#{phone} and
+			</if>
+			<if test="email!=null">
+				email=#{email}
+			</if>
+		</trim>
+	</select>
+	<select id="getUserCount"  resultType="int">
+		select count(*) from
+		account_info
+		where
+		<trim prefix="" suffix="" suffixOverrides="or">
+			<if test="userName!=null">
+				userName=#{userName}
+			</if>
+			<!-- 
+			<if test="userName!=null">
+				userName=#{userName} or
+			</if>
+			<if test="nickName!=null">
+				nickName=#{nickName} or
+			</if>
+			<if test="phone!=null">
+				phone=#{phone} or
+			</if>
+			<if test="email!=null">
+				email=#{email}
+			</if>
+			 -->
+		</trim>
+	</select>
+	<select id="queryAccountForInt" resultType="java.lang.Integer">
+		select count(*) from account_info
+	</select>
+	<select id="queryAccountList" resultType="goodsPublic.entity.AccountMsg">
+		select * from account_info limit ${param1},${param2}
+	</select>
+</mapper>

@@ -1,0 +1,56 @@
+@charset "UTF-8";
+body{
+	width: 100%;
+}
+.main_div{
+	width: 100%;
+	margin: 0 auto;
+	background-color: #fff;
+}
+.productName_div{
+	width: 95%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+.image1_div{
+	width: 95%;
+	text-align: center;
+}
+.image1_1_img,.image1_2_img,.image1_3_img,.image1_4_img,.image1_5_img,
+.image2_1_img,.image2_2_img,.image2_3_img,.image2_4_img,.image2_5_img{
+	width: 95%;
+	height: 300px;
+	margin-top: 25px;
+}
+.memo1_div{
+	width:95%;
+	margin-top: 20px;
+}
+.spxq_div{
+	margin-top: 20px;
+}
+.spxq_tab{
+	width: 95%;
+	margin: 0 auto;
+	border: #eee solid 1px;
+}
+.spxq_tab .head_td{
+	text-align: center;
+	background-color: #eee;
+}
+.spxq_tab .name_td{
+	width:25%;
+	border: #eee solid 1px;
+	padding-left: 20px;
+}
+.spxq_tab .value_td{
+	width:75%;
+	border: #eee solid 1px;
+	padding-left: 20px;
+}
+.image2_div{
+	width: 95%;text-align: center;margin-top: 20px;
+}
