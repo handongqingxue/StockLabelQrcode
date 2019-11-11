@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="goodsPublic.dao.UserMapper">
+<mapper namespace="com.stockLabelQrcode.dao.UserMapper">
 	<insert id="saveUser">
 		insert into account_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -53,7 +53,7 @@
 		</if>
 		where id=${param1}
 	</update>
-	<select id="getUser" resultType="goodsPublic.entity.AccountMsg">
+	<select id="getUser" resultType="com.stockLabelQrcode.entity.AccountMsg">
 		select * from
 		account_info
 		where
@@ -99,7 +99,7 @@
 	<select id="queryAccountForInt" resultType="java.lang.Integer">
 		select count(*) from account_info
 	</select>
-	<select id="queryAccountList" resultType="goodsPublic.entity.AccountMsg">
+	<select id="queryAccountList" resultType="com.stockLabelQrcode.entity.AccountMsg">
 		select * from account_info limit ${param1},${param2}
 	</select>
 </mapper>

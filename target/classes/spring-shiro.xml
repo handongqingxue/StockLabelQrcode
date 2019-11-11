@@ -14,28 +14,17 @@
 	</bean>
 
 	<!-- 項目自定义的Realm -->
-	<bean id="myShiroRealm" class="com.goodsPublic.util.shiro.realm.MyRealm">
+	<bean id="myShiroRealm" class="com.stockLabelQrcode.util.shiro.realm.MyRealm">
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/merchant/login" />
+		<property name="loginUrl" value="/createLabel/login" />
 		<property name="filterChainDefinitions">
 			<value>
-				/merchant/main/show=anon
-				/merchant/main/goShowHtmlGoods=anon
-				/merchant/main/kaiTongByWX=anon
-				/merchant/main/kaiTongByAlipay=anon
-				/merchant/main/goAddModule=anon
-				/merchant/main/checkIfLogined=anon
-				/merchant/login=anon
-				/merchant/login/captcha=anon
-				/merchant/checkIfLogin=anon
-				/merchant/loginQL=anon
-				/merchant/saveQLUser=anon
-				/merchant/regist=anon
+				/createLabel/login/captcha=anon
 				/createLabel/login=anon
 				/createLabel/regist=anon
 				/resource/**=anon

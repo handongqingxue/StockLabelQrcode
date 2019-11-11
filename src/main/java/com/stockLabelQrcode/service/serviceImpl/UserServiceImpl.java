@@ -17,7 +17,8 @@ import com.stockLabelQrcode.dao.UserMapper;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
-	
+
+	@Override
 	public int saveUser(AccountMsg msg) {
 		int a=userMapper.getUserCount(msg);
 		if(a>0) {
@@ -29,7 +30,8 @@ public class UserServiceImpl implements UserService {
 		}
 		return a;
 	}
-	
+
+	@Override
 	public AccountMsg checkUser(AccountMsg user) {
 		AccountMsg resultUser=userMapper.getUser(user);
 		if(resultUser==null) {
@@ -37,19 +39,22 @@ public class UserServiceImpl implements UserService {
 		}
 		return resultUser;
 	}
-	
+
+	@Override
 	public int queryAccountForInt() {
 		// TODO Auto-generated method stub
 		
 		return userMapper.queryAccountForInt();
 	}
-	
+
+	@Override
 	public List<AccountMsg> queryAccountList(int page, int rows, String sort, String order) {
 		// TODO Auto-generated method stub
 		
 		return userMapper.queryAccountList((page-1)*rows, rows, sort, order);
 	}
-	
+
+	@Override
 	public int updateAccountStatus(String id, String status) {
 		// TODO Auto-generated method stub
 		

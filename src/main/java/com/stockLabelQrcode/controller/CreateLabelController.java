@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -26,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.stockLabelQrcode.util.JsonUtil;
 import com.stockLabelQrcode.util.PlanResult;
+
+import com.stockLabelQrcode.service.UtilService;
 
 import com.stockLabelQrcode.entity.AccountMsg;
 import com.stockLabelQrcode.entity.AirBottle;
@@ -45,6 +48,8 @@ public class CreateLabelController {
 	private CreateLabelService createLabelService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UtilService utilService;
 	
 	/**
 	 * 跳转至登录页面
@@ -148,6 +153,17 @@ public class CreateLabelController {
 		}
 		
 		return JsonUtil.getJsonFromObject(plan);
+	}
+	
+	/**
+	 * 为登录页面获取验证码
+	 * @param session
+	 * @param identity
+	 * @param response
+	 */
+	@RequestMapping("/login/captcha")
+	public void getKaptchaImageByMerchant(HttpSession session, String identity, HttpServletResponse response) {
+		utilService.getKaptchaImageByMerchant(session, identity, response);
 	}
 	
 	@RequestMapping("/toAirBottleList")

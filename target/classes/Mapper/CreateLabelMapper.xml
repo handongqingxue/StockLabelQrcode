@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="goodsPublic.dao.CreateLabelMapper">
- 	<select id="selectPreviewCRSPDF" resultType="goodsPublic.entity.PreviewCRSPDF">
+<mapper namespace="com.stockLabelQrcode.dao.CreateLabelMapper">
+ 	<select id="selectPreviewCRSPDF" resultType="com.stockLabelQrcode.entity.PreviewCRSPDF">
  		select * from preview_crs_pdf
  	</select>
- 	<select id="getAirBottleById" resultType="goodsPublic.entity.AirBottle">
+ 	<select id="getAirBottleById" resultType="com.stockLabelQrcode.entity.AirBottle">
  		select * from air_bottle where id=#{id}
  	</select>
- 	<select id="selectCRSPdfSet" resultType="goodsPublic.entity.PreviewCRSPDFSet">
+ 	<select id="selectCRSPdfSet" resultType="com.stockLabelQrcode.entity.PreviewCRSPDFSet">
  		select * from preview_crs_pdf_set where label_type=#{labelType} and accountNumber=#{accountNumber}
  	</select>
  	<select id="queryAirBottleForInt" resultType="java.lang.Integer">
@@ -18,7 +18,7 @@
 			and qpbh like'%${qpbh}%'
 		</if>
 	</select>
-	<select id="queryAirBottleList" resultType="goodsPublic.entity.AirBottle">
+	<select id="queryAirBottleList" resultType="com.stockLabelQrcode.entity.AirBottle">
 		select * from air_bottle where 1=1
 		<if test="qpbh!=null&amp;qpbh!=''">
 			and qpbh like'%${qpbh}%'
@@ -28,7 +28,7 @@
 	<select id="getAirBottleCountByQpbh" resultType="java.lang.Integer">
 		select count(*) from air_bottle where qpbh=#{qpbh}
 	</select>
- 	<insert id="insertPreviewCRSPDFSet" parameterType="goodsPublic.entity.PreviewCRSPDFSet">
+ 	<insert id="insertPreviewCRSPDFSet" parameterType="com.stockLabelQrcode.entity.PreviewCRSPDFSet">
  		insert into preview_crs_pdf_set 
  		<trim prefix="(" suffix=")" suffixOverrides=",">
 	 		<if test="cpxh_left!=null">
@@ -120,7 +120,7 @@
 	 		</if>
  		</trim>
  	</insert>
- 	<insert id="insertAirBottleRecord" parameterType="goodsPublic.entity.AirBottle">
+ 	<insert id="insertAirBottleRecord" parameterType="com.stockLabelQrcode.entity.AirBottle">
  		insert into air_bottle
  		<trim prefix="(" suffix=")" suffixOverrides=",">
  			<if test="cpxh!=null">
@@ -164,7 +164,7 @@
 	 		</if>
  		</trim>
  	</insert>
- 	<update id="updateAirBottle" parameterType="goodsPublic.entity.AirBottle">
+ 	<update id="updateAirBottle" parameterType="com.stockLabelQrcode.entity.AirBottle">
  		update air_bottle set 
  		<if test="zl!=null">
  			zl=#{zl},
@@ -181,7 +181,7 @@
  		input=1
  		where qpbh=#{qpbh}
  	</update>
- 	<update id="editAirBottle" parameterType="goodsPublic.entity.AirBottle">
+ 	<update id="editAirBottle" parameterType="com.stockLabelQrcode.entity.AirBottle">
  		update air_bottle set 
  		<if test="zl!=null">
  			zl=#{zl},
