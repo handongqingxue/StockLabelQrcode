@@ -57,6 +57,14 @@ public class CreateLabelController {
 		return "/createLabel/login";
 	}
 	
+	/**
+	 * 调用登录接口登录
+	 * @param userName
+	 * @param password
+	 * @param loginVCode
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/login",method=RequestMethod.POST,produces="plain/text; charset=UTF-8")
 	@ResponseBody
 	public String login(String userName,String password,String loginVCode,HttpServletRequest request) {
@@ -97,14 +105,22 @@ public class CreateLabelController {
 		return JsonUtil.getJsonFromObject(plan);
 	}
 
-	//注册页面
+	/**
+	 * 跳转到注册页面
+	 * @return
+	 */
 	@RequestMapping(value = "/regist" , method = RequestMethod.GET)
 	public String regist() {
 		System.out.println("===注册页面===");
 		return "/createLabel/regist";
 	}
 	
-	//注册信息处理接口
+	/**
+	 * 注册信息处理接口
+	 * @param msg
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/regist" , method = RequestMethod.POST,produces="plain/text; charset=UTF-8")
 	@ResponseBody
 	public String subRegist(AccountMsg msg, HttpServletRequest request) {
@@ -162,24 +178,43 @@ public class CreateLabelController {
 		utilService.getKaptchaImageByMerchant(session, identity, response);
 	}
 	
+	/**
+	 * 跳转到历史记录查询页面
+	 * @return
+	 */
 	@RequestMapping("/toAirBottleList")
 	public String toAirBottleList() {
 		
 		return "/createLabel/airBottleList";
 	}
 	
+	/**
+	 * 跳转到创建批次页面
+	 * @return
+	 */
 	@RequestMapping("/toCreateBatch")
 	public String toCreateBatch() {
 		
 		return "/createLabel/createBatch";
 	}
 	
+	/**
+	 * 跳转到预览生成的合格证pdf页面
+	 * @return
+	 */
 	@RequestMapping("/toPreviewHGZPdf")
 	public String toPreviewHGZPdf() {
 		
 		return "/createLabel/previewHGZPdf";
 	}
 
+	/**
+	 * 扫码后跳转到产品信息页面
+	 * @param action
+	 * @param qpbh
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/toQrcodeInfo")
 	public String toQrcodeInfo(String action,String qpbh,HttpServletRequest request) {
 		
@@ -195,6 +230,12 @@ public class CreateLabelController {
 		return url;
 	}
 	
+	/**
+	 * 根据格式，查询缠绕式pdf模板方位参数配置
+	 * @param labelType
+	 * @param accountNumber
+	 * @return
+	 */
 	@RequestMapping(value="/selectCRSPdfSet")
 	@ResponseBody
 	public Map<String, Object> selectCRSPdfSet(Integer labelType, String accountNumber) {
@@ -208,6 +249,12 @@ public class CreateLabelController {
 		return jsonMap;
 	}
 
+	/**
+	 * 插入历史记录
+	 * @param airBottle
+	 * @param qpbhsStr
+	 * @return
+	 */
 	@RequestMapping(value="/insertAirBottleRecord")
 	@ResponseBody
 	public Map<String, Object> insertAirBottleRecord(AirBottle airBottle, String qpbhsStr) {
@@ -245,6 +292,11 @@ public class CreateLabelController {
 	}
 	*/
 	
+	/**
+	 * 根据气瓶编号，验证该气瓶是否已存在
+	 * @param qpbh
+	 * @return
+	 */
 	@RequestMapping(value="/checkAirBottleExistByQpbh")
 	@ResponseBody
 	public Map<String, Object> checkAirBottleExistByQpbh(String qpbh) {
@@ -262,6 +314,15 @@ public class CreateLabelController {
 		return jsonMap;
 	}
 	
+	/**
+	 * 查询历史记录
+	 * @param qpbh
+	 * @param page
+	 * @param rows
+	 * @param sort
+	 * @param order
+	 * @return
+	 */
 	@RequestMapping(value="/queryAirBottleList")
 	@ResponseBody
 	public Map<String, Object> queryAirBottleList(String qpbh,int page,int rows,String sort,String order) {
@@ -275,6 +336,12 @@ public class CreateLabelController {
 		return jsonMap;
 	}
 	
+	/**
+	 * 编辑导入的产品记录信息
+	 * @param excel_file
+	 * @param qpbhsStr
+	 * @return
+	 */
 	@RequestMapping(value="/updateAirBottleRecord",produces="plain/text; charset=UTF-8")
 	@ResponseBody
 	public String updateAirBottleRecord(@RequestParam(value="excel_file",required=false) MultipartFile excel_file,String qpbhsStr) {
@@ -348,6 +415,12 @@ public class CreateLabelController {
 		return json;
 	}
 	
+	/**
+	 * 跳转到编辑气瓶信息页面
+	 * @param request
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/goEditAirBottle")
 	public String goEditAirBottle(HttpServletRequest request, String id) {
 		
@@ -356,6 +429,11 @@ public class CreateLabelController {
 		return "/createLabel/editAirBottle";
 	}
 	
+	/**
+	 * 编辑气瓶信息
+	 * @param airBottle
+	 * @return
+	 */
 	@RequestMapping(value="/editAirBottle")
 	@ResponseBody
 	public Map<String, Object> editAirBottle(AirBottle airBottle) {
@@ -374,6 +452,11 @@ public class CreateLabelController {
 		return jsonMap;
 	}
 	
+	/**
+	 * 删除气瓶信息
+	 * @param ids
+	 * @return
+	 */
 	@RequestMapping(value="/deleteAirBottle",produces="plain/text; charset=UTF-8")
 	@ResponseBody
 	public String deleteAirBottle(String ids) {
@@ -394,6 +477,11 @@ public class CreateLabelController {
 		return json;
 	}
 
+	/**
+	 * 重新设置预览pdf模板里的方位参数
+	 * @param pCrsPdfSet
+	 * @return
+	 */
 	@RequestMapping(value="/editPreviewCrsPdfSet")
 	@ResponseBody
 	public Map<String, Object> editPreviewCrsPdfSet(PreviewCRSPDFSet pCrsPdfSet) {
@@ -418,6 +506,12 @@ public class CreateLabelController {
 		}
 	}
 	
+	/**
+	 * 生成二维码
+	 * @param url
+	 * @param qpbh
+	 * @return
+	 */
 	@RequestMapping(value="/createQrcode")
 	@ResponseBody
 	public Map<String, Object> createQrcode(String url, String qpbh) {
