@@ -86,7 +86,7 @@ $(function(){
 
 function createQrcode(qpbh){
 	var qrcodeUrl;
-	var url="http://120.27.5.36:8888/GoodsPublic/createLabel/toQrcodeInfo?action=hgz&qpbh="+qpbh;
+	var url=path+"createLabel/toQrcodeInfo?action=hgz&qpbh="+qpbh;
 	$.ajaxSetup({async:false});
     $.post("createQrcode",
 	   {url:url,qpbh:qpbh},

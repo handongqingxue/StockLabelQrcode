@@ -1,9 +1,8 @@
 package com.stockLabelQrcode.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,17 +17,11 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.stockLabelQrcode.util.JsonUtil;
-import com.stockLabelQrcode.util.PlanResult;
-
-import com.stockLabelQrcode.service.UtilService;
 
 import com.stockLabelQrcode.entity.AccountMsg;
 import com.stockLabelQrcode.entity.AirBottle;
@@ -36,9 +29,13 @@ import com.stockLabelQrcode.entity.PreviewCRSPDF;
 import com.stockLabelQrcode.entity.PreviewCRSPDFSet;
 import com.stockLabelQrcode.service.CreateLabelService;
 import com.stockLabelQrcode.service.UserService;
+import com.stockLabelQrcode.service.UtilService;
+import com.stockLabelQrcode.util.JsonUtil;
+import com.stockLabelQrcode.util.PlanResult;
+import com.stockLabelQrcode.util.qrcode.Qrcode;
+
 import jxl.Sheet;
 import jxl.Workbook;
-import jxl.read.biff.BiffException;
 
 @Controller
 @RequestMapping("/createLabel")
@@ -182,14 +179,20 @@ public class CreateLabelController {
 		
 		return "/createLabel/previewHGZPdf";
 	}
-	
-	@RequestMapping("/toQrcodeHGZ")
-	public String toQrcodeHGZ(String id,HttpServletRequest request) {
+
+	@RequestMapping("/toQrcodeInfo")
+	public String toQrcodeInfo(String action,String qpbh,HttpServletRequest request) {
 		
-		AirBottle airBottle = createLabelService.getAirBottleById(id);
+		//http://localhost:8088/GoodsPublic/createLabel/toQrcode?action=crs&qpbh=CB19001006
+		AirBottle airBottle = createLabelService.getAirBottleByQpbh(qpbh);
 		
 		request.setAttribute("airBottle", airBottle);
-		return "/createLabel/qrcodeHGZ";
+		String url=null;
+		if("crs".equals(action))
+			url="/createLabel/qrcodeCRS";
+		else if("hgz".equals(action))
+			url="/createLabel/qrcodeHGZ";
+		return url;
 	}
 	
 	@RequestMapping(value="/selectCRSPdfSet")
@@ -230,6 +233,17 @@ public class CreateLabelController {
 		
 		return jsonMap;
 	}
+	
+	/*
+	@RequestMapping("/toQrcodeHGZ")
+	public String toQrcodeHGZ(String id,HttpServletRequest request) {
+		
+		AirBottle airBottle = createLabelService.getAirBottleById(id);
+		
+		request.setAttribute("airBottle", airBottle);
+		return "/createLabel/qrcodeHGZ";
+	}
+	*/
 	
 	@RequestMapping(value="/checkAirBottleExistByQpbh")
 	@ResponseBody
@@ -378,6 +392,45 @@ public class CreateLabelController {
 			json=JsonUtil.getJsonFromObject(plan);
 		}
 		return json;
+	}
+
+	@RequestMapping(value="/editPreviewCrsPdfSet")
+	@ResponseBody
+	public Map<String, Object> editPreviewCrsPdfSet(PreviewCRSPDFSet pCrsPdfSet) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		try {
+			int count=createLabelService.editPreviewCrsPdfSet(pCrsPdfSet);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "编辑成功！");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "编辑失败！");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
+	@RequestMapping(value="/createQrcode")
+	@ResponseBody
+	public Map<String, Object> createQrcode(String url, String qpbh) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		String fileName = qpbh+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+		String avaPath="/GoodsPublic/upload/"+fileName;
+		String path = "D:/resource";
+        Qrcode.createQrCode(url, path, fileName);
+        
+        jsonMap.put("qrcodeUrl", avaPath);
+		
+		return jsonMap;
 	}
 
 }

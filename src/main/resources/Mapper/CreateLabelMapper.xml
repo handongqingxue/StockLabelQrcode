@@ -9,6 +9,9 @@
  	<select id="getAirBottleById" resultType="com.stockLabelQrcode.entity.AirBottle">
  		select * from air_bottle where id=#{id}
  	</select>
+ 	<select id="getAirBottleByQpbh" resultType="com.stockLabelQrcode.entity.AirBottle">
+ 		select * from air_bottle where qpbh=#{qpbh}
+ 	</select>
  	<select id="selectCRSPdfSet" resultType="com.stockLabelQrcode.entity.PreviewCRSPDFSet">
  		select * from preview_crs_pdf_set where label_type=#{labelType} and accountNumber=#{accountNumber}
  	</select>
@@ -200,4 +203,44 @@
 		#{id}
 		</foreach> 
 	</delete>
+	<update id="editPreviewCrsPdfSet" parameterType="com.stockLabelQrcode.entity.PreviewCRSPDFSet">
+ 		update preview_crs_pdf_set set
+ 		<if test="cpxh_left!=null">
+ 			cpxh_left=#{cpxh_left},
+ 		</if>
+ 		<if test="cpxh_top!=null">
+ 			cpxh_top=#{cpxh_top},
+ 		</if>
+ 		<if test="qpbh_left!=null">
+ 			qpbh_left=#{qpbh_left},
+ 		</if>
+ 		<if test="qpbh_top!=null">
+ 			qpbh_top=#{qpbh_top},
+ 		</if>
+ 		<if test="gcrj_left!=null">
+ 			gcrj_left=#{gcrj_left},
+ 		</if>
+ 		<if test="gcrj_top!=null">
+ 			gcrj_top=#{gcrj_top},
+ 		</if>
+ 		<if test="ndbh_left!=null">
+ 			ndbh_left=#{ndbh_left},
+ 		</if>
+ 		<if test="ndbh_top!=null">
+ 			ndbh_top=#{ndbh_top},
+ 		</if>
+ 		<if test="zzrq_left!=null">
+ 			zzrq_left=#{zzrq_left},
+ 		</if>
+ 		<if test="zzrq_top!=null">
+ 			zzrq_top=#{zzrq_top},
+ 		</if>
+ 		<if test="qrcode_left!=null">
+ 			qrcode_left=#{qrcode_left},
+ 		</if>
+ 		<if test="qrcode_top!=null">
+ 			qrcode_top=#{qrcode_top}
+ 		</if>
+ 		where id=#{id}
+ 	</update>
 </mapper>

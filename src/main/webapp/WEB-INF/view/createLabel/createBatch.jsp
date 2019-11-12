@@ -59,7 +59,7 @@ $(function(){
         			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
         			   qpbhsStr+=","+qpbh;
         			   
-        			   var url="http://120.27.5.36:8888/GoodsPublic/createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
+        			   var url=path+"createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
         			   $.post("createQrcode",
        					   {url:url,qpbh:qpbh},
        					   function(data){

@@ -88,4 +88,16 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 		return count>0?true:false;
 	}
 
+	@Override
+	public AirBottle getAirBottleByQpbh(String qpbh) {
+		// TODO Auto-generated method stub
+		return createLabelDao.getAirBottleByQpbh(qpbh);
+	}
+	
+	@Override
+	public int editPreviewCrsPdfSet(PreviewCRSPDFSet pCrsPdfSet) {
+		// TODO Auto-generated method stub
+		return createLabelDao.editPreviewCrsPdfSet(pCrsPdfSet);
+	}
+
 }
