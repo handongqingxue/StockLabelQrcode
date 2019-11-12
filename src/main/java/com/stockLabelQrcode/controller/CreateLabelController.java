@@ -57,7 +57,6 @@ public class CreateLabelController {
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String login() {
-		System.out.println("111111111111");
 		return "/createLabel/login";
 	}
 	
