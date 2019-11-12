@@ -32,107 +32,118 @@ $(function(){
         	   previewPDF(3);
            }},
            {text:"导出为PDF",id:"export_pdf_but",iconCls:"icon-ok",handler:function(){
-        	   if(checkPreviewPdfHtml()){
-        		   var qpqsbh=$("#qpqsbh_inp").val();
-        		   var qpjsbh=$("#qpjsbh_inp").val();
-        		   var qpqsbhPre=qpqsbh.substring(0,7);
-        		   var qpqsbhSuf=qpqsbh.substring(7,qpqsbh.length);
-        		   var zzrq=$("#zzrq_inp").val().replace(/\s*/g,'');
-        		   qpjsbh=qpjsbh.substring(7,qpjsbh.length);
-        		   var outputPdfDiv=$("#outputPdf_div");
-        		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
-                       var qpbhSuf;
-                       qpbhSuf=i+"";
-                       if(qpbhSuf.length==2)
-                    	    qpbhSuf="0"+i;
-                       else if(qpbhSuf.length==1)
-                    	    qpbhSuf="00"+i;
-                       var qpbh=qpqsbhPre+qpbhSuf;
-                       if(!checkQpbhExist(qpbh))
-                    	   continue;
-        			   outputPdfDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:400px;height: 300px;border:#000 solid 1px;\">"+$("#pdf_div").html()+"</div>");
-        		   }
-        		   
-        		   var qpbhsStr;
-        		   outputPdfDiv.find("div[id^='pdf_div']").each(function(i){
-        			   var pdfDivId=$(this).attr("id");
-        			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
-        			   qpbhsStr+=","+qpbh;
-        			   
-        			   var url=path+"createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
-        			   $.post("createQrcode",
-       					   {url:url,qpbh:qpbh},
-       					   function(data){
-       						   $("#"+pdfDivId).find("img[id='qrcode_img']").attr("src",data.qrcodeUrl);
-        			   	   }
-        			   ,"json");
-
-					   //console.log($(this).find("img[id='qrcode_img']").attr("src"));
-        			   $(this).find("span[id='qpbh_span']").text(qpbh);
-        			   //if(pdfDivId=="pdf_divCB19001002")
-        				   //return false;
-        			   $("#pdf_div").empty();
-        			   $("#pdf_div").append($("#"+pdfDivId).html());
-        			   //console.log($("#pdf_div").html());
-        			   html2canvas(
-	   	                   document.getElementById("pdf_div"),
-	   	                   {
-	   	                       dpi: 172,//导出pdf清晰度
-	   	                       onrendered: function (canvas) {
-	   	                           var contentWidth = canvas.width;
-	   	                           var contentHeight = canvas.height;
-	   	    
-	   	                           //一页pdf显示html页面生成的canvas高度;
-	   	                           var pageHeight = contentWidth / 592.28 * 841.89;
-	   	                           //未生成pdf的html页面高度
-	   	                           var leftHeight = contentHeight;
-	   	                           //pdf页面偏移
-	   	                           var position = 0;
-	   	                           //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
-	   	                           var imgWidth = 595.28;
-	   	                           var imgHeight = 592.28 / contentWidth * contentHeight;
-	   	    
-	   	                           var pageData = canvas.toDataURL('image/jpeg', 1.0);
-	   	                           var pdf = new jsPDF('', 'pt', 'a4');
-	   	    
-	   	                           //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-	   	                           //当内容未超过pdf一页显示的范围，无需分页
-	   	                           if (leftHeight < pageHeight) {
-	   	                               pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
-	   	                           } else {
-	   	                               while (leftHeight > 0) {
-	   	                                   pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-	   	                                   leftHeight -= pageHeight;
-	   	                                   position -= 841.89;
-	   	                                   //避免添加空白页
-	   	                                   if (leftHeight > 0) {
-	   	                                       pdf.addPage();
-	   	                                   }
-	   	                               }
-	   	                           }
-	   	                           pdf.save(qpbh+zzrq+'.pdf');
-	   	                       },
-	   	                       //背景设为白色（默认为黑色）
-	   	                       background: "#fff"  
-	   	                   }
-	   	                )
-	   	                
-        		   });
-        		   
-  	               editPreviewCrsPdfSet();
-  	               
-        		   var cpxh=$("#cpxh_inp").val();
-       			   var gcrj=$("#gcrj_inp").val();
-       			   var ndbh=$("#ndbh_inp").val();
-       			   var zzrq=$("#zzrq_inp").val();
-       			
-        		   $.post("insertAirBottleRecord",
-       				   {cpxh:cpxh,qpbhsStr:qpbhsStr.substring(1),gcrj:gcrj,ndbh:ndbh,zzrq:zzrq},
-       				   function(data){
-        			   		alert(data.info);
-        		   	   }
-        		   ,"json");
-        	   	}
+        	   if(checkCPXH()){
+        		   if(checkQpQsBh()){
+        			   if(checkQpJsBh()){
+        				   if(checkGCRJ()){
+        					   if(checkNDBH()){
+        						   if(checkZZRQ()){
+						        	   if(checkPreviewPdfHtml()){
+						        		   var qpqsbh=$("#qpqsbh_inp").val();
+						        		   var qpjsbh=$("#qpjsbh_inp").val();
+						        		   var qpqsbhPre=qpqsbh.substring(0,7);
+						        		   var qpqsbhSuf=qpqsbh.substring(7,qpqsbh.length);
+						        		   qpjsbh=qpjsbh.substring(7,qpjsbh.length);
+						        		   var zzrq=$("#zzrq_inp").val().replace(/\s*/g,'');
+						        		   var outputPdfDiv=$("#outputPdf_div");
+						        		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
+						                       var qpbhSuf;
+						                       qpbhSuf=i+"";
+						                       if(qpbhSuf.length==2)
+						                    	    qpbhSuf="0"+i;
+						                       else if(qpbhSuf.length==1)
+						                    	    qpbhSuf="00"+i;
+						                       var qpbh=qpqsbhPre+qpbhSuf;
+						                       if(!checkQpbhExist(qpbh))
+						                    	   continue;
+						        			   outputPdfDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:400px;height: 300px;border:#000 solid 1px;\">"+$("#pdf_div").html()+"</div>");
+						        		   }
+						        		   
+						        		   var qpbhsStr="";
+						        		   outputPdfDiv.find("div[id^='pdf_div']").each(function(i){
+						        			   var pdfDivId=$(this).attr("id");
+						        			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
+						        			   qpbhsStr+=","+qpbh;
+						        			   
+						        			   var url=path+"createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
+						        			   $.post("createQrcode",
+						       					   {url:url,qpbh:qpbh},
+						       					   function(data){
+						       						   $("#"+pdfDivId).find("img[id='qrcode_img']").attr("src",data.qrcodeUrl);
+						        			   	   }
+						        			   ,"json");
+						
+											   //console.log($(this).find("img[id='qrcode_img']").attr("src"));
+						        			   $(this).find("span[id='qpbh_span']").text(qpbh);
+						        			   //if(pdfDivId=="pdf_divCB19001002")
+						        				   //return false;
+						        			   $("#pdf_div").empty();
+						        			   $("#pdf_div").append($("#"+pdfDivId).html());
+						        			   //console.log($("#pdf_div").html());
+						        			   html2canvas(
+							   	                   document.getElementById("pdf_div"),
+							   	                   {
+							   	                       dpi: 172,//导出pdf清晰度
+							   	                       onrendered: function (canvas) {
+							   	                           var contentWidth = canvas.width;
+							   	                           var contentHeight = canvas.height;
+							   	    
+							   	                           //一页pdf显示html页面生成的canvas高度;
+							   	                           var pageHeight = contentWidth / 592.28 * 841.89;
+							   	                           //未生成pdf的html页面高度
+							   	                           var leftHeight = contentHeight;
+							   	                           //pdf页面偏移
+							   	                           var position = 0;
+							   	                           //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
+							   	                           var imgWidth = 595.28;
+							   	                           var imgHeight = 592.28 / contentWidth * contentHeight;
+							   	    
+							   	                           var pageData = canvas.toDataURL('image/jpeg', 1.0);
+							   	                           var pdf = new jsPDF('', 'pt', 'a4');
+							   	    
+							   	                           //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+							   	                           //当内容未超过pdf一页显示的范围，无需分页
+							   	                           if (leftHeight < pageHeight) {
+							   	                               pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+							   	                           } else {
+							   	                               while (leftHeight > 0) {
+							   	                                   pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+							   	                                   leftHeight -= pageHeight;
+							   	                                   position -= 841.89;
+							   	                                   //避免添加空白页
+							   	                                   if (leftHeight > 0) {
+							   	                                       pdf.addPage();
+							   	                                   }
+							   	                               }
+							   	                           }
+							   	                           pdf.save(qpbh+zzrq+'.pdf');
+							   	                       },
+							   	                       //背景设为白色（默认为黑色）
+							   	                       background: "#fff"  
+							   	                   }
+							   	                )
+							   	                
+						        		   });
+						        		   
+						  	               editPreviewCrsPdfSet();
+						  	               
+						        		   var cpxh=$("#cpxh_inp").val();
+						       			   var gcrj=$("#gcrj_inp").val();
+						       			   var ndbh=$("#ndbh_inp").val();
+						       			
+						        		   $.post("insertAirBottleRecord",
+						       				   {cpxh:cpxh,qpbhsStr:qpbhsStr.substring(1),gcrj:gcrj,ndbh:ndbh,zzrq:zzrq},
+						       				   function(data){
+						        			   		alert(data.info);
+						        		   	   }
+						        		   ,"json");
+						        	   	}
+        						    }
+        					    }
+        				    }
+        			    }
+        		    }
+        	    }
            }}
         ]
 	});
@@ -330,6 +341,126 @@ function checkQpbhExist(qpbh){
 	return bool;
 }
 
+function focusCPXH(){
+	var cpxh = $("#cpxh_inp").val();
+	if(cpxh=="产品型号不能为空"){
+		$("#cpxh_inp").val("");
+		$("#cpxh_inp").css("color", "#555555");
+	}
+}
+
+//验证产品型号
+function checkCPXH(){
+	var cpxh = $("#cpxh_inp").val();
+	if(cpxh==null||cpxh==""||cpxh=="产品型号不能为空"){
+		$("#cpxh_inp").css("color","#E15748");
+    	$("#cpxh_inp").val("产品型号不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusQpQsBh(){
+	var qpqsbh = $("#qpqsbh_inp").val();
+	if(qpqsbh=="气瓶起始编号不能为空"){
+		$("#qpqsbh_inp").val("");
+		$("#qpqsbh_inp").css("color", "#555555");
+	}
+}
+
+//验证气瓶起始编号
+function checkQpQsBh(){
+	var qpqsbh = $("#qpqsbh_inp").val();
+	if(qpqsbh==null||qpqsbh==""||qpqsbh=="气瓶起始编号不能为空"){
+		$("#qpqsbh_inp").css("color","#E15748");
+    	$("#qpqsbh_inp").val("气瓶起始编号不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusQpJsBh(){
+	var qpjsbh = $("#qpjsbh_inp").val();
+	if(qpjsbh=="气瓶结束编号不能为空"){
+		$("#qpjsbh_inp").val("");
+		$("#qpjsbh_inp").css("color", "#555555");
+	}
+}
+
+//验证气瓶结束编号
+function checkQpJsBh(){
+	var qpjsbh = $("#qpjsbh_inp").val();
+	if(qpjsbh==null||qpjsbh==""||qpjsbh=="气瓶结束编号不能为空"){
+		$("#qpjsbh_inp").css("color","#E15748");
+    	$("#qpjsbh_inp").val("气瓶结束编号不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusGCRJ(){
+	var gcrj = $("#gcrj_inp").val();
+	if(gcrj=="公称容积不能为空"){
+		$("#gcrj_inp").val("");
+		$("#gcrj_inp").css("color", "#555555");
+	}
+}
+
+//验证公称容积
+function checkGCRJ(){
+	var gcrj = $("#gcrj_inp").val();
+	if(gcrj==null||gcrj==""||gcrj=="公称容积不能为空"){
+		$("#gcrj_inp").css("color","#E15748");
+    	$("#gcrj_inp").val("公称容积不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusNDBH(){
+	var ndbh = $("#ndbh_inp").val();
+	if(ndbh=="内胆壁厚不能为空"){
+		$("#ndbh_inp").val("");
+		$("#ndbh_inp").css("color", "#555555");
+	}
+}
+
+//验证内胆壁厚
+function checkNDBH(){
+	var ndbh = $("#ndbh_inp").val();
+	if(ndbh==null||ndbh==""||ndbh=="内胆壁厚不能为空"){
+		$("#ndbh_inp").css("color","#E15748");
+    	$("#ndbh_inp").val("内胆壁厚不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusZZRQ(){
+	var zzrq = $("#zzrq_inp").val();
+	if(zzrq=="制造日期不能为空"){
+		$("#zzrq_inp").val("");
+		$("#zzrq_inp").css("color", "#555555");
+	}
+}
+
+//验证制造日期
+function checkZZRQ(){
+	var zzrq = $("#zzrq_inp").val();
+	if(zzrq==null||zzrq==""||zzrq=="制造日期不能为空"){
+		$("#zzrq_inp").css("color","#E15748");
+    	$("#zzrq_inp").val("制造日期不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
 function setFitWidthInParent(o){
 	var width=$(o).css("width");
 	return width.substring(0,width.length-2)-200;
@@ -358,37 +489,43 @@ function initWindowMarginLeft(){
 				<tr style="height: 45px;">
 					<td style="width:40%;">产品型号：</td>
 					<td>
-						<input id="cpxh_inp" name="" type="text" maxlength="20" value="356-70" onfocus="focus" onblur="check"/>
+						<input id="cpxh_inp" name="" type="text" maxlength="20" placeholder="例如:356-70" onfocus="focusCPXH()" onblur="checkCPXH()"/>
+						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
 				<tr style="height: 45px;">
 					<td>气瓶起始编号：</td>
 					<td>
-						<input id="qpqsbh_inp" name="" type="text" maxlength="20" value="CB19001001" onfocus="focus" onblur="check"/>
+						<input id="qpqsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001001" onfocus="focusQpQsBh()" onblur="checkQpQsBh()"/>
+						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
 				<tr style="height: 45px;">
 					<td>气瓶结束编号：</td>
 					<td>
-						<input id="qpjsbh_inp" name="" type="text" maxlength="20" value="CB19001003" onfocus="focus" onblur="check"/>
+						<input id="qpjsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001003" onfocus="focusQpJsBh()" onblur="checkQpJsBh()"/>
+						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
 				<tr style="height: 45px;">
 					<td>公称容积：</td>
 					<td>
-						<input id="gcrj_inp" name="" type="text" maxlength="20" value="70L" onfocus="focus" onblur="check"/>
+						<input id="gcrj_inp" name="" type="text" maxlength="20" placeholder="例如:70L" onfocus="focusGCRJ()" onblur="checkGCRJ()"/>
+						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
 				<tr style="height: 45px;">
 					<td>内胆壁厚：</td>
 					<td>
-						<input id="ndbh_inp" name="" type="text" maxlength="20" value="5.0" onfocus="focus" onblur="check"/>
+						<input id="ndbh_inp" name="" type="text" maxlength="20" placeholder="例如:5.0" onfocus="focusNDBH()" onblur="checkNDBH()"/>
+						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
 				<tr style="height: 45px;">
 					<td>制造日期：</td>
 					<td>
-						<input id="zzrq_inp" name="" type="text" maxlength="20" value="2019    11" onfocus="focus" onblur="check"/>
+						<input id="zzrq_inp" name="" type="text" maxlength="20" placeholder="例如:2019    11" onfocus="focusZZRQ()" onblur="checkZZRQ()"/>
+						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
 				<tr style="height: 350px;">

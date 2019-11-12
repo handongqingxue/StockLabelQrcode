@@ -116,7 +116,7 @@ function checkZl(){
 
 function focusSCRJ(){
 	var scrj = $("#scrj").val();
-	if(zl=="实测容积不能为空"){
+	if(scrj=="实测容积不能为空"){
 		$("#scrj").val("");
 		$("#scrj").css("color", "#555555");
 	}
@@ -217,7 +217,7 @@ function initWindowMarginLeft(){
 				重量
 			</td>
 			<td>
-				<input type="text" id="zl" name="zl" size="4" value="${requestScope.airBottle.zl }" />
+				<input type="text" id="zl" name="zl" size="10" value="${requestScope.airBottle.zl }" onfocus="focusZl()" onblur="checkZl()" />
 				<span style="color: #f00;">*</span>
 			</td>
 		  </tr>
@@ -226,7 +226,7 @@ function initWindowMarginLeft(){
 				实测容积
 			</td>
 			<td>
-				<input type="text" id="scrj" name="scrj" size="4" value="${requestScope.airBottle.scrj }" />
+				<input type="text" id="scrj" name="scrj" size="15" value="${requestScope.airBottle.scrj }" onfocus="focusSCRJ()" onblur="checkSCRJ()" />
 				<span style="color: #f00;">*</span>
 			</td>
 		  </tr>
@@ -235,7 +235,7 @@ function initWindowMarginLeft(){
 				气瓶支架型号
 			</td>
 			<td>
-				<input type="text" id="qpzjxh" name="qpzjxh" value="${requestScope.airBottle.qpzjxh }" onfocus="focusSort()" onblur="checkSort()"/>
+				<input type="text" id="qpzjxh" name="qpzjxh" value="${requestScope.airBottle.qpzjxh }" onfocus="focusQPZJXH()" onblur="checkQPZJXH()"/>
 				<span style="color: #f00;">*</span>
 			</td>
 		  </tr>

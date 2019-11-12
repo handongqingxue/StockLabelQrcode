@@ -8,7 +8,14 @@ public class PreviewCRSPDFSet implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private float cpxh_left;//产品型号距离左边多远
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public float getCpxh_left() {
 		return cpxh_left;
 	}
