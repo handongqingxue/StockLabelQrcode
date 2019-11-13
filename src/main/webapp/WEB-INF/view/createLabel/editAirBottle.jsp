@@ -175,7 +175,8 @@ function initWindowMarginLeft(){
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
-	<%@include file="side.jsp"%>
+	<%@include file="top.jsp"%>
+	<%@include file="left.jsp"%>
 	<div id="edit_div">
 		<form id="form1" name="form1" method="post" action="editAirBottle" enctype="multipart/form-data">
 		<input type="hidden" id="id" name="id" value="${requestScope.airBottle.id }"/>

@@ -1,7 +1,9 @@
 package com.stockLabelQrcode.controller;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +38,7 @@ import com.stockLabelQrcode.util.qrcode.Qrcode;
 
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 @Controller
 @RequestMapping("/createLabel")
@@ -421,6 +424,63 @@ public class CreateLabelController {
 			plan.setStatus(1);
 			plan.setMsg("导入成功！");
 			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+	
+	@RequestMapping(value="/loadExcelData",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String loadExcelData(@RequestParam(value="excel_file",required=false) MultipartFile excel_file) {
+		PlanResult plan=new PlanResult();
+		String json=null;
+		try {
+			System.out.println(excel_file.getSize());
+			// 创建输入流，读取Excel  
+			InputStream is = excel_file.getInputStream();  
+			// jxl提供的Workbook类  
+			Workbook wb = Workbook.getWorkbook(is);  
+			// Excel的页签数量  
+			int sheet_size = wb.getNumberOfSheets();  
+			
+			List<AirBottle> abList=new ArrayList<AirBottle>();
+			for (int index = 0; index < sheet_size; index++) {  
+			    // 每个页签创建一个Sheet对象  
+			    Sheet sheet = wb.getSheet(index);  
+			    // sheet.getRows()返回该页的总行数  
+			    for (int i = 1; i < sheet.getRows(); i++) {  
+			    	/*
+			        // sheet.getColumns()返回该页的总列数  
+			        for (int j = 0; j < sheet.getColumns(); j++) {  
+			            String cellinfo = sheet.getCell(j, i).getContents();  
+			            System.out.print(cellinfo+"   ");  
+			        }
+			        System.out.println("  ");
+			        */
+			    	String qpbh = sheet.getCell(1, i).getContents();
+		        	String zl = sheet.getCell(2, i).getContents();
+		        	String scrj = sheet.getCell(3, i).getContents();
+		        	String qpzjxh = sheet.getCell(4, i).getContents();
+		        	String qpzzdw = sheet.getCell(5, i).getContents();
+			        System.out.println("zl==="+zl);
+			        System.out.println("scrj==="+scrj);
+			        System.out.println("qpzjxh==="+qpzjxh);
+			        System.out.println("qpzzdw==="+qpzzdw);
+			        
+			        AirBottle airBottle=new AirBottle();
+			        airBottle.setQpbh(qpbh);
+			        airBottle.setZl(zl);
+			        airBottle.setScrj(scrj);
+			        airBottle.setQpzjxh(qpzjxh);
+			        airBottle.setQpzzdw(qpzzdw);
+			        abList.add(airBottle);
+			    }  
+			}
+			plan.setMsg("ok");
+			plan.setData(abList);
+			json=JsonUtil.getJsonFromObject(plan);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return json;
 	}

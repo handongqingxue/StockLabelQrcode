@@ -132,6 +132,9 @@ $(function(){
 		buttons:[
            {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
         	   deleteAirBottleByQpbhs();
+           }},
+           {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
+        	   openDeleteDiv(0);
            }}
         ]
 	});
@@ -160,20 +163,10 @@ $(function(){
 	$(".panel.window").css("margin-top","20px");
 	$(".panel.window").css("margin-left","300px");
 	$(".panel.window").css("background","linear-gradient(to bottom,#E7F4FD 0,#E7F4FD 20%)"); 
-	$(".panel.window .panel-title").css("color","#000");
-	$(".panel.window .panel-title").css("font-size","15px");
-	$(".panel.window .panel-title").css("padding-left","10px");
 	
 	$(".panel-header, .panel-body").css("border-color","#ddd");
 	
-	//以下的是表格下面的面板
-	$(".window-shadow").css("width","370px");
 	resetWindowShadow();
-	
-	$(".window,.window .window-body").css("border-color","#ddd");
-	
-	$("#ok_but").css("left","40%");
-	$("#ok_but").css("position","absolute");
 	
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
@@ -190,9 +183,22 @@ function openDeleteDiv(flag){
 }
 
 function resetWindowShadow(){
+	$(".panel.window .panel-title").css("color","#000");
+	$(".panel.window .panel-title").css("font-size","15px");
+	$(".panel.window .panel-title").css("padding-left","10px");
+	
+	//以下的是表格下面的面板
+	$(".window-shadow").css("width","370px");
 	$(".window-shadow").css("margin-top","20px");
 	$(".window-shadow").css("margin-left","300px");
 	$(".window-shadow").css("background","#E7F4FD");
+	$(".window,.window .window-body").css("border-color","#ddd");
+
+	$("#ok_but").css("left","30%");
+	$("#ok_but").css("position","absolute");
+	
+	$("#cancel_but").css("left","60%");
+	$("#cancel_but").css("position","absolute");
 }
 
 function resetTabStyle(){
@@ -328,7 +334,8 @@ function initTab1WindowMarginLeft(){
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
-	<%@include file="side.jsp"%>
+	<%@include file="top.jsp"%>
+	<%@include file="left.jsp"%>
 	<div id="tab1_div" style="margin-top:20px;margin-left: 200px;">
 		<div id="toolbar">
 			气瓶编号：<input type="text" id="qpbh_inp"/>
