@@ -30,7 +30,9 @@ public interface CreateLabelMapper {
 
 	int editAirBottle(AirBottle airBottle);
 
-	int deleteAirBottle(List<String> idList);
+	int deleteAirBottleById(List<String> idList);
+
+	int deleteAirBottleByQpbhs(List<String> qpbhList);
 
 	int getAirBottleCountByQpbh(@Param("qpbh")String qpbh);
 

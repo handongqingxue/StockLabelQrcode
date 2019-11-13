@@ -80,7 +80,9 @@ public interface CreateLabelService {
 	 * @param ids
 	 * @return
 	 */
-	int deleteAirBottle(String ids);
+	int deleteAirBottleById(String ids);
+
+	int deleteAirBottleByQpbhs(String qpbhs);
 
 	/**
 	 * 根据气瓶编号，验证该气瓶是否已存在

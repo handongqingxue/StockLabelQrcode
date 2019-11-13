@@ -197,11 +197,17 @@
  		</if>
  		where id=#{id}
  	</update>
- 	<delete id="deleteAirBottle" parameterType="java.util.List">
+ 	<delete id="deleteAirBottleById" parameterType="java.util.List">
 		delete from air_bottle where 1=1
 		<foreach collection="list" item="id" open=" and cast(id as char) in (" separator="," close=")">
 		#{id}
 		</foreach> 
+	</delete>
+	<delete id="deleteAirBottleByQpbhs" parameterType="java.util.List">
+		delete from air_bottle where 1=1
+		<foreach collection="list" item="qpbh" open=" and cast(qpbh as char) in(" separator="," close=")">
+		#{qpbh}
+		</foreach>
 	</delete>
 	<update id="editPreviewCrsPdfSet" parameterType="com.stockLabelQrcode.entity.PreviewCRSPDFSet">
  		update preview_crs_pdf_set set

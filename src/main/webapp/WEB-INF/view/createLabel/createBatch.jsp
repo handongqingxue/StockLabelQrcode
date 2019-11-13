@@ -19,7 +19,7 @@ $(function(){
 		title:"创建批次",
 		width:setFitWidthInParent("body"),
 		height:setFitHeightInParent(".layui-side"),
-		top:60,
+		top:80,
 		left:200,
 		buttons:[
            {text:"中文标签",id:"chinese_but",iconCls:"icon-ok",handler:function(){

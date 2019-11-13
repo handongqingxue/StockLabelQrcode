@@ -73,11 +73,20 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 	}
 
 	@Override
-	public int deleteAirBottle(String ids) {
+	public int deleteAirBottleById(String ids) {
 		// TODO Auto-generated method stub
 		int count=0;
 		List<String> idList = Arrays.asList(ids.split(","));
-		count=createLabelDao.deleteAirBottle(idList);
+		count=createLabelDao.deleteAirBottleById(idList);
+		return count;
+	}
+
+	@Override
+	public int deleteAirBottleByQpbhs(String qpbhs) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> qpbhList = Arrays.asList(qpbhs.split(","));
+		count=createLabelDao.deleteAirBottleByQpbhs(qpbhList);
 		return count;
 	}
 

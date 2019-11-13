@@ -16,17 +16,18 @@ $(function(){
 			tab1.datagrid("load",{qpbh:qpbh});
 		}
 	});
-	$("#add_but").linkbutton({
-		iconCls:"icon-add",
-		onClick:function(){
-			location.href=path+"createLabel/toCreateBatch";
-		}
-	});
 	
 	$("#remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
-			deleteByIds();
+			deleteById();
+		}
+	});
+	
+	$("#batchRemove_but").linkbutton({
+		iconCls:"icon-remove",
+		onClick:function(){
+			openDeleteDiv(1);
 		}
 	});
 	
@@ -94,6 +95,7 @@ $(function(){
 		url:"queryAirBottleList",
 		toolbar:"#toolbar",
 		width:setFitWidthInParent("body"),
+		singleSelect:true,
 		pagination:true,
 		pageSize:10,
 		columns:[[
@@ -121,7 +123,77 @@ $(function(){
 		}
 	});
 	
+	deleteDialog=$("#delete_div").dialog({
+		title:"批量删除",
+		width:370,
+		height:200,
+		top:250,
+		left:400,
+		buttons:[
+           {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
+        	   deleteAirBottleByQpbhs();
+           }}
+        ]
+	});
+	
+
+	$("#delete_div table").css("width","350px");
+	$("#delete_div table").css("magin","-100px");
+	$("#delete_div table td").css("padding-left","10px");
+	$("#delete_div table td").css("padding-right","10px");
+	$("#delete_div table td").css("font-size","15px");
+	
+	$("#delete_div table tr").each(function(){
+		$(this).find("td").eq(0).css("color","#006699");
+		$(this).find("td").eq(0).css("border-right","#CAD9EA solid 1px");
+		$(this).find("td").eq(0).css("font-weight","bold");
+		$(this).find("td").eq(0).css("background-color","#F5FAFE");
+	});
+
+	$("#delete_div table tr").mousemove(function(){
+		$(this).css("background-color","#ddd");
+	}).mouseout(function(){
+		$(this).css("background-color","#fff");
+	});
+	
+	$(".panel.window").css("width","353px");
+	$(".panel.window").css("margin-top","20px");
+	$(".panel.window").css("margin-left","300px");
+	$(".panel.window").css("background","linear-gradient(to bottom,#E7F4FD 0,#E7F4FD 20%)"); 
+	$(".panel.window .panel-title").css("color","#000");
+	$(".panel.window .panel-title").css("font-size","15px");
+	$(".panel.window .panel-title").css("padding-left","10px");
+	
+	$(".panel-header, .panel-body").css("border-color","#ddd");
+	
+	//以下的是表格下面的面板
+	$(".window-shadow").css("width","370px");
+	resetWindowShadow();
+	
+	$(".window,.window .window-body").css("border-color","#ddd");
+	
+	$("#ok_but").css("left","40%");
+	$("#ok_but").css("position","absolute");
+	
+	$(".dialog-button").css("background-color","#fff");
+	$(".dialog-button .l-btn-text").css("font-size","20px");
+	
+	openDeleteDiv(0);
 });
+
+function openDeleteDiv(flag){
+	deleteDialog.dialog({
+        closed: flag==1?false:true
+    })
+    if(flag==1)
+       resetWindowShadow();
+}
+
+function resetWindowShadow(){
+	$(".window-shadow").css("margin-top","20px");
+	$(".window-shadow").css("margin-left","300px");
+	$(".window-shadow").css("background","#E7F4FD");
+}
 
 function resetTabStyle(){
 	$(".panel.datagrid").css("margin-left",initTab1WindowMarginLeft());
@@ -136,24 +208,18 @@ function resetTabStyle(){
 	$(".panel.datagrid .datagrid-pager.pagination").css("background","#F5FAFE");
 }
 
-function deleteByIds() {
-	var rows=tab1.datagrid("getSelections");
-	if (rows.length == 0) {
+function deleteById() {
+	var row=tab1.datagrid("getSelected");
+	if (row==null) {
 		$.messager.alert("提示","请选择要删除的信息！","warning");
 		return false;
 	}
 	
 	$.messager.confirm("提示","确定要删除吗？",function(r){
 		if(r){
-			var ids = "";
-			for (var i = 0; i < rows.length; i++) {
-				ids += "," + rows[i].id;
-			}
-			ids=ids.substring(1);
-			
 			//$.ajaxSetup({async:false});
-			$.post(path+"createLabel/deleteAirBottle", 
-				{ids:ids}, 
+			$.post(path+"createLabel/deleteAirBottleById", 
+				{ids:row.id}, 
 				function(data) {
 					if(data.status==1){
 						alert(data.msg);
@@ -167,6 +233,83 @@ function deleteByIds() {
 			
 		}
 	});
+}
+
+function deleteAirBottleByQpbhs(){
+	if(checkQpQsBh()){
+	   if(checkQpJsBh()){
+ 		   var qpqsbh=$("#qpqsbh_inp").val();
+ 		   var qpjsbh=$("#qpjsbh_inp").val();
+ 		   var qpqsbhPre=qpqsbh.substring(0,7);
+ 		   var qpqsbhSuf=qpqsbh.substring(7,qpqsbh.length);
+ 		   qpjsbh=qpjsbh.substring(7,qpjsbh.length);
+ 		   var qpbhsStr="";
+ 		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
+                var qpbhSuf;
+                qpbhSuf=i+"";
+                if(qpbhSuf.length==2)
+             	    qpbhSuf="0"+i;
+                else if(qpbhSuf.length==1)
+             	    qpbhSuf="00"+i;
+                var qpbh=qpqsbhPre+qpbhSuf;
+                qpbhsStr+=","+qpbh;
+ 		   }
+ 		   
+ 		   $.post("deleteAirBottleByQpbhs",
+			   {qpbhsStr:qpbhsStr.substring(1)},
+			   function(data){
+				   if(data.status==1){
+					  alert(data.msg);
+					  openDeleteDiv(0);
+					  tab1.datagrid("load");
+				   }
+				   else{
+					  alert(data.msg);
+				   }
+ 		   	   }
+ 		   ,"json");
+	   }
+    }
+}
+
+function focusQpQsBh(){
+	var qpqsbh = $("#qpqsbh_inp").val();
+	if(qpqsbh=="气瓶起始编号不能为空"){
+		$("#qpqsbh_inp").val("");
+		$("#qpqsbh_inp").css("color", "#555555");
+	}
+}
+
+//验证气瓶起始编号
+function checkQpQsBh(){
+	var qpqsbh = $("#qpqsbh_inp").val();
+	if(qpqsbh==null||qpqsbh==""||qpqsbh=="气瓶起始编号不能为空"){
+		$("#qpqsbh_inp").css("color","#E15748");
+    	$("#qpqsbh_inp").val("气瓶起始编号不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusQpJsBh(){
+	var qpjsbh = $("#qpjsbh_inp").val();
+	if(qpjsbh=="气瓶结束编号不能为空"){
+		$("#qpjsbh_inp").val("");
+		$("#qpjsbh_inp").css("color", "#555555");
+	}
+}
+
+//验证气瓶结束编号
+function checkQpJsBh(){
+	var qpjsbh = $("#qpjsbh_inp").val();
+	if(qpjsbh==null||qpjsbh==""||qpjsbh=="气瓶结束编号不能为空"){
+		$("#qpjsbh_inp").css("color","#E15748");
+    	$("#qpjsbh_inp").val("气瓶结束编号不能为空");
+    	return false;
+	}
+	else
+		return true;
 }
 
 function setFitWidthInParent(o){
@@ -190,17 +333,37 @@ function initTab1WindowMarginLeft(){
 		<div id="toolbar">
 			气瓶编号：<input type="text" id="qpbh_inp"/>
 			<a id="search_but">查询</a>
-			<a id="add_but">创建批次</a>
 			<a id="remove_but">删除</a>
+			<a id="batchRemove_but">批量删除</a>
 			
+			<!-- 
 			<form id="form1">
 				<input type="file" id="excel_file" name="excel_file"/>
 				<input type="hidden" id="qpbhsStr" name="qpbhsStr"/>
 			</form>
 			<a id="input_but">导入Excel</a>
 			<a id="previewPdf_but">预览Pdf</a>
+			 -->
 		</div>
 		<table id="tab1">
+		</table>
+	</div>
+	<div id="delete_div">
+		<table>
+			<tr style="height: 45px;">
+				<td>气瓶起始编号：</td>
+				<td>
+					<input id="qpqsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001001" onfocus="focusQpQsBh()" onblur="checkQpQsBh()"/>
+					<span style="color: #f00;">*</span>
+				</td>
+			</tr>
+			<tr style="height: 45px;">
+				<td>气瓶结束编号：</td>
+				<td>
+					<input id="qpjsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001003" onfocus="focusQpJsBh()" onblur="checkQpJsBh()"/>
+					<span style="color: #f00;">*</span>
+				</td>
+			</tr>
 		</table>
 	</div>
 	<%@include file="foot.jsp"%>

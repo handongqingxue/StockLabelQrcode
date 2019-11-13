@@ -97,7 +97,7 @@ public class CreateLabelController {
 			
 			plan.setStatus(0);
 			plan.setMsg("验证通过");
-			plan.setUrl("/createLabel/toAirBottleList");
+			plan.setUrl("/createLabel/toCreateBatch");
 			return JsonUtil.getJsonFromObject(plan);
 		}
 		plan.setStatus(1);
@@ -139,7 +139,7 @@ public class CreateLabelController {
 		plan.setStatus(0);
 		plan.setMsg("注册成功");
 		plan.setData(msg);
-		plan.setUrl("/createLabel/toAirBottleList");
+		plan.setUrl("/createLabel/toCreateBatch");
 		
 		AccountMsg resultUser=userService.checkUser(msg);
 		List<PreviewCRSPDF> pCrsPdflist=createLabelService.selectPreviewCRSPDF();
@@ -179,6 +179,16 @@ public class CreateLabelController {
 	}
 	
 	/**
+	 * 跳转到创建批次页面
+	 * @return
+	 */
+	@RequestMapping("/toCreateBatch")
+	public String toCreateBatch() {
+		
+		return "/createLabel/createBatch";
+	}
+	
+	/**
 	 * 跳转到历史记录查询页面
 	 * @return
 	 */
@@ -189,13 +199,13 @@ public class CreateLabelController {
 	}
 	
 	/**
-	 * 跳转到创建批次页面
+	 * 跳转到导入检测数据页面
 	 * @return
 	 */
-	@RequestMapping("/toCreateBatch")
-	public String toCreateBatch() {
+	@RequestMapping("/toInputExcel")
+	public String toIndex() {
 		
-		return "/createLabel/createBatch";
+		return "/createLabel/inputExcel";
 	}
 	
 	/**
@@ -453,15 +463,40 @@ public class CreateLabelController {
 	}
 	
 	/**
-	 * 删除气瓶信息
+	 * 根据id删除气瓶信息
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value="/deleteAirBottle",produces="plain/text; charset=UTF-8")
+	@RequestMapping(value="/deleteAirBottleById",produces="plain/text; charset=UTF-8")
 	@ResponseBody
-	public String deleteAirBottle(String ids) {
+	public String deleteAirBottleById(String ids) {
 		
-		int count=createLabelService.deleteAirBottle(ids);
+		int count=createLabelService.deleteAirBottleById(ids);
+		PlanResult plan=new PlanResult();
+		String json;
+		if(count==0) {
+			plan.setStatus(0);
+			plan.setMsg("删除失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			plan.setMsg("删除成功");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+	
+	/**
+	 * 根据气瓶编号删除气瓶信息
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(value="/deleteAirBottleByQpbhs",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteAirBottleByQpbhs(String qpbhsStr) {
+		
+		int count=createLabelService.deleteAirBottleByQpbhs(qpbhsStr);
 		PlanResult plan=new PlanResult();
 		String json;
 		if(count==0) {
