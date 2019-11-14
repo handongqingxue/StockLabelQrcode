@@ -17,15 +17,15 @@ $(function(){
 		}
 	});
 
-	$("#remove_but").linkbutton({
-		iconCls:"icon-remove",
+	$("#inputExcel_but").linkbutton({
+		iconCls:"icon-back",
 		onClick:function(){
-			deleteById();
+			inputExcelByQpbh();
 		}
 	});
 	
-	$("#batchRemove_but").linkbutton({
-		iconCls:"icon-remove",
+	$("#batchIE_but").linkbutton({
+		iconCls:"icon-back",
 		onClick:function(){
 			openDeleteDiv(1);
 		}
@@ -112,7 +112,64 @@ $(function(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 	
 	openDeleteDiv(0);
+	
+	tab2=$("#tab2").datagrid({
+		title:"Excel数据",
+		//url:"queryAirBottleList",
+		//toolbar:"#toolbar",
+		width:setFitWidthInParent("body"),
+		height:300,
+		singleSelect:true,
+		pagination:true,
+		pageSize:10,
+		columns:[[
+            {field:"cpxh",title:"产品型号",width:100,sortable:true},
+            {field:"qpbh",title:"气瓶编号",width:150,sortable:true},
+            {field:"zl",title:"重量",width:80,sortable:true},
+            {field:"scrj",title:"实测容积",width:80,sortable:true},
+            {field:"qpzjxh",title:"气瓶支架型号",width:100,sortable:true},
+            {field:"qpzzdw",title:"气瓶制造单位",width:300,sortable:true}
+        ]]
+	});
+	tab2.datagrid("appendRow",{cpxh:"<div style=\"text-align:center;\">暂无数据</div>"});
+	tab2.datagrid("mergeCells",{index:0,field:"cpxh",colspan:6});
 });
+
+function inputExcelByQpbh(){
+	var row=tab1.datagrid("getSelected");
+	if (row==null) {
+		$.messager.alert("提示","请选择要更新的信息！","warning");
+		return false;
+	}
+	
+	var qpJAStr="[";
+	var rows = tab2.datagrid("getRows");
+	for(var i=0;i<rows.length;i++){
+		if(i>0)
+			qpJAStr+=",";
+        qpJAStr+="{'qpbh':'"+rows[i].qpbh+"','zl':'"+rows[i].zl+"','scrj':'"+rows[i].scrj+"','qpzjxh':'"+rows[i].qpzjxh+"','qpzzdw':'"+rows[i].qpzzdw+"'}";
+	}
+	qpJAStr+="]";
+	
+	$.messager.confirm("提示","确定要更新吗？",function(r){
+		if(r){
+			//$.ajaxSetup({async:false});
+			$.post(path+"createLabel/updateAirBottleRecord", 
+				{qpbhsStr:row.qpbh,qpJAStr:qpJAStr},
+				function(data) {
+					if(data.status==1){
+						alert(data.msg);
+						tab1.datagrid("load");
+					}
+					else{
+						alert(data.msg);
+					}
+				}
+			, "json");
+			
+		}
+	});
+}
 
 function openDeleteDiv(flag){
 	deleteDialog.dialog({
@@ -192,7 +249,7 @@ function checkQpJsBh(){
 		return true;
 }
 
-function aaa(obj){
+function loadExcelTab(obj){
 	/*
 	//var file=$(obj);
 	//var fileHtml=file.prop("outerHTML");
@@ -227,16 +284,16 @@ function aaa(obj){
 		processData: false,
 		contentType: false,
 		success: function (result){
-			console.log(JSON.parse(result).data);
-			/*
-			if(data.message=="ok"){
-				alert(data.msg);
-				tab1.datagrid("load");
+			var resultJO=JSON.parse(result);
+			var data=resultJO.data;
+			console.log(data);
+			if(resultJO.status==1){
+				//var data={"total":2,"rows":[{cpxh:"1",qpbh:"一"},{cpxh:"2",qpbh:"二"}]};
+				tab2.datagrid('loadData',JSON.parse(result).data);
 			}
 			else{
 				alert(data.msg);
 			}
-			*/
 		}
 	});
 }
@@ -255,11 +312,11 @@ function setFitWidthInParent(o){
 			气瓶编号：<input type="text" id="qpbh_inp"/>
 			<a id="search_but">查询</a>
 			<form id="form1">
-				<input type="file" id="excel_file" name="excel_file" onchange="aaa(this)"/>
+				<input type="file" id="excel_file" name="excel_file" onchange="loadExcelTab(this)"/>
 				<input type="hidden" id="qpbhsStr" name="qpbhsStr"/>
 			</form>
-			<a id="remove_but">删除</a>
-			<a id="batchRemove_but">批量删除</a>
+			<a id="inputExcel_but">导入</a>
+			<a id="batchIE_but">批量导入</a>
 			
 			<!-- 
 			<a id="input_but">导入Excel</a>
@@ -267,6 +324,8 @@ function setFitWidthInParent(o){
 			 -->
 		</div>
 		<table id="tab1">
+		</table>
+		<table id="tab2">
 		</table>
 	</div>
 	<div id="delete_div">

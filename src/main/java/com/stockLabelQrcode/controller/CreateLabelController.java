@@ -17,6 +17,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -357,46 +359,32 @@ public class CreateLabelController {
 	 */
 	@RequestMapping(value="/updateAirBottleRecord",produces="plain/text; charset=UTF-8")
 	@ResponseBody
-	public String updateAirBottleRecord(@RequestParam(value="excel_file",required=false) MultipartFile excel_file,String qpbhsStr) {
+	public String updateAirBottleRecord(String qpbhsStr,String qpJAStr) {
 		
 		PlanResult plan=new PlanResult();
 		int count = 0;
 		
         try {
-        	String[] qpbhArr = qpbhsStr.split(",");
+        	String[] qpbhArr = qpbhsStr.split(",");//这是上方表格里选中的数据
+        	JSONArray qpJA = new JSONArray(qpJAStr);//这是下方Excel表格里的数据
         	
-			// 创建输入流，读取Excel  
-			InputStream is = excel_file.getInputStream();  
-			// jxl提供的Workbook类  
-			Workbook wb = Workbook.getWorkbook(is);  
-			// Excel的页签数量  
-			int sheet_size = wb.getNumberOfSheets();  
-			for (int index = 0; index < sheet_size; index++) {  
-			    // 每个页签创建一个Sheet对象  
-			    Sheet sheet = wb.getSheet(index);  
-			    // sheet.getRows()返回该页的总行数  
-			    for (int i = 1; i < sheet.getRows(); i++) {  
-			    	/*
-			        // sheet.getColumns()返回该页的总列数  
-			        for (int j = 0; j < sheet.getColumns(); j++) {  
-			            String cellinfo = sheet.getCell(j, i).getContents();  
-			            System.out.print(cellinfo+"   ");  
-			        }
-			        System.out.println("  ");
-			        */
-			    	String qpbh = sheet.getCell(1, i).getContents();
-			    	if(StringUtils.isEmpty(qpbh))
+			    for (int i = 1; i < qpJA.length(); i++) {  
+			    	JSONObject qpJO = (JSONObject)qpJA.get(i);
+			    	String qpbh1 = qpJO.get("qpbh").toString();
+			    	if(StringUtils.isEmpty(qpbh1))
 			    		continue;
-			    	for (String qpbh1 : qpbhArr) {
+			    	for (String qpbh : qpbhArr) {
 				        if(qpbh.equals(qpbh1)) {
-				        	String zl = sheet.getCell(2, i).getContents();
-				        	String scrj = sheet.getCell(3, i).getContents();
-				        	String qpzjxh = sheet.getCell(4, i).getContents();
-				        	String qpzzdw = sheet.getCell(5, i).getContents();
+				        	String zl = qpJO.get("zl").toString();
+				        	String scrj = qpJO.get("scrj").toString();
+				        	String qpzjxh = qpJO.get("qpzjxh").toString();
+				        	String qpzzdw = qpJO.get("qpzzdw").toString();
+				        	/*
 					        System.out.println("zl==="+zl);
 					        System.out.println("scrj==="+scrj);
 					        System.out.println("qpzjxh==="+qpzjxh);
 					        System.out.println("qpzzdw==="+qpzzdw);
+					        */
 					        
 					        AirBottle airBottle=new AirBottle();
 					        airBottle.setQpbh(qpbh);
@@ -408,7 +396,6 @@ public class CreateLabelController {
 				        }
 					}
 			    }  
-			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -456,6 +443,7 @@ public class CreateLabelController {
 			        }
 			        System.out.println("  ");
 			        */
+			    	String cpxh = sheet.getCell(0, i).getContents();
 			    	String qpbh = sheet.getCell(1, i).getContents();
 		        	String zl = sheet.getCell(2, i).getContents();
 		        	String scrj = sheet.getCell(3, i).getContents();
@@ -467,6 +455,7 @@ public class CreateLabelController {
 			        System.out.println("qpzzdw==="+qpzzdw);
 			        
 			        AirBottle airBottle=new AirBottle();
+			        airBottle.setCpxh(cpxh);
 			        airBottle.setQpbh(qpbh);
 			        airBottle.setZl(zl);
 			        airBottle.setScrj(scrj);
@@ -475,12 +464,14 @@ public class CreateLabelController {
 			        abList.add(airBottle);
 			    }  
 			}
-			plan.setMsg("ok");
+			plan.setStatus(1);
 			plan.setData(abList);
 			json=JsonUtil.getJsonFromObject(plan);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			plan.setStatus(0);
+			plan.setMsg("查询失败！");
 		}
 		return json;
 	}
@@ -620,6 +611,11 @@ public class CreateLabelController {
         jsonMap.put("qrcodeUrl", avaPath);
 		
 		return jsonMap;
+	}
+	
+	public static void main(String[] args) {
+		String str="\"";
+		System.out.println(new JSONArray("[{\"zl\":\"71.1KG\"}]"));
 	}
 
 }
