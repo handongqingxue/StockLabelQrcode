@@ -7,12 +7,13 @@
 <title>编辑</title>
 <%@include file="js.jsp"%>
 <script type="text/javascript">
+var path='<%=basePath %>';
 $(function(){
 	$("#edit_div").dialog({
 		title:"编辑",
 		width:setFitWidthInParent("body"),
 		height:setFitHeightInParent(".layui-side"),
-		top:60,
+		top:80,
 		left:200,
 		buttons:[
            {text:"提交",id:"ok_but",iconCls:"icon-ok",handler:function(){
@@ -20,6 +21,8 @@ $(function(){
            }}
         ]
 	});
+	
+	previewPDF('${requestScope.airBottle.label_type }');
 	
 	$("#edit_div table").css("width","1000px");
 	$("#edit_div table").css("magin","-100px");
@@ -60,14 +63,140 @@ $(function(){
 	
 	$("#ok_but").css("left","45%");
 	$("#ok_but").css("position","absolute");
+	
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 });
+
+function editPreviewCrsPdfSet(){
+	var id=$("#pdf_div #id_hid").val();
+    var cpxhLeft=$("#pdf_div #cpxh_span").css("margin-left");
+    cpxhLeft=cpxhLeft.substring(0,cpxhLeft.length-2);
+    var cpxhTop=$("#pdf_div #cpxh_span").css("margin-top");
+    cpxhTop=cpxhTop.substring(0,cpxhTop.length-2);
+    var qpbhLeft=$("#pdf_div #qpbh_span").css("margin-left");
+    qpbhLeft=qpbhLeft.substring(0,qpbhLeft.length-2);
+    var qpbhTop=$("#pdf_div #qpbh_span").css("margin-top");
+    qpbhTop=qpbhTop.substring(0,qpbhTop.length-2);
+    var gcrjLeft=$("#pdf_div #gcrj_span").css("margin-left");
+    gcrjLeft=gcrjLeft.substring(0,gcrjLeft.length-2);
+    var gcrjTop=$("#pdf_div #gcrj_span").css("margin-top");
+    gcrjTop=gcrjTop.substring(0,gcrjTop.length-2);
+    var ndbhLeft=$("#pdf_div #ndbh_span").css("margin-left");
+    ndbhLeft=ndbhLeft.substring(0,ndbhLeft.length-2);
+    var ndbhTop=$("#pdf_div #ndbh_span").css("margin-top");
+    ndbhTop=ndbhTop.substring(0,ndbhTop.length-2);
+    var zzrqLeft=$("#pdf_div #zzrq_span").css("margin-left");
+    zzrqLeft=zzrqLeft.substring(0,zzrqLeft.length-2);
+    var zzrqTop=$("#pdf_div #zzrq_span").css("margin-top");
+    zzrqTop=zzrqTop.substring(0,zzrqTop.length-2);
+    var qrcodeLeft=$("#pdf_div #qrcode_img").css("margin-left");
+    qrcodeLeft=qrcodeLeft.substring(0,qrcodeLeft.length-2);
+    var qrcodeTop=$("#pdf_div #qrcode_img").css("margin-top");
+    qrcodeTop=qrcodeTop.substring(0,qrcodeTop.length-2);
+    
+    console.log("cpxhLeft==="+cpxhLeft);
+    console.log("cpxhTop==="+cpxhTop);
+    console.log("qpbhLeft==="+qpbhLeft);
+    console.log("qpbhTop==="+qpbhTop);
+    console.log("gcrjLeft==="+gcrjLeft);
+    console.log("gcrjTop==="+gcrjTop);
+    console.log("ndbhLeft==="+ndbhLeft);
+    console.log("ndbhTop==="+ndbhTop);
+    $.post("editPreviewCrsPdfSet",
+   		{id:id,cpxh_left:cpxhLeft,cpxh_top:cpxhTop,qpbh_left:qpbhLeft,qpbh_top:qpbhTop,gcrj_left:gcrjLeft,gcrj_top:gcrjTop,
+    	ndbh_left:ndbhLeft,ndbh_top:ndbhTop,zzrq_left:zzrqLeft,zzrq_top:zzrqTop,qrcode_left:qrcodeLeft,qrcode_top:qrcodeTop},
+   		function(){
+    	
+    	}
+    ,"json");
+}
+
+function previewPDF(labelType){
+	$.post("selectCRSPdfSet",
+		{labelType:labelType,accountNumber:'${sessionScope.user.id}'},
+		function(data){
+			console.log(data);
+			var crsPdfSet=data.crsPdfSet;
+			var id=crsPdfSet.id;
+			var cpxhLeft=crsPdfSet.cpxh_left;
+			var cpxhTop=crsPdfSet.cpxh_top;
+			var qpbhLeft=crsPdfSet.qpbh_left;
+			var qpbhTop=crsPdfSet.qpbh_top;
+			var gcrjLeft=crsPdfSet.gcrj_left;
+			var gcrjTop=crsPdfSet.gcrj_top;
+			var ndbhLeft=crsPdfSet.ndbh_left;
+			var ndbhTop=crsPdfSet.ndbh_top;
+			var zzrqLeft=crsPdfSet.zzrq_left;
+			var zzrqTop=crsPdfSet.zzrq_top;
+			var qrcodeLeft=crsPdfSet.qrcode_left;
+			var qrcodeTop=crsPdfSet.qrcode_top;
+			
+			var cpxh='${requestScope.airBottle.cpxh }';
+			var qpbh='${requestScope.airBottle.qpbh }';
+			var gcrj='${requestScope.airBottle.gcrj }';
+			var ndbh='${requestScope.airBottle.ndbh }';
+			var zzrq='${requestScope.airBottle.zzrq }';
+			
+			var previewPDFTd=$("#previewPDF_td");
+			previewPDFTd.empty();
+			previewPDFTd.append("<div id=\"pdf_div\" style=\"width:400px;height: 300px;border:#000 solid 1px;\">"
+									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
+									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 180px;height: 180px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+									+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
+									+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+qpbh+"</span>"
+									+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+gcrj+"</span>"
+									+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+ndbh+"</span>"
+									+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+zzrq+"</span>"
+								+"</div>");
+		}
+	,"json");
+}
+
+function resetPDFHtmlLocation(labelName,action){
+	if(checkPreviewPdfHtml()){
+		if(action=="up"){
+			var marginTop=$("#pdf_div #"+labelName).css("margin-top");
+			marginTop=marginTop.substring(0,marginTop.length-2);
+			marginTop--;
+			$("#pdf_div #"+labelName).css("margin-top",marginTop+"px");
+		}
+		else if(action=="down"){
+			var marginTop=$("#pdf_div #"+labelName).css("margin-top");
+			marginTop=marginTop.substring(0,marginTop.length-2);
+			marginTop++;
+			$("#pdf_div #"+labelName).css("margin-top",marginTop+"px");
+		}
+		else if(action=="left"){
+			var marginLeft=$("#pdf_div #"+labelName).css("margin-left");
+			marginLeft=marginLeft.substring(0,marginLeft.length-2);
+			marginLeft--;
+			$("#pdf_div #"+labelName).css("margin-left",marginLeft+"px");
+		}
+		else if(action=="right"){
+			var marginLeft=$("#pdf_div #"+labelName).css("margin-left");
+			marginLeft=marginLeft.substring(0,marginLeft.length-2);
+			marginLeft++;
+			$("#pdf_div #"+labelName).css("margin-left",marginLeft+"px");
+		}
+	}
+}
+
+function checkPreviewPdfHtml(){
+	var pdfHtml=$("#previewPDF_td").html();
+    if(pdfHtml.trim()==""){
+	    alert("请先生成预览！");
+	    return false;
+    }
+    else
+	    return true;
+}
 
 function checkEdit(){
 	if(checkZl()){
 		if(checkSCRJ()){
 			if(checkQPZJXH()){
+				editPreviewCrsPdfSet();
 				editAirBottle();
 			}
 		}
@@ -199,22 +328,6 @@ function initWindowMarginLeft(){
 		  </tr>
 		  <tr style="border-bottom: #CAD9EA solid 1px;">
 			<td align="right">
-				公称容积
-			</td>
-			<td>
-				<span>${requestScope.airBottle.gcrj }</span>
-			</td>
-		  </tr>
-		  <tr style="border-bottom: #CAD9EA solid 1px;">
-			<td align="right">
-				内胆壁厚
-			</td>
-			<td>
-				<span>${requestScope.airBottle.ndbh }</span>
-			</td>
-		  </tr>
-		  <tr style="border-bottom: #CAD9EA solid 1px;">
-			<td align="right">
 				重量
 			</td>
 			<td>
@@ -240,22 +353,56 @@ function initWindowMarginLeft(){
 				<span style="color: #f00;">*</span>
 			</td>
 		  </tr>
-		  <tr style="border-bottom: #CAD9EA solid 1px;">
-			<td align="right">
-				制造日期
-			</td>
-			<td>
-				<span>${requestScope.airBottle.zzrq }</span>
-			</td>
-		  </tr>
-		  <tr style="border-bottom: #CAD9EA solid 1px;">
-			<td align="right">
-				气瓶制造单位
-			</td>
-			<td>
-				<span>${requestScope.airBottle.qpzzdw }</span>
-			</td>
-		  </tr>
+				<tr style="border-bottom: #CAD9EA solid 1px;height: 350px;">
+					<td align="right">
+						<div style="height: 45px;line-height: 45px;">PDF预览</div>
+						<div style="height: 45px;">
+							产品型号：
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('cpxh_span','up')">上移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('cpxh_span','down')">下移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('cpxh_span','left')">左移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('cpxh_span','right')">右移</a>
+						</div>
+						<div style="height: 45px;">
+							气瓶编号：
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qpbh_span','up')">上移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qpbh_span','down')">下移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qpbh_span','left')">左移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qpbh_span','right')">右移</a>
+						</div>
+						<div style="height: 45px;">
+							公称容积：
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('gcrj_span','up')">上移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('gcrj_span','down')">下移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('gcrj_span','left')">左移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('gcrj_span','right')">右移</a>
+						</div>
+						<div style="height: 45px;">
+							内胆壁厚：
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('ndbh_span','up')">上移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('ndbh_span','down')">下移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('ndbh_span','left')">左移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('ndbh_span','right')">右移</a>
+						</div>
+						<div style="height: 45px;">
+							制造日期：
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrq_span','up')">上移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrq_span','down')">下移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrq_span','left')">左移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrq_span','right')">右移</a>
+						</div>
+						<div style="height: 45px;">
+							二维码：
+							&nbsp;&nbsp;
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qrcode_img','up')">上移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qrcode_img','down')">下移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qrcode_img','left')">左移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qrcode_img','right')">右移</a>
+						</div>
+					</td>
+					<td id="previewPDF_td">
+					</td>
+				</tr>
 		</table>
 		</form>
 	</div>
