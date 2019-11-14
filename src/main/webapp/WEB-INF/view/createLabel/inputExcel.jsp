@@ -27,7 +27,7 @@ $(function(){
 	$("#batchIE_but").linkbutton({
 		iconCls:"icon-back",
 		onClick:function(){
-			openDeleteDiv(1);
+			openBatchInputDiv(1);
 		}
 	});
 	
@@ -64,36 +64,36 @@ $(function(){
 		}
 	});
 	
-	deleteDialog=$("#delete_div").dialog({
-		title:"批量删除",
+	batInpDialog=$("#batchInput_div").dialog({
+		title:"批量导入",
 		width:370,
 		height:200,
 		top:250,
 		left:400,
 		buttons:[
            {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
-        	   deleteAirBottleByQpbhs();
+        	   batchInputExcel();
            }},
            {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
-        	   openDeleteDiv(0);
+        	   openBatchInputDiv(0);
            }}
         ]
 	});
 	
-	$("#delete_div table").css("width","350px");
-	$("#delete_div table").css("magin","-100px");
-	$("#delete_div table td").css("padding-left","10px");
-	$("#delete_div table td").css("padding-right","10px");
-	$("#delete_div table td").css("font-size","15px");
+	$("#batchInput_div table").css("width","350px");
+	$("#batchInput_div table").css("magin","-100px");
+	$("#batchInput_div table td").css("padding-left","10px");
+	$("#batchInput_div table td").css("padding-right","10px");
+	$("#batchInput_div table td").css("font-size","15px");
 	
-	$("#delete_div table tr").each(function(){
+	$("#batchInput_div table tr").each(function(){
 		$(this).find("td").eq(0).css("color","#006699");
 		$(this).find("td").eq(0).css("border-right","#CAD9EA solid 1px");
 		$(this).find("td").eq(0).css("font-weight","bold");
 		$(this).find("td").eq(0).css("background-color","#F5FAFE");
 	});
 
-	$("#delete_div table tr").mousemove(function(){
+	$("#batchInput_div table tr").mousemove(function(){
 		$(this).css("background-color","#ddd");
 	}).mouseout(function(){
 		$(this).css("background-color","#fff");
@@ -111,7 +111,7 @@ $(function(){
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 	
-	openDeleteDiv(0);
+	openBatchInputDiv(0);
 	
 	tab2=$("#tab2").datagrid({
 		title:"Excel数据",
@@ -142,20 +142,11 @@ function inputExcelByQpbh(){
 		return false;
 	}
 	
-	var qpJAStr="[";
-	var rows = tab2.datagrid("getRows");
-	for(var i=0;i<rows.length;i++){
-		if(i>0)
-			qpJAStr+=",";
-        qpJAStr+="{'qpbh':'"+rows[i].qpbh+"','zl':'"+rows[i].zl+"','scrj':'"+rows[i].scrj+"','qpzjxh':'"+rows[i].qpzjxh+"','qpzzdw':'"+rows[i].qpzzdw+"'}";
-	}
-	qpJAStr+="]";
-	
 	$.messager.confirm("提示","确定要更新吗？",function(r){
 		if(r){
 			//$.ajaxSetup({async:false});
-			$.post(path+"createLabel/updateAirBottleRecord", 
-				{qpbhsStr:row.qpbh,qpJAStr:qpJAStr},
+			$.post("updateAirBottleRecord", 
+				{qpbhsStr:row.qpbh,qpJAStr:getQPJAStr()},
 				function(data) {
 					if(data.status==1){
 						alert(data.msg);
@@ -171,8 +162,57 @@ function inputExcelByQpbh(){
 	});
 }
 
-function openDeleteDiv(flag){
-	deleteDialog.dialog({
+function batchInputExcel(){
+	if(checkQpQsBh()){
+	   if(checkQpJsBh()){
+ 		   var qpqsbh=$("#qpqsbh_inp").val();
+ 		   var qpjsbh=$("#qpjsbh_inp").val();
+ 		   var qpqsbhPre=qpqsbh.substring(0,7);
+ 		   var qpqsbhSuf=qpqsbh.substring(7,qpqsbh.length);
+ 		   qpjsbh=qpjsbh.substring(7,qpjsbh.length);
+ 		   var qpbhsStr="";
+ 		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
+                var qpbhSuf;
+                qpbhSuf=i+"";
+                if(qpbhSuf.length==2)
+             	    qpbhSuf="0"+i;
+                else if(qpbhSuf.length==1)
+             	    qpbhSuf="00"+i;
+                var qpbh=qpqsbhPre+qpbhSuf;
+                qpbhsStr+=","+qpbh;
+ 		   }
+ 		   
+ 		   $.post("updateAirBottleRecord",
+			   {qpbhsStr:qpbhsStr.substring(1),qpJAStr:getQPJAStr()},
+			   function(data){
+				   if(data.status==1){
+					  alert(data.msg);
+					  openBatchInputDiv(0);
+					  tab1.datagrid("load");
+				   }
+				   else{
+					  alert(data.msg);
+				   }
+ 		   	   }
+ 		   ,"json");
+	   }
+    }
+}
+
+function getQPJAStr(){
+	var qpJAStr="[";
+	var rows = tab2.datagrid("getRows");
+	for(var i=0;i<rows.length;i++){
+		if(i>0)
+			qpJAStr+=",";
+        qpJAStr+="{'qpbh':'"+rows[i].qpbh+"','zl':'"+rows[i].zl+"','scrj':'"+rows[i].scrj+"','qpzjxh':'"+rows[i].qpzjxh+"','qpzzdw':'"+rows[i].qpzzdw+"'}";
+	}
+	qpJAStr+="]";
+	return qpJAStr;
+}
+
+function openBatchInputDiv(flag){
+	batInpDialog.dialog({
         closed: flag==1?false:true
     })
     if(flag==1)
@@ -286,7 +326,7 @@ function loadExcelTab(obj){
 		success: function (result){
 			var resultJO=JSON.parse(result);
 			var data=resultJO.data;
-			console.log(data);
+			//console.log(data);
 			if(resultJO.status==1){
 				//var data={"total":2,"rows":[{cpxh:"1",qpbh:"一"},{cpxh:"2",qpbh:"二"}]};
 				tab2.datagrid('loadData',JSON.parse(result).data);
@@ -328,7 +368,7 @@ function setFitWidthInParent(o){
 		<table id="tab2">
 		</table>
 	</div>
-	<div id="delete_div">
+	<div id="batchInput_div">
 		<table>
 			<tr style="height: 45px;">
 				<td>气瓶起始编号：</td>
