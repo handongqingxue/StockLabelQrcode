@@ -55,6 +55,19 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 	}
 
 	@Override
+	public int queryBatchForInt(String cpxh, String qpbh, String qpzjxh, String zzrq, String qpzzdw) {
+		// TODO Auto-generated method stub
+		return createLabelDao.queryBatchForInt(cpxh, qpbh, qpzjxh, zzrq, qpzzdw);
+	}
+
+	@Override
+	public List<AirBottle> queryBatchList(String cpxh, String qpbh, String qpzjxh, String zzrq, String qpzzdw, int page,
+			int rows, String sort, String order) {
+		// TODO Auto-generated method stub
+		return createLabelDao.queryBatchList(cpxh, qpbh, qpzjxh, zzrq, qpzzdw, (page-1)*rows, rows, sort, order);
+	}
+
+	@Override
 	public int updateAirBottle(AirBottle airBottle) {
 		// TODO Auto-generated method stub
 		return createLabelDao.updateAirBottle(airBottle);

@@ -224,6 +224,16 @@ public class CreateLabelController {
 	}
 
 	/**
+	 * 跳转到批次查询页面
+	 * @return
+	 */
+	@RequestMapping("/toBatchList")
+	public String toBatchList() {
+		
+		return "/createLabel/batchList";
+	}
+
+	/**
 	 * 扫码后跳转到产品信息页面
 	 * @param action
 	 * @param qpbh
@@ -348,6 +358,19 @@ public class CreateLabelController {
 		
 		jsonMap.put("total", count);
 		jsonMap.put("rows", abList);
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/queryBatchList")
+	@ResponseBody
+	public Map<String, Object> queryBatchList(String cpxh,String qpbh,String qpzjxh,String zzrq,String qpzzdw,int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		int count = createLabelService.queryBatchForInt(cpxh, qpbh, qpzjxh, zzrq, qpzzdw);
+		List<AirBottle> batchList = createLabelService.queryBatchList(cpxh, qpbh, qpzjxh, zzrq, qpzzdw, page, rows, sort, order);
+		
+		jsonMap.put("total", count);
+		jsonMap.put("rows", batchList);
 		return jsonMap;
 	}
 	

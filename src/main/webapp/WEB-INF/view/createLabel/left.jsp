@@ -85,7 +85,7 @@
 				<div style="width:100%;height: 1px;background-color: #CAD9EA;"></div>
 				<li class="layui-nav-item">
 					<img class="pointer-img" alt="" src="<%=basePath%>resource/images/ico_3.gif" />
-					<a href="<%=basePath%>createLabel/toCreateBatch">
+					<a href="<%=basePath%>createLabel/toBatchList">
 						&nbsp;&nbsp;&nbsp;批次查询
 					</a>
 				</li>

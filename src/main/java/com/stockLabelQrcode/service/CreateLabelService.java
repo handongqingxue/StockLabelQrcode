@@ -55,6 +55,33 @@ public interface CreateLabelService {
 	List<AirBottle> queryAirBottleList(String qpbh, int page, int rows, String sort, String order);
 
 	/**
+	 * 查询批次条数
+	 * @param cpxh
+	 * @param qpbh
+	 * @param qpzjxh
+	 * @param zzrq
+	 * @param qpzzdw
+	 * @return
+	 */
+	int queryBatchForInt(String cpxh, String qpbh, String qpzjxh, String zzrq, String qpzzdw);
+
+	/**
+	 * 查询批次记录
+	 * @param cpxh
+	 * @param qpbh
+	 * @param qpzjxh
+	 * @param zzrq
+	 * @param qpzzdw
+	 * @param page
+	 * @param rows
+	 * @param sort
+	 * @param order
+	 * @return
+	 */
+	List<AirBottle> queryBatchList(String cpxh, String qpbh, String qpzjxh, String zzrq, String qpzzdw, int page,
+			int rows, String sort, String order);
+
+	/**
 	 * 根据导入的excel产品信息，更新历史记录里未填写的信息
 	 * @param airBottle
 	 * @return

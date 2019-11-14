@@ -28,6 +28,43 @@
 		</if>
 		limit ${param2},${param3}
 	</select>
+	<select id="queryBatchForInt" resultType="java.lang.Integer">
+		select count(*) from air_bottle where 1=1
+		<if test="cpxh!=null&amp;cpxh!=''">
+			and cpxh like'%${cpxh}%'
+		</if>
+		<if test="qpbh!=null&amp;qpbh!=''">
+			and qpbh like'%${qpbh}%'
+		</if>
+		<if test="qpzjxh!=null&amp;qpzjxh!=''">
+			and qpzjxh like'%${qpzjxh}%'
+		</if>
+		<if test="zzrq!=null&amp;zzrq!=''">
+			and zzrq like'%${zzrq}%'
+		</if>
+		<if test="qpzzdw!=null&amp;qpzzdw!=''">
+			and qpzzdw like'%${qpzzdw}%'
+		</if>
+	</select>
+	<select id="queryBatchList" resultType="com.stockLabelQrcode.entity.AirBottle">
+		select * from air_bottle where 1=1
+		<if test="cpxh!=null&amp;cpxh!=''">
+			and cpxh like'%${cpxh}%'
+		</if>
+		<if test="qpbh!=null&amp;qpbh!=''">
+			and qpbh like'%${qpbh}%'
+		</if>
+		<if test="qpzjxh!=null&amp;qpzjxh!=''">
+			and qpzjxh like'%${qpzjxh}%'
+		</if>
+		<if test="zzrq!=null&amp;zzrq!=''">
+			and zzrq like'%${zzrq}%'
+		</if>
+		<if test="qpzzdw!=null&amp;qpzzdw!=''">
+			and qpzzdw like'%${qpzzdw}%'
+		</if>
+		limit ${start},${rows}
+	</select>
 	<select id="getAirBottleCountByQpbh" resultType="java.lang.Integer">
 		select count(*) from air_bottle where qpbh=#{qpbh}
 	</select>

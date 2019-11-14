@@ -22,6 +22,12 @@ public interface CreateLabelMapper {
 
 	List<AirBottle> queryAirBottleList(@Param("qpbh")String qpbh, int start, int rows, String sort, String order);
 
+	int queryBatchForInt(@Param("cpxh")String cpxh, @Param("qpbh")String qpbh, @Param("qpzjxh")String qpzjxh, @Param("zzrq")String zzrq, @Param("qpzzdw")String qpzzdw);
+
+	List<AirBottle> queryBatchList(@Param("cpxh")String cpxh, @Param("qpbh")String qpbh, @Param("qpzjxh")String qpzjxh, 
+			@Param("zzrq")String zzrq, @Param("qpzzdw")String qpzzdw, @Param("start")int start, @Param("rows")int rows,
+			@Param("sort")String sort, @Param("order")String order);
+
 	int updateAirBottle(AirBottle airBottle);
 
 	AirBottle getAirBottleById(@Param("id")String id);
