@@ -17,14 +17,14 @@ $(function(){
 		}
 	});
 	
-	$("#outputPdf_but").linkbutton({
+	$("#previewPdf_but").linkbutton({
 		iconCls:"icon-back",
 		onClick:function(){
-			inputExcelByQpbh();
+			previewPdf();
 		}
 	});
 	
-	$("#batchOP_but").linkbutton({
+	$("#batPrePdf_but").linkbutton({
 		iconCls:"icon-back",
 		onClick:function(){
 			openBatchOutputDiv(1);
@@ -68,6 +68,45 @@ $(function(){
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 });
+
+function previewPdf(){
+	var row=tab1.datagrid("getSelected");
+	if (row==null) {
+		$.messager.alert("提示","请选择要预览的Pdf信息！","warning");
+		return false;
+	}
+	
+	$.post("selectCRSPdfSet",
+		{labelType:row.label_type,accountNumber:'${sessionScope.user.id}'},
+		function(data){
+			console.log(data);
+			var crsPdfSet=data.crsPdfSet;
+			var id=crsPdfSet.id;
+			var cpxhLeft=crsPdfSet.cpxh_left;
+			var cpxhTop=crsPdfSet.cpxh_top;
+			var qpbhLeft=crsPdfSet.qpbh_left;
+			var qpbhTop=crsPdfSet.qpbh_top;
+			var gcrjLeft=crsPdfSet.gcrj_left;
+			var gcrjTop=crsPdfSet.gcrj_top;
+			var ndbhLeft=crsPdfSet.ndbh_left;
+			var ndbhTop=crsPdfSet.ndbh_top;
+			var zzrqLeft=crsPdfSet.zzrq_left;
+			var zzrqTop=crsPdfSet.zzrq_top;
+			var qrcodeLeft=crsPdfSet.qrcode_left;
+			var qrcodeTop=crsPdfSet.qrcode_top;
+			
+			var pdfDiv=$("#pdf_div");
+			pdfDiv.empty();
+			pdfDiv.append("<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
+					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_url+"\" style=\"width: 180px;height: 180px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+					+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+row.cpxh+"</span>"
+					+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+row.qpbh+"</span>"
+					+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+row.gcrj+"</span>"
+					+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+row.ndbh+"</span>"
+					+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+row.zzrq+"</span>");
+		}
+	,"json");
+}
 
 function initBatOutpDialog(){
 	batOutpDialog=$("#batchOutput_div").dialog({
@@ -215,8 +254,8 @@ function setFitWidthInParent(o){
 		<div id="toolbar">
 			气瓶编号：<input type="text" id="qpbh_inp"/>
 			<a id="search_but">查询</a>
-			<a id="outputPdf_but">导出</a>
-			<a id="batchOP_but">批量导出</a>
+			<a id="previewPdf_but">预览标签Pdf</a>
+			<a id="batPrePdf_but">批量预览标签Pdf</a>
 		</div>
 		<table id="tab1">
 		</table>
@@ -243,12 +282,14 @@ function setFitWidthInParent(o){
 	</div>
 	<div id="previewPdf_div">
 		<div id="pdf_div" style="width:400px;height: 300px;border:#000 solid 1px;">
+			<!-- 
 			 <img alt="" src="<%=basePath %>/resource/images/qrcode.png" style="width: 80px;height: 80px;margin-top: 10px;margin-left: 300px;position: absolute;">
 		     <span style="margin-top: 20px;margin-left: 150px;position: absolute;">356-70</span>
 		     <span style="margin-top: 40px;margin-left: 90px;position: absolute;">CB190</span>
 		     <span style="margin-top: 90px;margin-left: 210px;position: absolute;">70L</span>
 		     <span style="margin-top: 140px;margin-left: 120px;position: absolute;">5.0</span>
 		     <span style="margin-top: 190px;margin-left: 210px;position: absolute;">2019&nbsp;&nbsp;&nbsp;&nbsp;1</span>
+		      -->
 		</div>
 	</div>
 	<%@include file="foot.jsp"%>

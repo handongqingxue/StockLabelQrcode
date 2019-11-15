@@ -190,6 +190,12 @@
  			<if test="zzrq!=null">
 	 			zzrq,
 	 		</if>
+ 			<if test="qrcode_url!=null">
+	 			qrcode_url,
+	 		</if>
+ 			<if test="label_type!=null">
+	 			label_type,
+	 		</if>
  			<if test="input!=null">
 	 			input,
 	 		</if>
@@ -210,6 +216,12 @@
 	 		</if>
  			<if test="zzrq!=null">
 	 			#{zzrq},
+	 		</if>
+ 			<if test="qrcode_url!=null">
+	 			#{qrcode_url},
+	 		</if>
+ 			<if test="label_type!=null">
+	 			#{label_type},
 	 		</if>
  			<if test="input!=null">
 	 			0,

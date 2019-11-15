@@ -130,9 +130,11 @@ $(function(){
 						        		   var cpxh=$("#cpxh_inp").val();
 						       			   var gcrj=$("#gcrj_inp").val();
 						       			   var ndbh=$("#ndbh_inp").val();
+						       			   var qrcode_url=$("#pdf_div #qrcode_img").attr("src");
+						       			   var label_type=$("#pdf_div #labelType_hid").val();
 						       			
 						        		   $.post("insertAirBottleRecord",
-						       				   {cpxh:cpxh,qpbhsStr:qpbhsStr.substring(1),gcrj:gcrj,ndbh:ndbh,zzrq:zzrq},
+						       				   {cpxh:cpxh,qpbhsStr:qpbhsStr.substring(1),gcrj:gcrj,ndbh:ndbh,zzrq:zzrq,qrcode_url:qrcode_url,label_type:label_type},
 						       				   function(data){
 						        			   		alert(data.info);
 						        		   	   }
@@ -275,6 +277,7 @@ function previewPDF(labelType){
 			previewPDFTd.empty();
 			previewPDFTd.append("<div id=\"pdf_div\" style=\"width:400px;height: 300px;border:#000 solid 1px;\">"
 									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
+									+"<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>"
 									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 180px;height: 180px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 									+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
 									+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+qpqsbh+"</span>"
