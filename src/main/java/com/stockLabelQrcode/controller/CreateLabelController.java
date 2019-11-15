@@ -216,6 +216,16 @@ public class CreateLabelController {
 	}
 	
 	/**
+	 * 跳转到导出Pdf页面
+	 * @return
+	 */
+	@RequestMapping("/toOutputPdf")
+	public String toOutputPdf() {
+		
+		return "/createLabel/outputPdf";
+	}
+	
+	/**
 	 * 跳转到预览生成的合格证pdf页面
 	 * @return
 	 */

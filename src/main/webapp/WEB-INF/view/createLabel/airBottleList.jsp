@@ -102,7 +102,7 @@ $(function(){
 		width:setFitWidthInParent("body"),
 		singleSelect:true,
 		pagination:true,
-		pageSize:10,
+		pageSize:20,
 		columns:[[
             {field:"cpxh",title:"产品型号",width:100,sortable:true},
             {field:"qpbh",title:"气瓶编号",width:150,sortable:true},

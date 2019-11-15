@@ -21,7 +21,7 @@
 	<div style="margin-left: 250px;height: 40px;line-height: 40px;">
 		<div style="width: 100px;text-align: center;font-size: 16px;"><a href="<%=basePath%>createLabel/toCreateBatch">首页</a></div>
 		<div style="width: 150px;text-align: center;font-size: 16px;margin-top: -40px;margin-left: 100px;"><a href="<%=basePath%>createLabel/toAirBottleList">历史记录</a></div>
-		<div style="width: 150px;text-align: center;font-size: 16px;margin-top: -40px;margin-left: 250px;"><a>导出Pdf</a></div>
+		<div style="width: 150px;text-align: center;font-size: 16px;margin-top: -40px;margin-left: 250px;"><a href="<%=basePath%>createLabel/toOutputPdf">导出Pdf</a></div>
 	</div>
 	<ul class="layui-nav layui-layout-right">
 		<li class="layui-nav-item">
