@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>导出Pdf</title>
 <%@include file="js.jsp"%>
+<script type="text/javascript" src="<%=basePath %>resource/js/pdf/jspdf.debug.js"></script>
+<script type="text/javascript" src="<%=basePath %>resource/js/pdf/html2canvas.min.js"></script>
 <script type="text/javascript">
 var path='<%=basePath %>';
 $(function(){
@@ -108,6 +110,82 @@ function previewPdf(){
 	,"json");
 }
 
+function prePdfByQpbhs(){
+	if(checkQpQsBh()){
+	   if(checkQpJsBh()){
+ 		   var qpqsbh=$("#qpqsbh_inp").val();
+ 		   var qpjsbh=$("#qpjsbh_inp").val();
+ 		   var qpqsbhPre=qpqsbh.substring(0,7);
+ 		   var qpqsbhSuf=qpqsbh.substring(7,qpqsbh.length);
+ 		   qpjsbh=qpjsbh.substring(7,qpjsbh.length);
+ 		   var qpbhsStr="";
+ 		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
+                var qpbhSuf;
+                qpbhSuf=i+"";
+                if(qpbhSuf.length==2)
+             	    qpbhSuf="0"+i;
+                else if(qpbhSuf.length==1)
+             	    qpbhSuf="00"+i;
+                var qpbh=qpqsbhPre+qpbhSuf;
+                qpbhsStr+=","+qpbh;
+ 		   }
+ 		   
+ 		   $.post("selectAirBottleByQpbhs",
+			   {qpbhsStr:qpbhsStr.substring(1)},
+			   function(result){
+				   if(result.status==1){
+					  openBatPrePdfDiv(0);
+					  window.open("toPreviewHGZPdf?action=batch&uuid="+result.data,"newwindow","width=300;");
+				   }
+				   else{
+					  alert(result.msg);
+				   }
+ 		   	   }
+ 		   ,"json");
+	   }
+    }
+}
+
+function focusQpQsBh(){
+	var qpqsbh = $("#qpqsbh_inp").val();
+	if(qpqsbh=="气瓶起始编号不能为空"){
+		$("#qpqsbh_inp").val("");
+		$("#qpqsbh_inp").css("color", "#555555");
+	}
+}
+
+//验证气瓶起始编号
+function checkQpQsBh(){
+	var qpqsbh = $("#qpqsbh_inp").val();
+	if(qpqsbh==null||qpqsbh==""||qpqsbh=="气瓶起始编号不能为空"){
+		$("#qpqsbh_inp").css("color","#E15748");
+    	$("#qpqsbh_inp").val("气瓶起始编号不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusQpJsBh(){
+	var qpjsbh = $("#qpjsbh_inp").val();
+	if(qpjsbh=="气瓶结束编号不能为空"){
+		$("#qpjsbh_inp").val("");
+		$("#qpjsbh_inp").css("color", "#555555");
+	}
+}
+
+//验证气瓶结束编号
+function checkQpJsBh(){
+	var qpjsbh = $("#qpjsbh_inp").val();
+	if(qpjsbh==null||qpjsbh==""||qpjsbh=="气瓶结束编号不能为空"){
+		$("#qpjsbh_inp").css("color","#E15748");
+    	$("#qpjsbh_inp").val("气瓶结束编号不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
 function initBatOutpDialog(){
 	batOutpDialog=$("#batchOutput_div").dialog({
 		title:"批量导出",
@@ -117,7 +195,7 @@ function initBatOutpDialog(){
 		left:400,
 		buttons:[
            {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
-        	   batchInputExcel();
+        	   prePdfByQpbhs();
            }},
            {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
         	   openBatchOutputDiv(0);
@@ -164,7 +242,7 @@ function initPrePdfDialog(){
 		left:850,
 		buttons:[
            {text:"导出Pdf",id:"output_but",iconCls:"icon-ok",handler:function(){
-        	   batchInputExcel();
+        	   outputPdf();
            }},
            {text:"取消",id:"canPre_but",iconCls:"icon-cancel",handler:function(){
         	   openBatchOutputDiv(0);
@@ -182,6 +260,66 @@ function initPrePdfDialog(){
 	$(".panel-header, .panel-body").eq(1).css("border-color","#ddd");
 	
 	resetPrePdfWindowShadow();
+}
+
+function checkPreviewPdfHtml(){
+	var pdfHtml=$("#pdf_div").html();
+    if(pdfHtml.trim()==""){
+	    alert("请先生成预览！");
+	    return false;
+    }
+    else
+	    return true;
+}
+
+function outputPdf(){
+	if(checkPreviewPdfHtml()){
+		html2canvas(
+           document.getElementById("pdf_div"),
+           {
+               dpi: 172,//导出pdf清晰度
+               onrendered: function (canvas) {
+                   var contentWidth = canvas.width;
+                   var contentHeight = canvas.height;
+
+                   //一页pdf显示html页面生成的canvas高度;
+                   var pageHeight = contentWidth / 592.28 * 841.89;
+                   //未生成pdf的html页面高度
+                   var leftHeight = contentHeight;
+                   //pdf页面偏移
+                   var position = 0;
+                   //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
+                   var imgWidth = 595.28;
+                   var imgHeight = 592.28 / contentWidth * contentHeight;
+
+                   var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                   var pdf = new jsPDF('', 'pt', 'a4');
+
+                   //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                   //当内容未超过pdf一页显示的范围，无需分页
+                   if (leftHeight < pageHeight) {
+                       pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                   } else {
+                       while (leftHeight > 0) {
+                           pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                           leftHeight -= pageHeight;
+                           position -= 841.89;
+                           //避免添加空白页
+                           if (leftHeight > 0) {
+                               pdf.addPage();
+                           }
+                       }
+                   }
+                   
+                   var qpbh=$("#pdf_div #qpbh_span").text();
+                   var zzrq=$("#pdf_div #zzrq_span").text();
+                   pdf.save(qpbh+zzrq+'.pdf');
+               },
+               //背景设为白色（默认为黑色）
+               background: "#fff"  
+           }
+        )
+	}
 }
 
 function openBatchOutputDiv(flag){
