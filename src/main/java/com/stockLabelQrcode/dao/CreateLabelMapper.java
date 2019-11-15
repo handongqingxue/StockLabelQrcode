@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.stockLabelQrcode.entity.AirBottle;
 import com.stockLabelQrcode.entity.PreviewCRSPDF;
 import com.stockLabelQrcode.entity.PreviewCRSPDFSet;
+import com.stockLabelQrcode.entity.PreviewPdfJson;
 
 public interface CreateLabelMapper {
 
@@ -39,9 +40,15 @@ public interface CreateLabelMapper {
 	int deleteAirBottleById(List<String> idList);
 
 	int deleteAirBottleByQpbhs(List<String> qpbhList);
+	
+	List<AirBottle> selectAirBottleByQpbhs(List<String> qpbhList);
 
 	int getAirBottleCountByQpbh(@Param("qpbh")String qpbh);
 
 	int editPreviewCrsPdfSet(PreviewCRSPDFSet pCrsPdfSet);
+
+	int insertPrePdfJson(PreviewPdfJson ppj);
+
+	PreviewPdfJson selectPrePdfJsonByUuid(@Param("uuid")String uuid);
 
 }

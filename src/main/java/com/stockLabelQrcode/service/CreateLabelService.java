@@ -5,6 +5,7 @@ import java.util.List;
 import com.stockLabelQrcode.entity.AirBottle;
 import com.stockLabelQrcode.entity.PreviewCRSPDF;
 import com.stockLabelQrcode.entity.PreviewCRSPDFSet;
+import com.stockLabelQrcode.entity.PreviewPdfJson;
 
 public interface CreateLabelService {
 
@@ -111,6 +112,8 @@ public interface CreateLabelService {
 
 	int deleteAirBottleByQpbhs(String qpbhs);
 
+	List<AirBottle> selectAirBottleByQpbhs(String qpbhsStr);
+
 	/**
 	 * 根据气瓶编号，验证该气瓶是否已存在
 	 * @param qpbh
@@ -131,5 +134,9 @@ public interface CreateLabelService {
 	 * @return
 	 */
 	int editPreviewCrsPdfSet(PreviewCRSPDFSet pCrsPdfSet);
+
+	int insertPrePdfJson(PreviewPdfJson ppj);
+
+	PreviewPdfJson selectPrePdfJsonByUuid(String uuid);
 
 }

@@ -52,13 +52,13 @@ body {
 					<label class="beg-login-icon"> <i class="layui-icon">&#xe612;</i>
 					</label> <input type="text" name="userName" placeholder="请输入登录名"
 						class="layui-input" lay-verify="required|userName"
-						autocomplete="off" value="">
+						autocomplete="off" value="${sessionScope.user.userName }">
 				</div>
 				<div class="layui-form-item">
 					<label class="beg-login-icon"> <i class="layui-icon">&#xe642;</i>
 					</label> <input type="password" name="password" placeholder="请输入密码"
 						class="layui-input" lay-verify="required|password_"
-						autocomplete="off" value="">
+						autocomplete="off" value="${sessionScope.user.passWord }">
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-row layui-col-space8">

@@ -68,6 +68,18 @@
 	<select id="getAirBottleCountByQpbh" resultType="java.lang.Integer">
 		select count(*) from air_bottle where qpbh=#{qpbh}
 	</select>
+	<select id="selectAirBottleByQpbhs" parameterType="java.util.List" resultType="com.stockLabelQrcode.entity.AirBottle">
+		select * from air_bottle where 1=1
+		<foreach collection="list" item="qpbh" open=" and cast(qpbh as char) in(" separator="," close=")">
+		#{qpbh}
+		</foreach>
+	</select>
+	<select id="selectPrePdfJsonByUuid" resultType="com.stockLabelQrcode.entity.PreviewPdfJson">
+		select * from preview_pdf_json where uuid=#{uuid}
+	</select>
+	<insert id="insertPrePdfJson" parameterType="com.stockLabelQrcode.entity.PreviewPdfJson">
+		insert into preview_pdf_json (uuid,data) values (#{uuid},#{data})
+	</insert>
  	<insert id="insertPreviewCRSPDFSet" parameterType="com.stockLabelQrcode.entity.PreviewCRSPDFSet">
  		insert into preview_crs_pdf_set 
  		<trim prefix="(" suffix=")" suffixOverrides=",">

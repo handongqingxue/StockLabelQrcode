@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +32,7 @@ import com.stockLabelQrcode.entity.AccountMsg;
 import com.stockLabelQrcode.entity.AirBottle;
 import com.stockLabelQrcode.entity.PreviewCRSPDF;
 import com.stockLabelQrcode.entity.PreviewCRSPDFSet;
+import com.stockLabelQrcode.entity.PreviewPdfJson;
 import com.stockLabelQrcode.service.CreateLabelService;
 import com.stockLabelQrcode.service.UserService;
 import com.stockLabelQrcode.service.UtilService;
@@ -585,6 +587,53 @@ public class CreateLabelController {
 		}
 		return json;
 	}
+	
+	/**
+	 * 根据气瓶编号查询气瓶信息
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(value="/selectAirBottleByQpbhs",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String selectAirBottleByQpbhs(String qpbhsStr) {
+
+		PlanResult plan=new PlanResult();
+		String json;
+		
+		List<AirBottle> abList = createLabelService.selectAirBottleByQpbhs(qpbhsStr);
+		if(abList.size()==0) {
+			plan.setStatus(0);
+			plan.setMsg("获取预览信息失败！");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+			
+			PreviewPdfJson ppj=new PreviewPdfJson();
+			ppj.setUuid(uuid);
+			ppj.setData(new JSONArray(abList).toString());
+			int i=createLabelService.insertPrePdfJson(ppj);
+			
+			plan.setStatus(1);
+			plan.setData(uuid);;
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		return json;
+	}
+	
+	@RequestMapping(value="/getPrePdfJsonByUuid",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String getPrePdfJsonByUuid(String uuid) {
+
+		PlanResult plan=new PlanResult();
+		String json;
+
+		PreviewPdfJson ppf = createLabelService.selectPrePdfJsonByUuid(uuid);
+		plan.setData(ppf.getData());
+		json=JsonUtil.getJsonFromObject(plan);
+		
+		return json;
+	}
 
 	/**
 	 * 重新设置预览pdf模板里的方位参数
@@ -637,8 +686,7 @@ public class CreateLabelController {
 	}
 	
 	public static void main(String[] args) {
-		String str="\"";
-		System.out.println(new JSONArray("[{\"zl\":\"71.1KG\"}]"));
+		
 	}
 
 }

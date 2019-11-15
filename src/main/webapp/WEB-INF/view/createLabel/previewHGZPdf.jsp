@@ -15,18 +15,19 @@
 <script type="text/javascript">
 var path='<%=basePath %>';
 $(function(){
-	var previewPdfDiv=$("#previewPdf_div");
-	var airBottleJA=JSON.parse('${param.jsonStr}');
-	for(var i=0;i<airBottleJA.length;i++){
-		var airBottleJO=airBottleJA[i];
-		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrq=\""+airBottleJO.zzrq+"\" style=\"width:400px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
-								+"<img alt=\"\" src=\""+createQrcode(airBottleJO.qpbh)+"\" style=\"width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;\">"
-								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
-								+"<span style=\"margin-top: 60px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
-								+"<span style=\"margin-top: 100px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
-								+"<span style=\"margin-top: 140px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
-								+"<span style=\"margin-top: 180px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq+"</span>"
-							+"</div>");
+	var jsonStr="";
+	if('${param.action}'=="single"){
+		jsonStr='${param.jsonStr}';
+		initPreviewPdfDiv(jsonStr);
+	}
+	else{
+		$.post("getPrePdfJsonByUuid",
+			{uuid:'${param.uuid}'},
+			function(result){
+				jsonStr=result.data;
+				initPreviewPdfDiv(jsonStr);
+			}
+		,"json");
 	}
 	
 	$("#output_but").linkbutton({
@@ -83,6 +84,22 @@ $(function(){
 		}
 	});
 });
+
+function initPreviewPdfDiv(jsonStr){
+	var previewPdfDiv=$("#previewPdf_div");
+	var airBottleJA=JSON.parse(jsonStr);
+	for(var i=0;i<airBottleJA.length;i++){
+		var airBottleJO=airBottleJA[i];
+		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrq=\""+airBottleJO.zzrq+"\" style=\"width:400px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
+								+"<img alt=\"\" src=\""+createQrcode(airBottleJO.qpbh)+"\" style=\"width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;\">"
+								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
+								+"<span style=\"margin-top: 60px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
+								+"<span style=\"margin-top: 100px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
+								+"<span style=\"margin-top: 140px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
+								+"<span style=\"margin-top: 180px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq+"</span>"
+							+"</div>");
+	}
+}
 
 function createQrcode(qpbh){
 	var qrcodeUrl;

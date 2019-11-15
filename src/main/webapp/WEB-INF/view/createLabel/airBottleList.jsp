@@ -73,20 +73,25 @@ $(function(){
 	$("#previewPdf_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var rows=tab1.datagrid("getSelections");
-			if (rows.length == 0) {
-				$.messager.alert("提示","请选择要生成Pdf的信息！","warning");
+			var row=tab1.datagrid("getSelected");
+			if (row == null) {
+				$.messager.alert("提示","请选择要预览的Pdf信息！","warning");
 				return false;
 			}
-			var jsonStr="[";
-			for(var i=0;i<rows.length;i++){
-				jsonStr+="{\"cpxh\":\""+rows[i].cpxh+"\",\"qpbh\":\""+rows[i].qpbh+"\",\"zl\":\""+rows[i].zl+"\",\"scrj\":\""+rows[i].scrj+"\",\"zzrq\":\""+rows[i].zzrq+"\"}";
-				if(i<rows.length-1)
-					jsonStr+=",";
-			}
-			jsonStr+="]";
+			var jsonStr="[{\"cpxh\":\""+row.cpxh+"\",\"qpbh\":\""+row.qpbh+"\",\"zl\":\""+row.zl+"\",\"scrj\":\""+row.scrj+"\",\"zzrq\":\""+row.zzrq+"\"}]";
 			//https://blog.csdn.net/xiaomage1314/article/details/77945425
+			window.open("toPreviewHGZPdf?action=single&jsonStr="+escape(jsonStr),"newwindow","width=300;");
+		}
+	});
+	
+	$("#batPrePdf_but").linkbutton({
+		iconCls:"icon-search",
+		onClick:function(){
+			openBatPrePdfDiv(1);
+			/*
+			var jsonStr="[{\"cpxh\":\""+row.cpxh+"\",\"qpbh\":\""+row.qpbh+"\",\"zl\":\""+row.zl+"\",\"scrj\":\""+row.scrj+"\",\"zzrq\":\""+row.zzrq+"\"}]";
 			window.open("toPreviewHGZPdf?jsonStr="+escape(jsonStr),"newwindow","width=300;");
+			*/
 		}
 	});
 	
@@ -159,6 +164,42 @@ $(function(){
 		$(this).css("background-color","#fff");
 	});
 	
+	batPrePdfDialog=$("#batPrePdf_div").dialog({
+		title:"批量预览",
+		width:370,
+		height:200,
+		top:250,
+		left:400,
+		buttons:[
+           {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
+        	   prePdfByQpbhs();
+           }},
+           {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
+        	   openBatPrePdfDiv(0);
+           }}
+        ]
+	});
+	
+
+	$("#batPrePdf_div table").css("width","350px");
+	$("#batPrePdf_div table").css("magin","-100px");
+	$("#batPrePdf_div table td").css("padding-left","10px");
+	$("#batPrePdf_div table td").css("padding-right","10px");
+	$("#batPrePdf_div table td").css("font-size","15px");
+	
+	$("#batPrePdf_div table tr").each(function(){
+		$(this).find("td").eq(0).css("color","#006699");
+		$(this).find("td").eq(0).css("border-right","#CAD9EA solid 1px");
+		$(this).find("td").eq(0).css("font-weight","bold");
+		$(this).find("td").eq(0).css("background-color","#F5FAFE");
+	});
+
+	$("#batPrePdf_div table tr").mousemove(function(){
+		$(this).css("background-color","#ddd");
+	}).mouseout(function(){
+		$(this).css("background-color","#fff");
+	});
+	
 	$(".panel.window").css("width","353px");
 	$(".panel.window").css("margin-top","20px");
 	$(".panel.window").css("margin-left","300px");
@@ -172,10 +213,19 @@ $(function(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 	
 	openDeleteDiv(0);
+	openBatPrePdfDiv(0);
 });
 
 function openDeleteDiv(flag){
 	deleteDialog.dialog({
+        closed: flag==1?false:true
+    })
+    if(flag==1)
+       resetWindowShadow();
+}
+
+function openBatPrePdfDiv(flag){
+	batPrePdfDialog.dialog({
         closed: flag==1?false:true
     })
     if(flag==1)
@@ -242,10 +292,10 @@ function deleteById() {
 }
 
 function deleteAirBottleByQpbhs(){
-	if(checkQpQsBh()){
-	   if(checkQpJsBh()){
- 		   var qpqsbh=$("#qpqsbh_inp").val();
- 		   var qpjsbh=$("#qpjsbh_inp").val();
+	if(checkDelQpQsBh()){
+	   if(checkDelQpJsBh()){
+ 		   var qpqsbh=$("#delete_div #qpqsbh_inp").val();
+ 		   var qpjsbh=$("#delete_div #qpjsbh_inp").val();
  		   var qpqsbhPre=qpqsbh.substring(0,7);
  		   var qpqsbhSuf=qpqsbh.substring(7,qpqsbh.length);
  		   qpjsbh=qpjsbh.substring(7,qpjsbh.length);
@@ -278,40 +328,116 @@ function deleteAirBottleByQpbhs(){
     }
 }
 
-function focusQpQsBh(){
-	var qpqsbh = $("#qpqsbh_inp").val();
+function prePdfByQpbhs(){
+	if(checkPreQpQsBh()){
+	   if(checkPreQpJsBh()){
+ 		   var qpqsbh=$("#batPrePdf_div #qpqsbh_inp").val();
+ 		   var qpjsbh=$("#batPrePdf_div #qpjsbh_inp").val();
+ 		   var qpqsbhPre=qpqsbh.substring(0,7);
+ 		   var qpqsbhSuf=qpqsbh.substring(7,qpqsbh.length);
+ 		   qpjsbh=qpjsbh.substring(7,qpjsbh.length);
+ 		   var qpbhsStr="";
+ 		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
+                var qpbhSuf;
+                qpbhSuf=i+"";
+                if(qpbhSuf.length==2)
+             	    qpbhSuf="0"+i;
+                else if(qpbhSuf.length==1)
+             	    qpbhSuf="00"+i;
+                var qpbh=qpqsbhPre+qpbhSuf;
+                qpbhsStr+=","+qpbh;
+ 		   }
+ 		   
+ 		   $.post("selectAirBottleByQpbhs",
+			   {qpbhsStr:qpbhsStr.substring(1)},
+			   function(result){
+				   if(result.status==1){
+					  openBatPrePdfDiv(0);
+					  window.open("toPreviewHGZPdf?action=batch&uuid="+result.data,"newwindow","width=300;");
+				   }
+				   else{
+					  alert(result.msg);
+				   }
+ 		   	   }
+ 		   ,"json");
+	   }
+    }
+}
+
+function focusDelQpQsBh(){
+	var qpqsbh = $("#delete_div #qpqsbh_inp").val();
 	if(qpqsbh=="气瓶起始编号不能为空"){
-		$("#qpqsbh_inp").val("");
-		$("#qpqsbh_inp").css("color", "#555555");
+		$("#delete_div #qpqsbh_inp").val("");
+		$("#delete_div #qpqsbh_inp").css("color", "#555555");
 	}
 }
 
-//验证气瓶起始编号
-function checkQpQsBh(){
-	var qpqsbh = $("#qpqsbh_inp").val();
+//验证删除气瓶起始编号
+function checkDelQpQsBh(){
+	var qpqsbh = $("#delete_div #qpqsbh_inp").val();
 	if(qpqsbh==null||qpqsbh==""||qpqsbh=="气瓶起始编号不能为空"){
-		$("#qpqsbh_inp").css("color","#E15748");
-    	$("#qpqsbh_inp").val("气瓶起始编号不能为空");
+		$("#delete_div #qpqsbh_inp").css("color","#E15748");
+    	$("#delete_div #qpqsbh_inp").val("气瓶起始编号不能为空");
     	return false;
 	}
 	else
 		return true;
 }
 
-function focusQpJsBh(){
-	var qpjsbh = $("#qpjsbh_inp").val();
+function focusDelQpJsBh(){
+	var qpjsbh = $("#delete_div #qpjsbh_inp").val();
 	if(qpjsbh=="气瓶结束编号不能为空"){
-		$("#qpjsbh_inp").val("");
-		$("#qpjsbh_inp").css("color", "#555555");
+		$("#delete_div #qpjsbh_inp").val("");
+		$("#delete_div #qpjsbh_inp").css("color", "#555555");
 	}
 }
 
-//验证气瓶结束编号
-function checkQpJsBh(){
-	var qpjsbh = $("#qpjsbh_inp").val();
+//验证删除气瓶结束编号
+function checkDelQpJsBh(){
+	var qpjsbh = $("#delete_div #qpjsbh_inp").val();
 	if(qpjsbh==null||qpjsbh==""||qpjsbh=="气瓶结束编号不能为空"){
-		$("#qpjsbh_inp").css("color","#E15748");
-    	$("#qpjsbh_inp").val("气瓶结束编号不能为空");
+		$("#delete_div #qpjsbh_inp").css("color","#E15748");
+    	$("#delete_div #qpjsbh_inp").val("气瓶结束编号不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusPreQpQsBh(){
+	var qpqsbh = $("#batPrePdf_div #qpqsbh_inp").val();
+	if(qpqsbh=="气瓶起始编号不能为空"){
+		$("#batPrePdf_div #qpqsbh_inp").val("");
+		$("#batPrePdf_div #qpqsbh_inp").css("color", "#555555");
+	}
+}
+
+//验证预览气瓶起始编号
+function checkPreQpQsBh(){
+	var qpqsbh = $("#batPrePdf_div #qpqsbh_inp").val();
+	if(qpqsbh==null||qpqsbh==""||qpqsbh=="气瓶起始编号不能为空"){
+		$("#batPrePdf_div #qpqsbh_inp").css("color","#E15748");
+    	$("#batPrePdf_div #qpqsbh_inp").val("气瓶起始编号不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
+function focusPreQpJsBh(){
+	var qpjsbh = $("#batPrePdf_div #qpjsbh_inp").val();
+	if(qpjsbh=="气瓶结束编号不能为空"){
+		$("#batPrePdf_div #qpjsbh_inp").val("");
+		$("#batPrePdf_div #qpjsbh_inp").css("color", "#555555");
+	}
+}
+
+//验证预览气瓶结束编号
+function checkPreQpJsBh(){
+	var qpjsbh = $("#batPrePdf_div #qpjsbh_inp").val();
+	if(qpjsbh==null||qpjsbh==""||qpjsbh=="气瓶结束编号不能为空"){
+		$("#batPrePdf_div #qpjsbh_inp").css("color","#E15748");
+    	$("#batPrePdf_div #qpjsbh_inp").val("气瓶结束编号不能为空");
     	return false;
 	}
 	else
@@ -342,6 +468,8 @@ function initTab1WindowMarginLeft(){
 			<a id="search_but">查询</a>
 			<a id="remove_but">删除</a>
 			<a id="batchRemove_but">批量删除</a>
+			<a id="previewPdf_but">预览合格证Pdf</a>
+			<a id="batPrePdf_but">批量预览合格证Pdf</a>
 			
 			<!-- 
 			<form id="form1">
@@ -360,14 +488,32 @@ function initTab1WindowMarginLeft(){
 			<tr style="height: 45px;">
 				<td>气瓶起始编号：</td>
 				<td>
-					<input id="qpqsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001001" onfocus="focusQpQsBh()" onblur="checkQpQsBh()"/>
+					<input id="qpqsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001001" onfocus="focusDelQpQsBh()" onblur="checkDelQpQsBh()"/>
 					<span style="color: #f00;">*</span>
 				</td>
 			</tr>
 			<tr style="height: 45px;">
 				<td>气瓶结束编号：</td>
 				<td>
-					<input id="qpjsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001003" onfocus="focusQpJsBh()" onblur="checkQpJsBh()"/>
+					<input id="qpjsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001003" onfocus="focusDelQpJsBh()" onblur="checkDelQpJsBh()"/>
+					<span style="color: #f00;">*</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="batPrePdf_div">
+		<table>
+			<tr style="height: 45px;">
+				<td>气瓶起始编号：</td>
+				<td>
+					<input id="qpqsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001001" onfocus="focusPreQpQsBh()" onblur="checkPreQpQsBh()"/>
+					<span style="color: #f00;">*</span>
+				</td>
+			</tr>
+			<tr style="height: 45px;">
+				<td>气瓶结束编号：</td>
+				<td>
+					<input id="qpjsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001003" onfocus="focusPreQpJsBh()" onblur="checkPreQpJsBh()"/>
 					<span style="color: #f00;">*</span>
 				</td>
 			</tr>

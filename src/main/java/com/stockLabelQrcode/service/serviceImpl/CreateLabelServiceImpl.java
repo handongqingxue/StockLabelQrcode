@@ -10,6 +10,7 @@ import com.stockLabelQrcode.dao.CreateLabelMapper;
 import com.stockLabelQrcode.entity.AirBottle;
 import com.stockLabelQrcode.entity.PreviewCRSPDF;
 import com.stockLabelQrcode.entity.PreviewCRSPDFSet;
+import com.stockLabelQrcode.entity.PreviewPdfJson;
 import com.stockLabelQrcode.service.CreateLabelService;
 
 @Service
@@ -104,6 +105,13 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 	}
 
 	@Override
+	public List<AirBottle> selectAirBottleByQpbhs(String qpbhsStr) {
+		// TODO Auto-generated method stub
+		List<String> qpbhList = Arrays.asList(qpbhsStr.split(","));
+		return createLabelDao.selectAirBottleByQpbhs(qpbhList);
+	}
+
+	@Override
 	public boolean checkAirBottleExistByQpbh(String qpbh) {
 		// TODO Auto-generated method stub
 		int count=createLabelDao.getAirBottleCountByQpbh(qpbh);
@@ -120,6 +128,18 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 	public int editPreviewCrsPdfSet(PreviewCRSPDFSet pCrsPdfSet) {
 		// TODO Auto-generated method stub
 		return createLabelDao.editPreviewCrsPdfSet(pCrsPdfSet);
+	}
+
+	@Override
+	public int insertPrePdfJson(PreviewPdfJson ppj) {
+		// TODO Auto-generated method stub
+		return createLabelDao.insertPrePdfJson(ppj);
+	}
+
+	@Override
+	public PreviewPdfJson selectPrePdfJsonByUuid(String uuid) {
+		// TODO Auto-generated method stub
+		return createLabelDao.selectPrePdfJsonByUuid(uuid);
 	}
 
 }
