@@ -9,7 +9,7 @@
 <style>
 .beg-login-box {
 	width: 450px;
-	height: 330px;
+	height: 270px;
 	margin: 10% auto;
 	background-color: rgba(255, 255, 255, 0.407843);
 	border-radius: 10px;
@@ -61,24 +61,6 @@ body {
 						autocomplete="off" value="${sessionScope.user.passWord }">
 				</div>
 				<div class="layui-form-item">
-					<div class="layui-row layui-col-space8">
-						<div class="layui-col-md4">
-							<input type="text" name="loginVCode" lay-verify="verifyCode"
-								autocomplete="off" placeholder="验证码" lay-verify="required"
-								class="layui-input" style="padding-left: 9px">
-						</div>
-						<div class="layui-col-md5">
-							<img src="<%=basePath%>/createLabel/login/captcha" id="loginVCode"
-								style="width: 115px; height: 39px" />
-						</div>
-						<div class="layui-col-md3">
-							<span style="font-size: 14px; line-height: 39px; float: right"><a
-								href="javascript:void(0)" class="replace_code"
-								style="color: #FFF; cursor: pointer">换一张?</a></span>
-						</div>
-					</div>
-				</div>
-				<div class="layui-form-item">
 					<div class="beg-pull-left ">
 						<button class="layui-btn layui-btn-primary" lay-submit=""
 							lay-filter="login">
@@ -99,9 +81,6 @@ body {
 <script type="text/javascript">
     //更换验证码
     var baseUrl="${pageContext.request.contextPath}"
-    $(".replace_code").bind("click",function () {
-        $("#loginVCode").hide().attr('src', baseUrl+ "/createLabel/login/captcha?" + Math.floor(Math.random() * 100) ).fadeIn();
-    });
     //form提交
     layui.use(['layer', 'form'], function () {
         var layer = layui.layer,
@@ -112,10 +91,9 @@ body {
             $(data.elem).attr('class', 'layui-btn layui-btn-disabled');
             var url=baseUrl + "/createLabel/login"
             var params = {
-                    userName: data.field.userName,
-                    password: MD5(data.field.password).toUpperCase(),
-                    rememberMe : data.field.rememberMe,
-                    loginVCode:data.field.loginVCode
+                userName: data.field.userName,
+                password: MD5(data.field.password).toUpperCase(),
+                rememberMe : data.field.rememberMe,
             };
             $.post(url,params,function(result){
             	var json=JSON.parse(result); 

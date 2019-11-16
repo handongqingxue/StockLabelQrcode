@@ -31,7 +31,7 @@
 			</a>
 		</li>
 		<li class="layui-nav-item">
-			<a style="color: #fff;" href="<%=basePath%>merchant/exit">退出</a>
+			<a style="color: #fff;" href="<%=basePath%>createLabel/exit">退出</a>
 		</li>
 	</ul>
 </div>

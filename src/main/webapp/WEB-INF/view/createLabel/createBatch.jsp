@@ -123,21 +123,27 @@ $(function(){
 							   	                )
 							   	                
 						        		   });
-						        		   
-						  	               editPreviewCrsPdfSet();
-						  	               
-						        		   var cpxh=$("#cpxh_inp").val();
-						       			   var gcrj=$("#gcrj_inp").val();
-						       			   var ndbh=$("#ndbh_inp").val();
-						       			   var label_type=$("#pdf_div #labelType_hid").val();
-						       			
-						        		   $.post("insertAirBottleRecord",
-						       				   {cpxh:cpxh,qpbhsStr:qpbhsStr.substring(1),qrcodeCRSUrlsStr:qrcodeCRSUrlsStr.substring(1),
-						        			   qrcodeHGZUrlsStr:qrcodeHGZUrlsStr.substring(1),gcrj:gcrj,ndbh:ndbh,zzrq:zzrq,label_type:label_type},
-						       				   function(data){
-						        			   		alert(data.info);
-						        		   	   }
-						        		   ,"json");
+
+						       			   qpbhsStr=qpbhsStr.substring(1);
+						       			   qrcodeCRSUrlsStr=qrcodeCRSUrlsStr.substring(1);
+						       			   qrcodeHGZUrlsStr=qrcodeHGZUrlsStr.substring(1);
+						       			   
+						       			   if(qpbhsStr!=""){
+							  	               editPreviewCrsPdfSet();
+							  	               
+							        		   var cpxh=$("#cpxh_inp").val();
+							       			   var gcrj=$("#gcrj_inp").val();
+							       			   var ndbh=$("#ndbh_inp").val();
+							       			   var label_type=$("#pdf_div #labelType_hid").val();
+							       			
+							        		   $.post("insertAirBottleRecord",
+							       				   {cpxh:cpxh,qpbhsStr:qpbhsStr,qrcodeCRSUrlsStr:qrcodeCRSUrlsStr,
+							        			   qrcodeHGZUrlsStr:qrcodeHGZUrlsStr,gcrj:gcrj,ndbh:ndbh,zzrq:zzrq,label_type:label_type},
+							       				   function(data){
+							        			   		alert(data.info);
+							        		   	   }
+							        		   ,"json");
+						       			   }
 						        	   	}
         						    }
         					    }
