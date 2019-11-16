@@ -134,8 +134,8 @@ function prePdfByQpbhs(){
 			   {qpbhsStr:qpbhsStr.substring(1)},
 			   function(result){
 				   if(result.status==1){
-					  openBatPrePdfDiv(0);
-					  window.open("toPreviewHGZPdf?action=batch&uuid="+result.data,"newwindow","width=300;");
+					  openBatchOutputDiv(0);
+					  window.open("toPreviewCRSPdf?uuid="+result.data,"newwindow","width=300;");
 				   }
 				   else{
 					  alert(result.msg);

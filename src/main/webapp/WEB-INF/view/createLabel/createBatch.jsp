@@ -60,18 +60,17 @@ $(function(){
 						        		   }
 						        		   
 						        		   var qpbhsStr="";
+						        		   var qrcodeCRSUrlsStr="";
+						        		   var qrcodeHGZUrlsStr="";
 						        		   outputPdfDiv.find("div[id^='pdf_div']").each(function(i){
 						        			   var pdfDivId=$(this).attr("id");
 						        			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
 						        			   qpbhsStr+=","+qpbh;
+						        			   qrcodeCRSUrlsStr+=","+$("#pdf_div #qrcode_img").attr("src");
+						        			   qrcodeHGZUrlsStr+=","+$("#pdf_div #qrcodeHGZUrl_hid").val();
 						        			   
-						        			   var url=path+"createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
-						        			   $.post("createQrcode",
-						       					   {url:url,qpbh:qpbh},
-						       					   function(data){
-						       						   $("#"+pdfDivId).find("img[id='qrcode_img']").attr("src",data.qrcodeUrl);
-						        			   	   }
-						        			   ,"json");
+						        			   createCRSQrcode(qpbh,pdfDivId);
+						        			   createHGZQrcode(qpbh,pdfDivId);
 						
 											   //console.log($(this).find("img[id='qrcode_img']").attr("src"));
 						        			   $(this).find("span[id='qpbh_span']").text(qpbh);
@@ -130,11 +129,11 @@ $(function(){
 						        		   var cpxh=$("#cpxh_inp").val();
 						       			   var gcrj=$("#gcrj_inp").val();
 						       			   var ndbh=$("#ndbh_inp").val();
-						       			   var qrcode_url=$("#pdf_div #qrcode_img").attr("src");
 						       			   var label_type=$("#pdf_div #labelType_hid").val();
 						       			
 						        		   $.post("insertAirBottleRecord",
-						       				   {cpxh:cpxh,qpbhsStr:qpbhsStr.substring(1),gcrj:gcrj,ndbh:ndbh,zzrq:zzrq,qrcode_url:qrcode_url,label_type:label_type},
+						       				   {cpxh:cpxh,qpbhsStr:qpbhsStr.substring(1),qrcodeCRSUrlsStr:qrcodeCRSUrlsStr.substring(1),
+						        			   qrcodeHGZUrlsStr:qrcodeHGZUrlsStr.substring(1),gcrj:gcrj,ndbh:ndbh,zzrq:zzrq,label_type:label_type},
 						       				   function(data){
 						        			   		alert(data.info);
 						        		   	   }
@@ -202,6 +201,26 @@ $(function(){
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 });
+
+function createCRSQrcode(qpbh,pdfDivId){
+   var url=path+"createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
+   $.post("createQrcode",
+	   {url:url,qpbh:qpbh},
+	   function(data){
+		   $("#"+pdfDivId).find("img[id='qrcode_img']").attr("src",data.qrcodeUrl);
+   	   }
+   ,"json");
+}
+
+function createHGZQrcode(qpbh,pdfDivId){
+	var url=path+"createLabel/toQrcodeInfo?action=hgz&qpbh="+qpbh;
+    $.post("createQrcode",
+	   {url:url,qpbh:qpbh},
+	   function(data){
+		   $("#"+pdfDivId).find("#qrcodeHGZUrl_hid").val(data.qrcodeUrl);
+   	   }
+    ,"json");
+}
 
 function editPreviewCrsPdfSet(){
 	var id=$("#pdf_div #id_hid").val();
@@ -278,6 +297,7 @@ function previewPDF(labelType){
 			previewPDFTd.append("<div id=\"pdf_div\" style=\"width:400px;height: 300px;border:#000 solid 1px;\">"
 									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
 									+"<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>"
+									+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
 									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 180px;height: 180px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 									+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
 									+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+qpqsbh+"</span>"

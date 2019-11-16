@@ -78,7 +78,7 @@ $(function(){
 				$.messager.alert("提示","请选择要预览的Pdf信息！","warning");
 				return false;
 			}
-			var jsonStr="[{\"cpxh\":\""+row.cpxh+"\",\"qpbh\":\""+row.qpbh+"\",\"zl\":\""+row.zl+"\",\"scrj\":\""+row.scrj+"\",\"zzrq\":\""+row.zzrq+"\"}]";
+			var jsonStr="[{\"cpxh\":\""+row.cpxh+"\",\"qpbh\":\""+row.qpbh+"\",\"zl\":\""+row.zl+"\",\"scrj\":\""+row.scrj+"\",\"zzrq\":\""+row.zzrq+"\",\"qrcode_hgz_url\":\""+row.qrcode_hgz_url+"\"}]";
 			//https://blog.csdn.net/xiaomage1314/article/details/77945425
 			window.open("toPreviewHGZPdf?action=single&jsonStr="+escape(jsonStr),"newwindow","width=300;");
 		}

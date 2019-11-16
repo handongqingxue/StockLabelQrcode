@@ -226,6 +226,16 @@ public class CreateLabelController {
 	}
 	
 	/**
+	 * 跳转到预览生成的缠绕式pdf页面
+	 * @return
+	 */
+	@RequestMapping("/toPreviewCRSPdf")
+	public String toPreviewCRSPdf() {
+		
+		return "/createLabel/previewCRSPdf";
+	}
+	
+	/**
 	 * 跳转到预览生成的合格证pdf页面
 	 * @return
 	 */
@@ -294,15 +304,19 @@ public class CreateLabelController {
 	 */
 	@RequestMapping(value="/insertAirBottleRecord")
 	@ResponseBody
-	public Map<String, Object> insertAirBottleRecord(AirBottle airBottle, String qpbhsStr) {
+	public Map<String, Object> insertAirBottleRecord(AirBottle airBottle, String qpbhsStr, String qrcodeCRSUrlsStr, String qrcodeHGZUrlsStr) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		String[] qpbhArr = qpbhsStr.split(",");
+		String[] qrcodeCRSUrlArr = qrcodeCRSUrlsStr.split(",");
+		String[] qrcodeHGZUrlArr = qrcodeHGZUrlsStr.split(",");
 		
 		int count = 0;
 		for (int i = 0; i < qpbhArr.length; i++) {
 			airBottle.setQpbh(qpbhArr[i]);
+			airBottle.setQrcode_crs_url(qrcodeCRSUrlArr[i]);
+			airBottle.setQrcode_hgz_url(qrcodeHGZUrlArr[i]);
 			count += createLabelService.insertAirBottleRecord(airBottle);
 		}
 		

@@ -69,11 +69,17 @@ public class AirBottle implements Serializable {
 	public void setQpzzdw(String qpzzdw) {
 		this.qpzzdw = qpzzdw;
 	}
-	public String getQrcode_url() {
-		return qrcode_url;
+	public String getQrcode_crs_url() {
+		return qrcode_crs_url;
 	}
-	public void setQrcode_url(String qrcode_url) {
-		this.qrcode_url = qrcode_url;
+	public void setQrcode_crs_url(String qrcode_crs_url) {
+		this.qrcode_crs_url = qrcode_crs_url;
+	}
+	public String getQrcode_hgz_url() {
+		return qrcode_hgz_url;
+	}
+	public void setQrcode_hgz_url(String qrcode_hgz_url) {
+		this.qrcode_hgz_url = qrcode_hgz_url;
 	}
 	public int getLabel_type() {
 		return label_type;
@@ -96,7 +102,8 @@ public class AirBottle implements Serializable {
 	private String qpzjxh;//气瓶支架型号
 	private String zzrq;//制造日期
 	private String qpzzdw;//气瓶制造单位
-	private String qrcode_url;//二维码链接
+	private String qrcode_crs_url;//缠绕式二维码链接
+	private String qrcode_hgz_url;//合格证式二维码链接
 	private int label_type;//标签类型：1.中文标签、2.ISO标签、3.ECE标签
 	private Boolean input;
 

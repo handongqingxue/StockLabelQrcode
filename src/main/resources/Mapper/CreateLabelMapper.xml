@@ -190,8 +190,11 @@
  			<if test="zzrq!=null">
 	 			zzrq,
 	 		</if>
- 			<if test="qrcode_url!=null">
-	 			qrcode_url,
+ 			<if test="qrcode_crs_url!=null">
+	 			qrcode_crs_url,
+	 		</if>
+ 			<if test="qrcode_hgz_url!=null">
+	 			qrcode_hgz_url,
 	 		</if>
  			<if test="label_type!=null">
 	 			label_type,
@@ -217,8 +220,11 @@
  			<if test="zzrq!=null">
 	 			#{zzrq},
 	 		</if>
- 			<if test="qrcode_url!=null">
-	 			#{qrcode_url},
+ 			<if test="qrcode_crs_url!=null">
+	 			#{qrcode_crs_url},
+	 		</if>
+ 			<if test="qrcode_hgz_url!=null">
+	 			#{qrcode_hgz_url},
 	 		</if>
  			<if test="label_type!=null">
 	 			#{label_type},
