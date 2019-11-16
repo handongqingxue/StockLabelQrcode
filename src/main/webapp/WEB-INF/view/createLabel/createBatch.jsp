@@ -56,7 +56,7 @@ $(function(){
 						                       var qpbh=qpqsbhPre+qpbhSuf;
 						                       if(!checkQpbhExist(qpbh))
 						                    	   continue;
-						        			   outputPdfDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:400px;height: 300px;border:#000 solid 1px;\">"+$("#pdf_div").html()+"</div>");
+						        			   outputPdfDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:500px;height: 300px;border:#000 solid 1px;\">"+$("#pdf_div").html()+"</div>");
 						        		   }
 						        		   
 						        		   var qpbhsStr="";
@@ -73,6 +73,9 @@ $(function(){
 						        			   createHGZQrcode(qpbh,pdfDivId);
 						
 											   //console.log($(this).find("img[id='qrcode_img']").attr("src"));
+											   
+						        			   removeChinesePdfLabel($(this));
+						        			   
 						        			   $(this).find("span[id='qpbh_span']").text(qpbh);
 						        			   //if(pdfDivId=="pdf_divCB19001002")
 						        				   //return false;
@@ -208,6 +211,26 @@ $(function(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 });
 
+function removeChinesePdfLabel(pdfDiv){
+   pdfDiv.find("#cpxhTit1_span").remove();
+   pdfDiv.find("#cpxhTit2_span").remove();
+   pdfDiv.find("#qpbhTit1_span").remove();
+   pdfDiv.find("#cpbzh_span").remove();
+   pdfDiv.find("#czjz_span").remove();
+   pdfDiv.find("#gcrjTit_span").remove();
+   pdfDiv.find("#gcgzyl_span").remove();
+   pdfDiv.find("#sysyyl_span").remove();
+   pdfDiv.find("#gndsjbhTit1_span").remove();
+   pdfDiv.find("#gndsjbhTit2_span").remove();
+   pdfDiv.find("#sjsynx_span").remove();
+   pdfDiv.find("#zzxkzbh_span").remove();
+   pdfDiv.find("#zzrqTit1_span").remove();
+   pdfDiv.find("#zzrqTit2_span").remove();
+   pdfDiv.find("#zzrqTit3_span").remove();
+   pdfDiv.find("#gsmc_span").remove();
+   pdfDiv.find("#fwrx_span").remove();
+}
+
 function createCRSQrcode(qpbh,pdfDivId){
    var url=path+"createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
    $.post("createQrcode",
@@ -300,17 +323,36 @@ function previewPDF(labelType){
 			
 			var previewPDFTd=$("#previewPDF_td");
 			previewPDFTd.empty();
-			previewPDFTd.append("<div id=\"pdf_div\" style=\"width:400px;height: 300px;border:#000 solid 1px;\">"
-									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
-									+"<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>"
-									+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
-									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 180px;height: 180px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
-									+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
-									+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+qpqsbh+"</span>"
-									+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+gcrj+"</span>"
-									+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+ndbh+"</span>"
-									+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+zzrq+"</span>"
-								+"</div>");
+			if(labelType==1){
+				previewPDFTd.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;border:#000 solid 1px;\">"
+										+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
+										+"<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>"
+										+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
+										+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+										+"<span id=\"cpxhTit1_span\" style=\"margin-top: 10px;margin-left: 120px;position: absolute;\">CNG2-G-</span>"
+										+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
+										+"<span id=\"cpxhTit2_span\" style=\"margin-top: 10px;margin-left: 280px;position: absolute;\">-20B</span>"
+										+"<span id=\"qpbhTit1_span\" style=\"margin-top: 36px;margin-left: 20px;position: absolute;\">气瓶编号:</span>"
+										+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+qpqsbh+"</span>"
+										+"<span id=\"cpbzh_span\" style=\"margin-top: 67px;margin-left: 20px;position: absolute;\">产品标准号:Q/Ng301(GB24160.MOD)</span>"
+										+"<span id=\"czjz_span\" style=\"margin-top: 101px;margin-left: 20px;position: absolute;\">充装介质:CNG</span>"
+										+"<span id=\"gcrjTit_span\" style=\"margin-top: 101px;margin-left: 250px;position: absolute;\">公称容积:</span>"
+										+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+gcrj+"</span>"
+										+"<span id=\"gcgzyl_span\" style=\"margin-top: 136px;margin-left: 20px;position: absolute;\">公称工作压力:20MPa:</span>"
+										+"<span id=\"sysyyl_span\" style=\"margin-top: 136px;margin-left: 250px;position: absolute;\">水压试验压力:30MPa:</span>"
+										+"<span id=\"gndsjbhTit1_span\" style=\"margin-top: 171px;margin-left: 20px;position: absolute;\">锅内胆设计壁厚:</span>"
+										+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+ndbh+"</span>"
+										+"<span id=\"gndsjbhTit2_span\" style=\"margin-top: 171px;margin-left: 190px;position: absolute;\">mm</span>"
+										+"<span id=\"sjsynx_span\" style=\"margin-top: 171px;margin-left: 250px;position: absolute;\">设计使用年限:15年</span>"
+										+"<span id=\"zzxkzbh_span\" style=\"margin-top: 207px;margin-left: 20px;position: absolute;\">制造许可证编号:TS2210A53</span>"
+										+"<span id=\"zzrqTit1_span\" style=\"margin-top: 207px;margin-left: 250px;position: absolute;\">制造日期:</span>"
+										+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+zzrq+"</span>"
+										+"<span id=\"zzrqTit2_span\" style=\"margin-top: 207px;margin-left: 380px;position: absolute;\">年</span>"
+										+"<span id=\"zzrqTit3_span\" style=\"margin-top: 207px;margin-left: 440px;position: absolute;\">月</span>"
+										+"<span id=\"gsmc_span\" style=\"margin-top: 240px;margin-left: 120px;position: absolute;\">湖北三江航天江北机械工程有限公司</span>"
+										+"<span id=\"fwrx_span\" style=\"margin-top: 266px;margin-left: 180px;position: absolute;\">服务热线：4001-066-980</span>"
+									+"</div>");
+			}
 		}
 	,"json");
 }
@@ -526,14 +568,14 @@ function initWindowMarginLeft(){
 				<tr style="height: 45px;">
 					<td>气瓶起始编号：</td>
 					<td>
-						<input id="qpqsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001001" onfocus="focusQpQsBh()" onblur="checkQpQsBh()"/>
+						<input id="qpqsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001001" value="CB19001001" onfocus="focusQpQsBh()" onblur="checkQpQsBh()"/>
 						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
 				<tr style="height: 45px;">
 					<td>气瓶结束编号：</td>
 					<td>
-						<input id="qpjsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001003" onfocus="focusQpJsBh()" onblur="checkQpJsBh()"/>
+						<input id="qpjsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001003" value="CB19001002" onfocus="focusQpJsBh()" onblur="checkQpJsBh()"/>
 						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
@@ -608,7 +650,7 @@ function initWindowMarginLeft(){
 					<td id="previewPDF_td">
 					</td>
 					<!-- 
-					<div id="pdf_div" style="width:400px;height: 300px;border:#000 solid 1px;">
+					<div id="pdf_div" style="width:500px;height: 300px;border:#000 solid 1px;">
 						 <img alt="" src="<%=basePath %>/resource/images/qrcode.png" style="width: 80px;height: 80px;margin-top: 10px;margin-left: 300px;position: absolute;">
 					     <span style="margin-top: 20px;margin-left: 150px;position: absolute;">356-70</span>
 					     <span style="margin-top: 40px;margin-left: 90px;position: absolute;">CB190</span>
