@@ -74,11 +74,12 @@ $(function(){
 						
 											   //console.log($(this).find("img[id='qrcode_img']").attr("src"));
 											   
-						        			   removeChinesePdfLabel($(this));
+						        			   //removeChinesePdfLabel($(this));
 						        			   
 						        			   $(this).find("span[id='qpbh_span']").text(qpbh);
 						        			   //if(pdfDivId=="pdf_divCB19001002")
 						        				   //return false;
+						        			   $("#"+pdfDivId).css("border","0px");
 						        			   $("#pdf_div").empty();
 						        			   $("#pdf_div").append($("#"+pdfDivId).html());
 						        			   //console.log($("#pdf_div").html());
@@ -99,6 +100,8 @@ $(function(){
 							   	                           //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
 							   	                           var imgWidth = 595.28;
 							   	                           var imgHeight = 592.28 / contentWidth * contentHeight;
+							   	                           //var imgWidth = 800;
+							   	                           //var imgHeight = 500;
 							   	    
 							   	                           var pageData = canvas.toDataURL('image/jpeg', 1.0);
 							   	                           var pdf = new jsPDF('', 'pt', 'a4');
@@ -323,36 +326,49 @@ function previewPDF(labelType){
 			
 			var previewPDFTd=$("#previewPDF_td");
 			previewPDFTd.empty();
+			previewPDFTd.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;border:#000 solid 1px;\">"
+									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
+									+"<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>"
+									+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
+									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+									+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
+									+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+qpqsbh+"</span>"
+									+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+gcrj+"</span>"
+									+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+ndbh+"</span>"
+									+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+zzrq+"</span>"
+								+"</div>");
+			/*
 			if(labelType==1){
 				previewPDFTd.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;border:#000 solid 1px;\">"
 										+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
 										+"<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>"
 										+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
 										+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
-										+"<span id=\"cpxhTit1_span\" style=\"margin-top: 10px;margin-left: 120px;position: absolute;\">CNG2-G-</span>"
+										+"<span id=\"cpxhTit1_span\" style=\"margin-top: 24px;margin-left: 120px;position: absolute;\">CNG2-G-</span>"
 										+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
-										+"<span id=\"cpxhTit2_span\" style=\"margin-top: 10px;margin-left: 280px;position: absolute;\">-20B</span>"
-										+"<span id=\"qpbhTit1_span\" style=\"margin-top: 36px;margin-left: 20px;position: absolute;\">气瓶编号:</span>"
+										+"<span id=\"cpxhTit2_span\" style=\"margin-top: 24px;margin-left: 280px;position: absolute;\">-20B</span>"
+										+"<span id=\"qpbhTit1_span\" style=\"margin-top: 68px;margin-left: 20px;position: absolute;\">气瓶编号:</span>"
 										+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+qpqsbh+"</span>"
-										+"<span id=\"cpbzh_span\" style=\"margin-top: 67px;margin-left: 20px;position: absolute;\">产品标准号:Q/Ng301(GB24160.MOD)</span>"
-										+"<span id=\"czjz_span\" style=\"margin-top: 101px;margin-left: 20px;position: absolute;\">充装介质:CNG</span>"
-										+"<span id=\"gcrjTit_span\" style=\"margin-top: 101px;margin-left: 250px;position: absolute;\">公称容积:</span>"
+										+"<span id=\"cpbzh_span\" style=\"margin-top: 97px;margin-left: 20px;position: absolute;\">产品标准号:Q/Ng301(GB24160.MOD)</span>"
+										+"<span id=\"czjz_span\" style=\"margin-top: 128px;margin-left: 20px;position: absolute;\">充装介质:CNG</span>"
+										+"<span id=\"gcrjTit_span\" style=\"margin-top: 128px;margin-left: 250px;position: absolute;\">公称容积:</span>"
 										+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+gcrj+"</span>"
-										+"<span id=\"gcgzyl_span\" style=\"margin-top: 136px;margin-left: 20px;position: absolute;\">公称工作压力:20MPa:</span>"
-										+"<span id=\"sysyyl_span\" style=\"margin-top: 136px;margin-left: 250px;position: absolute;\">水压试验压力:30MPa:</span>"
-										+"<span id=\"gndsjbhTit1_span\" style=\"margin-top: 171px;margin-left: 20px;position: absolute;\">锅内胆设计壁厚:</span>"
+										+"<span id=\"gcgzyl_span\" style=\"margin-top: 156px;margin-left: 20px;position: absolute;\">公称工作压力:20MPa:</span>"
+										+"<span id=\"sysyyl_span\" style=\"margin-top: 156px;margin-left: 250px;position: absolute;\">水压试验压力:30MPa:</span>"
+										+"<span id=\"gndsjbhTit1_span\" style=\"margin-top: 186px;margin-left: 20px;position: absolute;\">锅内胆设计壁厚:</span>"
 										+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+ndbh+"</span>"
-										+"<span id=\"gndsjbhTit2_span\" style=\"margin-top: 171px;margin-left: 190px;position: absolute;\">mm</span>"
-										+"<span id=\"sjsynx_span\" style=\"margin-top: 171px;margin-left: 250px;position: absolute;\">设计使用年限:15年</span>"
-										+"<span id=\"zzxkzbh_span\" style=\"margin-top: 207px;margin-left: 20px;position: absolute;\">制造许可证编号:TS2210A53</span>"
-										+"<span id=\"zzrqTit1_span\" style=\"margin-top: 207px;margin-left: 250px;position: absolute;\">制造日期:</span>"
+										+"<span id=\"gndsjbhTit2_span\" style=\"margin-top: 186px;margin-left: 190px;position: absolute;\">mm</span>"
+										+"<span id=\"sjsynx_span\" style=\"margin-top: 186px;margin-left: 250px;position: absolute;\">设计使用年限:15年</span>"
+										+"<span id=\"zzxkzbh_span\" style=\"margin-top: 215px;margin-left: 20px;position: absolute;\">制造许可证编号:TS2210A53</span>"
+										+"<span id=\"zzrqTit1_span\" style=\"margin-top: 215px;margin-left: 290px;position: absolute;\">制造日期:</span>"
 										+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+zzrq+"</span>"
-										+"<span id=\"zzrqTit2_span\" style=\"margin-top: 207px;margin-left: 380px;position: absolute;\">年</span>"
-										+"<span id=\"zzrqTit3_span\" style=\"margin-top: 207px;margin-left: 440px;position: absolute;\">月</span>"
-										+"<span id=\"gsmc_span\" style=\"margin-top: 240px;margin-left: 120px;position: absolute;\">湖北三江航天江北机械工程有限公司</span>"
-										+"<span id=\"fwrx_span\" style=\"margin-top: 266px;margin-left: 180px;position: absolute;\">服务热线：4001-066-980</span>"
+										+"<span id=\"zzrqTit2_span\" style=\"margin-top: 215px;margin-left: 410px;position: absolute;\">年</span>"
+										+"<span id=\"zzrqTit3_span\" style=\"margin-top: 215px;margin-left: 460px;position: absolute;\">月</span>"
+										//+"<span id=\"gsmc_span\" style=\"margin-top: 240px;margin-left: 120px;position: absolute;\">湖北三江航天江北机械工程有限公司</span>"
+										//+"<span id=\"fwrx_span\" style=\"margin-top: 266px;margin-left: 180px;position: absolute;\">服务热线：4001-066-980</span>"
 									+"</div>");
 			}
+			*/
 		}
 	,"json");
 }
