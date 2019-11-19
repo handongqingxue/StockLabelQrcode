@@ -36,7 +36,8 @@ $(function(){
 			var previewPdfDiv=$("#previewPdf_div");
 			previewPdfDiv.find("div[id^='pdf_div']").each(function(i){
  			   var pdfDivId=$(this).attr("id");
- 			   var zzrq=$(this).attr("zzrq");
+ 			   var zzrqY=$(this).attr("zzrqY");
+ 			   var zzrqM=$(this).attr("zzrqM");
  			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
  			   html2canvas(
                    document.getElementById(pdfDivId),
@@ -74,7 +75,7 @@ $(function(){
                                    }
                                }
                            }
-                           pdf.save(qpbh+zzrq+'.pdf');
+                           pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
                        },
                        //背景设为白色（默认为黑色）
                        background: "#fff"  
@@ -90,13 +91,13 @@ function initPreviewPdfDiv(jsonStr){
 	var airBottleJA=JSON.parse(jsonStr);
 	for(var i=0;i<airBottleJA.length;i++){
 		var airBottleJO=airBottleJA[i];
-		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrq=\""+airBottleJO.zzrq+"\" style=\"width:400px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
+		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:400px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
 								+"<img alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\" style=\"width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;\">"
 								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
 								+"<span style=\"margin-top: 60px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
 								+"<span style=\"margin-top: 100px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
 								+"<span style=\"margin-top: 140px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
-								+"<span style=\"margin-top: 180px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq+"</span>"
+								+"<span style=\"margin-top: 180px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq_y+airBottleJO.zzrq_m+"</span>"
 							+"</div>");
 	}
 }

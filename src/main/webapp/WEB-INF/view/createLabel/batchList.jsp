@@ -15,9 +15,10 @@ $(function(){
 			var cpxh=$("#cpxh_inp").val();
 			var qpbh=$("#qpbh_inp").val();
 			var qpzjxh=$("#qpzjxh_inp").val();
-			var zzrq=$("#zzrq_inp").val();
+			var zzrqY=$("#zzrqY_inp").val();
+			var zzrqM=$("#zzrqM_inp").val();
 			var qpzzdw=$("#qpzzdw_inp").val();
-			tab1.datagrid("load",{cpxh:cpxh,qpbh:qpbh,qpzjxh:qpzjxh,zzrq:zzrq,qpzzdw:qpzzdw});
+			tab1.datagrid("load",{cpxh:cpxh,qpbh:qpbh,qpzjxh:qpzjxh,zzrq_y:zzrqY,zzrq_m:zzrqM,qpzzdw:qpzzdw});
 		}
 	});
 	
@@ -37,7 +38,9 @@ $(function(){
             {field:"zl",title:"重量",width:80,sortable:true},
             {field:"scrj",title:"实测容积",width:80,sortable:true},
             {field:"qpzjxh",title:"气瓶支架型号",width:100,sortable:true},
-            {field:"zzrq",title:"制造日期",width:100,sortable:true},
+            {field:"zzrq_y",title:"制造日期",width:100,sortable:true,formatter:function(value,row){
+            	return value+"-"+row.zzrq_m;
+            }},
             {field:"qpzzdw",title:"气瓶制造单位",width:300,sortable:true}
         ]],
         onLoadSuccess:function(data){
@@ -85,11 +88,19 @@ function initTab1WindowMarginLeft(){
 	<%@include file="left.jsp"%>
 	<div id="tab1_div" style="margin-top:20px;margin-left: 200px;">
 		<div id="toolbar">
-			产品型号：<input type="text" id="cpxh_inp"/>
-			气瓶编号：<input type="text" id="qpbh_inp"/>
-			气瓶支架型号：<input type="text" id="qpzjxh_inp"/>
-			制造日期：<input type="text" id="zzrq_inp"/>
-			气瓶制造单位：<input type="text" id="qpzzdw_inp"/>
+			产品型号：
+			<input type="text" id="cpxh_inp"/>
+			气瓶编号：
+			<input type="text" id="qpbh_inp"/>
+			气瓶支架型号：
+			<input type="text" id="qpzjxh_inp"/>
+			制造日期：
+			<input type="text" id="zzrqY_inp" size="6" maxlength="4"/>
+			年
+			<input type="text" id="zzrqM_inp" size="3" maxlength="2"/>
+			月
+			气瓶制造单位：
+			<input type="text" id="qpzzdw_inp"/>
 			<a id="search_but">查询</a>
 		</div>
 		<table id="tab1">

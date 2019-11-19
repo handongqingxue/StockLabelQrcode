@@ -64,17 +64,29 @@ public class PreviewCRSPDFSet implements Serializable {
 	public void setNdbh_top(float ndbh_top) {
 		this.ndbh_top = ndbh_top;
 	}
-	public float getZzrq_left() {
-		return zzrq_left;
+	public float getZzrq_y_left() {
+		return zzrq_y_left;
 	}
-	public void setZzrq_left(float zzrq_left) {
-		this.zzrq_left = zzrq_left;
+	public void setZzrq_y_left(float zzrq_y_left) {
+		this.zzrq_y_left = zzrq_y_left;
 	}
-	public float getZzrq_top() {
-		return zzrq_top;
+	public float getZzrq_y_top() {
+		return zzrq_y_top;
 	}
-	public void setZzrq_top(float zzrq_top) {
-		this.zzrq_top = zzrq_top;
+	public void setZzrq_y_top(float zzrq_y_top) {
+		this.zzrq_y_top = zzrq_y_top;
+	}
+	public float getZzrq_m_left() {
+		return zzrq_m_left;
+	}
+	public void setZzrq_m_left(float zzrq_m_left) {
+		this.zzrq_m_left = zzrq_m_left;
+	}
+	public float getZzrq_m_top() {
+		return zzrq_m_top;
+	}
+	public void setZzrq_m_top(float zzrq_m_top) {
+		this.zzrq_m_top = zzrq_m_top;
 	}
 	public float getQrcode_left() {
 		return qrcode_left;
@@ -107,8 +119,10 @@ public class PreviewCRSPDFSet implements Serializable {
 	private float gcrj_top;//公称容积距离上边多远
 	private float ndbh_left;//内胆壁厚距离左边多远
 	private float ndbh_top;//内胆壁厚距离上边多远
-	private float zzrq_left;//制造日期距离左边多远
-	private float zzrq_top;//制造日期距离上边多远
+	private float zzrq_y_left;//制造日期年份距离左边多远
+	private float zzrq_y_top;//制造日期年份距离上边多远
+	private float zzrq_m_left;//制造日期月份距离左边多远
+	private float zzrq_m_top;//制造日期月份距离上边多远
 	private float qrcode_left;//二维码距离左边多远
 	private float qrcode_top;//二维码距离上边多远
 	private float label_type;//标签类型：1.中文标签、2.ISO标签、3.ECE标签

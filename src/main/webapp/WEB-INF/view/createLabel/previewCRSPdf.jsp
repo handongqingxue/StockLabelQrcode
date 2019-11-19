@@ -26,7 +26,8 @@ $(function(){
 			var previewPdfDiv=$("#previewPdf_div");
 			previewPdfDiv.find("div[id^='pdf_div']").each(function(i){
  			   var pdfDivId=$(this).attr("id");
- 			   var zzrq=$(this).attr("zzrq");
+ 			   var zzrqY=$(this).attr("zzrqY");
+ 			   var zzrqM=$(this).attr("zzrqM");
  			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
 		   	   $("#"+pdfDivId).css("border","0px");
  			   html2canvas(
@@ -65,7 +66,7 @@ $(function(){
                                    }
                                }
                            }
-                           pdf.save(qpbh+zzrq+'.pdf');
+                           pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
 	        			   $("#"+pdfDivId).css("border","#000 solid 1px");
                        },
                        //背景设为白色（默认为黑色）
@@ -98,18 +99,21 @@ function initPreviewPdfDiv(jsonStr){
 				var gcrjTop=crsPdfSet.gcrj_top;
 				var ndbhLeft=crsPdfSet.ndbh_left;
 				var ndbhTop=crsPdfSet.ndbh_top;
-				var zzrqLeft=crsPdfSet.zzrq_left;
-				var zzrqTop=crsPdfSet.zzrq_top;
+				var zzrqYLeft=crsPdfSet.zzrq_y_left;
+				var zzrqYTop=crsPdfSet.zzrq_y_top;
+				var zzrqMLeft=crsPdfSet.zzrq_m_left;
+				var zzrqMTop=crsPdfSet.zzrq_m_top;
 				var qrcodeLeft=crsPdfSet.qrcode_left;
 				var qrcodeTop=crsPdfSet.qrcode_top;
 	
-				previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrq=\""+airBottleJO.zzrq+"\" style=\"width:500px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
+				previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
 						+"<img id=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_crs_url+"\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 						+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
 						+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
 						+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+airBottleJO.gcrj+"</span>"
 						+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+airBottleJO.ndbh+"</span>"
-						+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+airBottleJO.zzrq+"</span>"
+						+"<span id=\"zzrqY_span\" style=\"margin-top: "+zzrqYTop+"px;margin-left: "+zzrqYLeft+"px;position: absolute;\">"+airBottleJO.zzrq_y+"</span>"
+						+"<span id=\"zzrqM_span\" style=\"margin-top: "+zzrqMTop+"px;margin-left: "+zzrqMLeft+"px;position: absolute;\">"+airBottleJO.zzrq_m+"</span>"
 					+"</div>");
 			}
 		,"json");

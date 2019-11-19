@@ -153,8 +153,10 @@ public class CreateLabelController {
 			pCrsPdfSet.setGcrj_top(pCrsPdf.getGcrj_top());
 			pCrsPdfSet.setNdbh_left(pCrsPdf.getNdbh_left());
 			pCrsPdfSet.setNdbh_top(pCrsPdf.getNdbh_top());
-			pCrsPdfSet.setZzrq_left(pCrsPdf.getZzrq_left());
-			pCrsPdfSet.setZzrq_top(pCrsPdf.getZzrq_top());
+			pCrsPdfSet.setZzrq_y_left(pCrsPdf.getZzrq_y_left());
+			pCrsPdfSet.setZzrq_y_top(pCrsPdf.getZzrq_y_top());
+			pCrsPdfSet.setZzrq_m_left(pCrsPdf.getZzrq_m_left());
+			pCrsPdfSet.setZzrq_m_top(pCrsPdf.getZzrq_m_top());
 			pCrsPdfSet.setQrcode_left(pCrsPdf.getQrcode_left());
 			pCrsPdfSet.setQrcode_top(pCrsPdf.getQrcode_top());
 			pCrsPdfSet.setLabel_type(pCrsPdf.getLabel_type());
@@ -390,11 +392,11 @@ public class CreateLabelController {
 	
 	@RequestMapping(value="/queryBatchList")
 	@ResponseBody
-	public Map<String, Object> queryBatchList(String cpxh,String qpbh,String qpzjxh,String zzrq,String qpzzdw,int page,int rows,String sort,String order) {
+	public Map<String, Object> queryBatchList(String cpxh,String qpbh,String qpzjxh,String zzrq_y,String zzrq_m,String qpzzdw,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		int count = createLabelService.queryBatchForInt(cpxh, qpbh, qpzjxh, zzrq, qpzzdw);
-		List<AirBottle> batchList = createLabelService.queryBatchList(cpxh, qpbh, qpzjxh, zzrq, qpzzdw, page, rows, sort, order);
+		int count = createLabelService.queryBatchForInt(cpxh, qpbh, qpzjxh, zzrq_y, zzrq_m, qpzzdw);
+		List<AirBottle> batchList = createLabelService.queryBatchList(cpxh, qpbh, qpzjxh, zzrq_y, zzrq_m, qpzzdw, page, rows, sort, order);
 		
 		jsonMap.put("total", count);
 		jsonMap.put("rows", batchList);

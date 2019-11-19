@@ -60,18 +60,20 @@ public interface CreateLabelService {
 	 * @param cpxh
 	 * @param qpbh
 	 * @param qpzjxh
-	 * @param zzrq
+	 * @param zzrq_y
+	 * @param zzrq_m
 	 * @param qpzzdw
 	 * @return
 	 */
-	int queryBatchForInt(String cpxh, String qpbh, String qpzjxh, String zzrq, String qpzzdw);
+	int queryBatchForInt(String cpxh, String qpbh, String qpzjxh, String zzrq_y, String zzrq_m, String qpzzdw);
 
 	/**
 	 * 查询批次记录
 	 * @param cpxh
 	 * @param qpbh
 	 * @param qpzjxh
-	 * @param zzrq
+	 * @param zzrq_y
+	 * @param zzrq_m
 	 * @param qpzzdw
 	 * @param page
 	 * @param rows
@@ -79,7 +81,7 @@ public interface CreateLabelService {
 	 * @param order
 	 * @return
 	 */
-	List<AirBottle> queryBatchList(String cpxh, String qpbh, String qpzjxh, String zzrq, String qpzzdw, int page,
+	List<AirBottle> queryBatchList(String cpxh, String qpbh, String qpzjxh, String zzrq_y, String zzrq_m, String qpzzdw, int page,
 			int rows, String sort, String order);
 
 	/**

@@ -57,11 +57,17 @@ public class AirBottle implements Serializable {
 	public void setQpzjxh(String qpzjxh) {
 		this.qpzjxh = qpzjxh;
 	}
-	public String getZzrq() {
-		return zzrq;
+	public String getZzrq_y() {
+		return zzrq_y;
 	}
-	public void setZzrq(String zzrq) {
-		this.zzrq = zzrq;
+	public void setZzrq_y(String zzrq_y) {
+		this.zzrq_y = zzrq_y;
+	}
+	public String getZzrq_m() {
+		return zzrq_m;
+	}
+	public void setZzrq_m(String zzrq_m) {
+		this.zzrq_m = zzrq_m;
 	}
 	public String getQpzzdw() {
 		return qpzzdw;
@@ -100,7 +106,8 @@ public class AirBottle implements Serializable {
 	private String zl;//重量
 	private String scrj;//实测容积
 	private String qpzjxh;//气瓶支架型号
-	private String zzrq;//制造日期
+	private String zzrq_y;//制造日期年份
+	private String zzrq_m;//制造日期月份
 	private String qpzzdw;//气瓶制造单位
 	private String qrcode_crs_url;//缠绕式二维码链接
 	private String qrcode_hgz_url;//合格证式二维码链接

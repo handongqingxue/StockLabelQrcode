@@ -56,16 +56,16 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 	}
 
 	@Override
-	public int queryBatchForInt(String cpxh, String qpbh, String qpzjxh, String zzrq, String qpzzdw) {
+	public int queryBatchForInt(String cpxh, String qpbh, String qpzjxh, String zzrq_y, String zzrq_m, String qpzzdw) {
 		// TODO Auto-generated method stub
-		return createLabelDao.queryBatchForInt(cpxh, qpbh, qpzjxh, zzrq, qpzzdw);
+		return createLabelDao.queryBatchForInt(cpxh, qpbh, qpzjxh, zzrq_y, zzrq_m, qpzzdw);
 	}
 
 	@Override
-	public List<AirBottle> queryBatchList(String cpxh, String qpbh, String qpzjxh, String zzrq, String qpzzdw, int page,
+	public List<AirBottle> queryBatchList(String cpxh, String qpbh, String qpzjxh, String zzrq_y, String zzrq_m, String qpzzdw, int page,
 			int rows, String sort, String order) {
 		// TODO Auto-generated method stub
-		return createLabelDao.queryBatchList(cpxh, qpbh, qpzjxh, zzrq, qpzzdw, (page-1)*rows, rows, sort, order);
+		return createLabelDao.queryBatchList(cpxh, qpbh, qpzjxh, zzrq_y, zzrq_m, qpzzdw, (page-1)*rows, rows, sort, order);
 	}
 
 	@Override

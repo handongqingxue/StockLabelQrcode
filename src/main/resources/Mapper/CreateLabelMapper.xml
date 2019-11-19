@@ -39,8 +39,11 @@
 		<if test="qpzjxh!=null&amp;qpzjxh!=''">
 			and qpzjxh like'%${qpzjxh}%'
 		</if>
-		<if test="zzrq!=null&amp;zzrq!=''">
-			and zzrq like'%${zzrq}%'
+		<if test="zzrq_y!=null&amp;zzrq_y!=''">
+			and zzrq_y like'%${zzrq_y}%'
+		</if>
+		<if test="zzrq_m!=null&amp;zzrq_m!=''">
+			and zzrq_m like'%${zzrq_m}%'
 		</if>
 		<if test="qpzzdw!=null&amp;qpzzdw!=''">
 			and qpzzdw like'%${qpzzdw}%'
@@ -57,8 +60,11 @@
 		<if test="qpzjxh!=null&amp;qpzjxh!=''">
 			and qpzjxh like'%${qpzjxh}%'
 		</if>
-		<if test="zzrq!=null&amp;zzrq!=''">
-			and zzrq like'%${zzrq}%'
+		<if test="zzrq_y!=null&amp;zzrq_y!=''">
+			and zzrq_y like'%${zzrq_y}%'
+		</if>
+		<if test="zzrq_m!=null&amp;zzrq_m!=''">
+			and zzrq_m like'%${zzrq_m}%'
 		</if>
 		<if test="qpzzdw!=null&amp;qpzzdw!=''">
 			and qpzzdw like'%${qpzzdw}%'
@@ -107,11 +113,17 @@
 	 		<if test="ndbh_top!=null">
 	 			ndbh_top,
 	 		</if>
-	 		<if test="zzrq_left!=null">
-	 			zzrq_left,
+	 		<if test="zzrq_y_left!=null">
+	 			zzrq_y_left,
 	 		</if>
-	 		<if test="zzrq_top!=null">
-	 			zzrq_top,
+	 		<if test="zzrq_y_top!=null">
+	 			zzrq_y_top,
+	 		</if>
+	 		<if test="zzrq_m_left!=null">
+	 			zzrq_m_left,
+	 		</if>
+	 		<if test="zzrq_m_top!=null">
+	 			zzrq_m_top,
 	 		</if>
 	 		<if test="qrcode_left!=null">
 	 			qrcode_left,
@@ -187,8 +199,11 @@
  			<if test="ndbh!=null">
 	 			ndbh,
 	 		</if>
- 			<if test="zzrq!=null">
-	 			zzrq,
+ 			<if test="zzrq_y!=null">
+	 			zzrq_y,
+	 		</if>
+ 			<if test="zzrq_m!=null">
+	 			zzrq_m,
 	 		</if>
  			<if test="qrcode_crs_url!=null">
 	 			qrcode_crs_url,
@@ -217,8 +232,11 @@
  			<if test="ndbh!=null">
 	 			#{ndbh},
 	 		</if>
- 			<if test="zzrq!=null">
-	 			#{zzrq},
+ 			<if test="zzrq_y!=null">
+	 			#{zzrq_y},
+	 		</if>
+ 			<if test="zzrq_m!=null">
+	 			#{zzrq_m},
 	 		</if>
  			<if test="qrcode_crs_url!=null">
 	 			#{qrcode_crs_url},
@@ -302,11 +320,17 @@
  		<if test="ndbh_top!=null">
  			ndbh_top=#{ndbh_top},
  		</if>
- 		<if test="zzrq_left!=null">
- 			zzrq_left=#{zzrq_left},
+ 		<if test="zzrq_y_left!=null">
+ 			zzrq_y_left=#{zzrq_y_left},
  		</if>
- 		<if test="zzrq_top!=null">
- 			zzrq_top=#{zzrq_top},
+ 		<if test="zzrq_y_top!=null">
+ 			zzrq_y_top=#{zzrq_y_top},
+ 		</if>
+ 		<if test="zzrq_m_left!=null">
+ 			zzrq_m_left=#{zzrq_m_left},
+ 		</if>
+ 		<if test="zzrq_m_top!=null">
+ 			zzrq_m_top=#{zzrq_m_top},
  		</if>
  		<if test="qrcode_left!=null">
  			qrcode_left=#{qrcode_left},

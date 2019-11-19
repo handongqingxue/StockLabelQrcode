@@ -92,20 +92,24 @@ function previewPdf(){
 			var gcrjTop=crsPdfSet.gcrj_top;
 			var ndbhLeft=crsPdfSet.ndbh_left;
 			var ndbhTop=crsPdfSet.ndbh_top;
-			var zzrqLeft=crsPdfSet.zzrq_left;
-			var zzrqTop=crsPdfSet.zzrq_top;
+			var zzrqYLeft=crsPdfSet.zzrq_y_left;
+			var zzrqYTop=crsPdfSet.zzrq_y_top;
+			
+			var zzrqMLeft=crsPdfSet.zzrq_m_left;
+			var zzrqMTop=crsPdfSet.zzrq_m_top;
 			var qrcodeLeft=crsPdfSet.qrcode_left;
 			var qrcodeTop=crsPdfSet.qrcode_top;
 			
 			var pdfDiv=$("#pdf_div");
 			pdfDiv.empty();
 			pdfDiv.append("<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
-					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_crs_url+"\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_crs_url+"\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 					+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+row.cpxh+"</span>"
 					+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+row.qpbh+"</span>"
 					+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+row.gcrj+"</span>"
 					+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+row.ndbh+"</span>"
-					+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+row.zzrq+"</span>");
+					+"<span id=\"zzrqY_span\" style=\"margin-top: "+zzrqYTop+"px;margin-left: "+zzrqYLeft+"px;position: absolute;\">"+row.zzrq_y+"</span>"
+					+"<span id=\"zzrqM_span\" style=\"margin-top: "+zzrqMTop+"px;margin-left: "+zzrqMLeft+"px;position: absolute;\">"+row.zzrq_m+"</span>");
 		}
 	,"json");
 }
@@ -313,8 +317,9 @@ function outputPdf(){
                    }
                    
                    var qpbh=$("#pdf_div #qpbh_span").text();
-                   var zzrq=$("#pdf_div #zzrq_span").text();
-                   pdf.save(qpbh+zzrq+'.pdf');
+                   var zzrqY=$("#pdf_div #zzrqY_span").text();
+                   var zzrqM=$("#pdf_div #zzrqM_span").text();
+                   pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
     			   $("#pdf_div").css("border","#000 solid 1px");
                },
                //背景设为白色（默认为黑色）
