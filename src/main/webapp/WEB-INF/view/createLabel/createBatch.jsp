@@ -79,7 +79,7 @@ $(function(){
 						        			   $(this).find("span[id='qpbh_span']").text(qpbh);
 						        			   //if(pdfDivId=="pdf_divCB19001002")
 						        				   //return false;
-						        			   $("#"+pdfDivId).css("border","0px");
+					        			   	   $("#pdf_div").css("border","0px");
 						        			   $("#pdf_div").empty();
 						        			   $("#pdf_div").append($("#"+pdfDivId).html());
 						        			   //console.log($("#pdf_div").html());
@@ -122,6 +122,7 @@ $(function(){
 							   	                               }
 							   	                           }
 							   	                           pdf.save(qpbh+zzrq+'.pdf');
+									        			   $("#pdf_div").css("border","#000 solid 1px");
 							   	                       },
 							   	                       //背景设为白色（默认为黑色）
 							   	                       background: "#fff"  

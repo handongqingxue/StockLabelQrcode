@@ -100,7 +100,7 @@ function previewPdf(){
 			var pdfDiv=$("#pdf_div");
 			pdfDiv.empty();
 			pdfDiv.append("<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
-					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_url+"\" style=\"width: 180px;height: 180px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_crs_url+"\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 					+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+row.cpxh+"</span>"
 					+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+row.qpbh+"</span>"
 					+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+row.gcrj+"</span>"
@@ -236,7 +236,7 @@ function initBatOutpDialog(){
 function initPrePdfDialog(){
 	previewPdfDialog=$("#previewPdf_div").dialog({
 		title:"预览Pdf",
-		width:570,
+		width:520,
 		height:400,
 		top:80,
 		left:850,
@@ -250,9 +250,9 @@ function initPrePdfDialog(){
         ]
 	});
 	
-	$("#previewPdf_div #pdf_div").css("width","570px");
+	$("#previewPdf_div #pdf_div").css("width","500px");
 	
-	$(".panel.window").eq(1).css("width","553px");
+	$(".panel.window").eq(1).css("width","513px");
 	$(".panel.window").eq(1).css("margin-top","20px");
 	$(".panel.window").eq(1).css("margin-left","300px");
 	$(".panel.window").eq(1).css("background","linear-gradient(to bottom,#E7F4FD 0,#E7F4FD 20%)"); 
@@ -274,6 +274,7 @@ function checkPreviewPdfHtml(){
 
 function outputPdf(){
 	if(checkPreviewPdfHtml()){
+	   	$("#pdf_div").css("border","0px");
 		html2canvas(
            document.getElementById("pdf_div"),
            {
@@ -314,6 +315,7 @@ function outputPdf(){
                    var qpbh=$("#pdf_div #qpbh_span").text();
                    var zzrq=$("#pdf_div #zzrq_span").text();
                    pdf.save(qpbh+zzrq+'.pdf');
+    			   $("#pdf_div").css("border","#000 solid 1px");
                },
                //背景设为白色（默认为黑色）
                background: "#fff"  
@@ -355,7 +357,7 @@ function resetPrePdfWindowShadow(){
 	$(".panel.window").eq(1).find(".panel-title").css("padding-left","10px");
 	
 	//以下的是表格下面的面板
-	$(".window-shadow").eq(1).css("width","570px");
+	$(".window-shadow").eq(1).css("width","520px");
 	$(".window-shadow").eq(1).css("margin-top","20px");
 	$(".window-shadow").eq(1).css("margin-left","300px");
 	$(".window-shadow").eq(1).css("background","#E7F4FD");
@@ -419,7 +421,7 @@ function setFitWidthInParent(o){
 		</table>
 	</div>
 	<div id="previewPdf_div">
-		<div id="pdf_div" style="width:400px;height: 300px;border:#000 solid 1px;">
+		<div id="pdf_div" style="width:500px;height: 300px;border:#000 solid 1px;">
 			<!-- 
 			 <img alt="" src="<%=basePath %>/resource/images/qrcode.png" style="width: 80px;height: 80px;margin-top: 10px;margin-left: 300px;position: absolute;">
 		     <span style="margin-top: 20px;margin-left: 150px;position: absolute;">356-70</span>

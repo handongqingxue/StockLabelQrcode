@@ -28,6 +28,7 @@ $(function(){
  			   var pdfDivId=$(this).attr("id");
  			   var zzrq=$(this).attr("zzrq");
  			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
+		   	   $("#"+pdfDivId).css("border","0px");
  			   html2canvas(
                    document.getElementById(pdfDivId),
                    {
@@ -65,6 +66,7 @@ $(function(){
                                }
                            }
                            pdf.save(qpbh+zzrq+'.pdf');
+	        			   $("#"+pdfDivId).css("border","#000 solid 1px");
                        },
                        //背景设为白色（默认为黑色）
                        background: "#fff"  
@@ -80,14 +82,37 @@ function initPreviewPdfDiv(jsonStr){
 	var airBottleJA=JSON.parse(jsonStr);
 	for(var i=0;i<airBottleJA.length;i++){
 		var airBottleJO=airBottleJA[i];
-		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrq=\""+airBottleJO.zzrq+"\" style=\"width:400px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
-								+"<img alt=\"\" src=\""+airBottleJO.qrcode_crs_url+"\" style=\"width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;\">"
-								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
-								+"<span style=\"margin-top: 60px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
-								+"<span style=\"margin-top: 100px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
-								+"<span style=\"margin-top: 140px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
-								+"<span style=\"margin-top: 180px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq+"</span>"
-							+"</div>");
+		
+		$.ajaxSetup({async:false});
+		$.post("selectCRSPdfSet",
+			{labelType:airBottleJO.label_type,accountNumber:'${sessionScope.user.id}'},
+			function(data){
+				//console.log(data);
+				var crsPdfSet=data.crsPdfSet;
+				var id=crsPdfSet.id;
+				var cpxhLeft=crsPdfSet.cpxh_left;
+				var cpxhTop=crsPdfSet.cpxh_top;
+				var qpbhLeft=crsPdfSet.qpbh_left;
+				var qpbhTop=crsPdfSet.qpbh_top;
+				var gcrjLeft=crsPdfSet.gcrj_left;
+				var gcrjTop=crsPdfSet.gcrj_top;
+				var ndbhLeft=crsPdfSet.ndbh_left;
+				var ndbhTop=crsPdfSet.ndbh_top;
+				var zzrqLeft=crsPdfSet.zzrq_left;
+				var zzrqTop=crsPdfSet.zzrq_top;
+				var qrcodeLeft=crsPdfSet.qrcode_left;
+				var qrcodeTop=crsPdfSet.qrcode_top;
+	
+				previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrq=\""+airBottleJO.zzrq+"\" style=\"width:500px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
+						+"<img id=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_crs_url+"\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+						+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
+						+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
+						+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+airBottleJO.gcrj+"</span>"
+						+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+airBottleJO.ndbh+"</span>"
+						+"<span id=\"zzrq_span\" style=\"margin-top: "+zzrqTop+"px;margin-left: "+zzrqLeft+"px;position: absolute;\">"+airBottleJO.zzrq+"</span>"
+					+"</div>");
+			}
+		,"json");
 	}
 }
 </script>
