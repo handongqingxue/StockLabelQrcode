@@ -132,11 +132,11 @@ function initPreviewPdfDiv(jsonStr){
 }
 </script>
 </head>
-<body>
-<div id="previewPdf_div" style="width: 500px;margin:0 auto;">
-</div>
+<body id="aaa">
 <div style="margin-top: 10px;text-align: center;">
 	<a id="output_but">导出为PDF</a>
+</div>
+<div id="previewPdf_div" style="width: 500px;margin:0 auto;margin-top: 10px;">
 </div>
 <div id="outputPdf_div" style="width: 500px;margin:0 auto;display: none;">
 </div>
