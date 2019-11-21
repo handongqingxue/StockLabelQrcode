@@ -10,6 +10,7 @@
 <script type="text/javascript" src="<%=basePath %>resource/js/pdf/html2canvas.min.js"></script>
 <script type="text/javascript">
 var path='<%=basePath %>';
+var pdfHeight=0;
 $(function(){
 	$.post("getPrePdfJsonByUuid",
 		{uuid:'${param.uuid}'},
@@ -23,67 +24,72 @@ $(function(){
 	$("#output_but").linkbutton({
 		iconCls:"icon-back",
 		onClick:function(){
-			var previewPdfDiv=$("#previewPdf_div");
-			previewPdfDiv.find("div[id^='pdf_div']").each(function(i){
- 			   var pdfDivId=$(this).attr("id");
- 			   var zzrqY=$(this).attr("zzrqY");
- 			   var zzrqM=$(this).attr("zzrqM");
- 			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
-		   	   $("#"+pdfDivId).css("border","0px");
- 			   html2canvas(
-                   document.getElementById(pdfDivId),
-                   {
-                       dpi: 172,//导出pdf清晰度
-                       onrendered: function (canvas) {
-                           var contentWidth = canvas.width;
-                           var contentHeight = canvas.height;
-    
-                           //一页pdf显示html页面生成的canvas高度;
-                           var pageHeight = contentWidth / 592.28 * 841.89;
-                           //未生成pdf的html页面高度
-                           var leftHeight = contentHeight;
-                           //pdf页面偏移
-                           var position = 0;
-                           //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
-                           var imgWidth = 595.28;
-                           var imgHeight = 592.28 / contentWidth * contentHeight;
-    
-                           var pageData = canvas.toDataURL('image/jpeg', 1.0);
-                           var pdf = new jsPDF('', 'pt', 'a4');
-    
-                           //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-                           //当内容未超过pdf一页显示的范围，无需分页
-                           if (leftHeight < pageHeight) {
-                               pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
-                           } else {
-                               while (leftHeight > 0) {
-                                   pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-                                   leftHeight -= pageHeight;
-                                   position -= 841.89;
-                                   //避免添加空白页
-                                   if (leftHeight > 0) {
-                                       pdf.addPage();
-                                   }
-                               }
-                           }
-                           pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
-	        			   $("#"+pdfDivId).css("border","#000 solid 1px");
-                       },
-                       //背景设为白色（默认为黑色）
-                       background: "#fff"  
-                   }
-                )
- 		   });
+			outputPdf();
 		}
 	});
 });
 
+function outputPdf(){
+	$("#outputPdf_div").css("display","block");
+	$("#previewPdf_div div[id^='pdf_div']").each(function(){
+		$("#outputPdf_div").append($(this).clone());
+	});
+    $("#outputPdf_div").css("height",pdfHeight+"px");
+	
+	html2canvas(
+        document.getElementById("outputPdf_div"),
+        {
+            dpi: 172,//导出pdf清晰度
+            onrendered: function (canvas) {
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+
+                //一页pdf显示html页面生成的canvas高度;
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                //未生成pdf的html页面高度
+                var leftHeight = contentHeight;
+                //pdf页面偏移
+                var position = 0;
+                //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
+                var imgWidth = 595.28;
+                var imgHeight = 592.28 / contentWidth * contentHeight;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                //当内容未超过pdf一页显示的范围，无需分页
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                } else {
+                    while (leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免添加空白页
+                        if (leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+                pdf.save($("#previewPdf_div #pch_hid").val()+'.pdf');
+                $("#outputPdf_div").empty();
+    		    $("#outputPdf_div").css("height","0px");
+    			$("#outputPdf_div").css("display","none");
+            },
+            //背景设为白色（默认为黑色）
+            background: "#fff"  
+        }
+     )
+}
+
 function initPreviewPdfDiv(jsonStr){
 	var previewPdfDiv=$("#previewPdf_div");
 	var airBottleJA=JSON.parse(jsonStr);
+    var pch=airBottleJA[0].qpbh.substring(4,7);
+    previewPdfDiv.append("<input type=\"hidden\" id=\"pch_hid\" value=\""+pch+"\"/>");
 	for(var i=0;i<airBottleJA.length;i++){
 		var airBottleJO=airBottleJA[i];
-		
 		$.ajaxSetup({async:false});
 		$.post("selectCRSPdfSet",
 			{labelType:airBottleJO.label_type,accountNumber:'${sessionScope.user.id}'},
@@ -105,8 +111,10 @@ function initPreviewPdfDiv(jsonStr){
 				var zzrqMTop=crsPdfSet.zzrq_m_top;
 				var qrcodeLeft=crsPdfSet.qrcode_left;
 				var qrcodeTop=crsPdfSet.qrcode_top;
-	
-				previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;\">"
+
+                var pageHeight=708.75;
+                pdfHeight+=pageHeight;
+                previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: "+pageHeight+"px;margin:0 auto;border:#000 solid 1px;\">"
 						+"<img id=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_crs_url+"\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 						+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
 						+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
@@ -118,14 +126,19 @@ function initPreviewPdfDiv(jsonStr){
 			}
 		,"json");
 	}
+	
+	
+         
 }
 </script>
 </head>
 <body>
-<div id="previewPdf_div" style="width: 410px;margin:0 auto;">
+<div id="previewPdf_div" style="width: 500px;margin:0 auto;">
 </div>
 <div style="margin-top: 10px;text-align: center;">
 	<a id="output_but">导出为PDF</a>
+</div>
+<div id="outputPdf_div" style="width: 500px;margin:0 auto;display: none;">
 </div>
 </body>
 </html>
