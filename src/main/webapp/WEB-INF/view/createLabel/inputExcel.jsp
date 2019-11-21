@@ -239,6 +239,8 @@ function resetWindowShadow(){
 }
 
 function resetTabStyle(){
+	$(".panel.datagrid").css("margin-left",initTab1WindowMarginLeft());
+	
 	$(".panel.datagrid .panel-header").css("background","linear-gradient(to bottom,#E7F4FD 0,#E7F4FD 20%)");
 	$(".panel.datagrid .panel-header .panel-title").css("color","#000");
 	$(".panel.datagrid .panel-header .panel-title").css("font-size","15px");
@@ -342,12 +344,21 @@ function setFitWidthInParent(o){
 	var width=$(o).css("width");
 	return width.substring(0,width.length-2)-210;
 }
+
+function initTab1WindowMarginLeft(){
+	var tab1DivWidth=$("#tab1_div").css("width");
+	tab1DivWidth=tab1DivWidth.substring(0,tab1DivWidth.length-2);
+	var pdWidth=$(".panel.datagrid").css("width");
+	pdWidth=pdWidth.substring(0,pdWidth.length-2);
+	return ((tab1DivWidth-pdWidth)/2)+"px";
+}
 </script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
 	<%@include file="top.jsp"%>
-	<div id="tab1_div" style="margin-top:20px;margin-left: 20px;">
+	<%@include file="left.jsp"%>
+	<div id="tab1_div" style="margin-top:20px;margin-left: 200px;">
 		<div id="toolbar">
 			气瓶编号：<input type="text" id="qpbh_inp"/>
 			<a id="search_but">查询</a>
