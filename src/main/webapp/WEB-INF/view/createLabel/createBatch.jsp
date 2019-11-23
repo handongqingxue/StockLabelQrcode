@@ -60,8 +60,8 @@ $(function(){
 							                       else if(qpbhSuf.length==1)
 							                    	    qpbhSuf="00"+i;
 							                       var qpbh=qpqsbhPre+qpbhSuf;
-							                       //if(!checkQpbhExist(qpbh))
-							                    	   //continue;
+							                       if(!checkQpbhExist(qpbh))
+							                    	   continue;
 							                       var pageHeight=709;
 							                       pdfHeight+=pageHeight;
 							                       previewPDFDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:500px;height: "+pageHeight+"px;border:#000 solid 1px;\">"+pdfDivHtml+"</div>");
@@ -78,95 +78,83 @@ $(function(){
 							        			   var pdfDivId=$(this).attr("id");
 							        			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
 							        			   qpbhsStr+=","+qpbh;
-							        			   qrcodeCRSUrlsStr+=","+$("#pdf_div #qrcode_img").attr("src");
-							        			   qrcodeHGZUrlsStr+=","+$("#pdf_div #qrcodeHGZUrl_hid").val();
+							        			   qrcodeCRSUrlsStr+=","+$(this).find("#qrcode_img").attr("src");
+							        			   qrcodeHGZUrlsStr+=","+$(this).find("#qrcodeHGZUrl_hid").val();
 							
-												   //console.log($(this).find("img[id='qrcode_img']").attr("src"));
-												   
 							        			   //removeChinesePdfLabel($(this));
 							        			   
 							        			   $(this).find("span[id='qpbh_span']").text(qpbh);
-							        			   //if(pdfDivId=="pdf_divCB19001002")
-							        				   //return false;
-						        			   	   //$("#pdf_div").css("border","0px");
-							        			   //$("#pdf_div").append($("#"+pdfDivId).html());
-							        			   var oo=$(this).clone();
-							        			   console.log(oo);
-							        			   $("#outputPdf_div").append(oo);
-							        			   //console.log($("#pdf_div").html());
-							        			   
-								   	                
+							        			   $("#outputPdf_div").append($(this).clone());
 							        		   });
 							        		   
 							        		   $("#outputPdf_div").css("height",pdfHeight+"px");
-							        		   //var oo=$("#pdf_div").clone();
-							        		   //oo.attr("id","aaa");
-							        		   //$("body").append(oo);
 							        		   
 							        		   html2canvas(
-								   	                   //document.getElementById("pdf_div"),
-								   	                   document.getElementById("outputPdf_div"),
-								   	                   {
-								   	                       dpi: 172,//导出pdf清晰度
-								   	                       onrendered: function (canvas) {
-								   	                           var contentWidth = canvas.width;
-								   	                           var contentHeight = canvas.height;
-								   	    
-								   	                           //一页pdf显示html页面生成的canvas高度;
-								   	                           var pageHeight = contentWidth / 592.28 * 841.89;
-								   	                           //var pageHeight = 300;
-								   	                           //未生成pdf的html页面高度
-								   	                           var leftHeight = contentHeight;
-								   	                           //pdf页面偏移
-								   	                           var position = 0;
-								   	                           //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
-								   	                           var imgWidth = 595.28;
-								   	                           var imgHeight = 592.28 / contentWidth * contentHeight;
-								   	                           //var imgWidth = 500;
-								   	                           //var imgHeight = 300;
-								   	    
-								   	                           var pageData = canvas.toDataURL('image/jpeg', 1.0);
-								   	                           var pdf = new jsPDF('', 'pt', 'a4');
-								   	    
-								   	                           //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-								   	                           //alert(leftHeight+","+imgHeight);
-								   	                           //当内容未超过pdf一页显示的范围，无需分页
-								   	                           if (leftHeight < pageHeight) {
-								   	                               pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
-								   	                           } else {
-								   	                               while (leftHeight > 0) {
-								   	                                   pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-								   	                                   leftHeight -= pageHeight;
-								   	                                   position -= 841.89;
-								   	                                   //避免添加空白页
-								   	                                   if (leftHeight > 0) {
-								   	                                       pdf.addPage();
-								   	                                   }
-								   	                               }
-								   	                           }
-								   	                           pdf.save($("#previewPdf_div #pch_hid").val()+zzrqY+zzrqM+'.pdf');
-										                       //$("#outputPdf_div").empty();
-											           		   //$("#outputPdf_div").css("height","0px");
-											           		   //$("#outputPdf_div").css("display","none");
-								   	                       },
-								   	                       //背景设为白色（默认为黑色）
-								   	                       background: "#fff"  
-								   	                   }
-								   	                )
+							   	                   document.getElementById("outputPdf_div"),
+							   	                   {
+							   	                       dpi: 172,//导出pdf清晰度
+							   	                       onrendered: function (canvas) {
+							   	                           var contentWidth = canvas.width;
+							   	                           var contentHeight = canvas.height;
+							   	    
+							   	                           //一页pdf显示html页面生成的canvas高度;
+							   	                           var pageHeight = contentWidth / 592.28 * 841.89;
+							   	                           //var pageHeight = 300;
+							   	                           //未生成pdf的html页面高度
+							   	                           var leftHeight = contentHeight;
+							   	                           //pdf页面偏移
+							   	                           var position = 0;
+							   	                           //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
+							   	                           var imgWidth = 595.28;
+							   	                           var imgHeight = 592.28 / contentWidth * contentHeight;
+							   	                           //var imgWidth = 500;
+							   	                           //var imgHeight = 300;
+							   	    
+							   	                           var pageData = canvas.toDataURL('image/jpeg', 1.0);
+							   	                           var pdf = new jsPDF('', 'pt', 'a4');
+							   	    
+							   	                           //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+							   	                           //alert(leftHeight+","+imgHeight);
+							   	                           //当内容未超过pdf一页显示的范围，无需分页
+							   	                           if (leftHeight < pageHeight) {
+							   	                               pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+							   	                           } else {
+							   	                               while (leftHeight > 0) {
+							   	                                   pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+							   	                                   leftHeight -= pageHeight;
+							   	                                   position -= 841.89;
+							   	                                   //避免添加空白页
+							   	                                   if (leftHeight > 0) {
+							   	                                       pdf.addPage();
+							   	                                   }
+							   	                               }
+							   	                           }
+							   	                           pdf.save($("#previewPdf_div #pch_hid").val()+zzrqY+zzrqM+'.pdf');
+							   	                           $("#previewPdf_div").empty();
+							   	                           var firstPdfDiv=$("#outputPdf_div div[id^='pdf_div']").first();
+							   	                           firstPdfDiv.css("height","300px");
+							   	                           $("#previewPdf_div").append(firstPdfDiv);
+							   	                           
+									                       $("#outputPdf_div").empty();
+										           		   $("#outputPdf_div").css("height","0px");
+										           		   $("#outputPdf_div").css("display","none");
+							   	                       },
+							   	                       //背景设为白色（默认为黑色）
+							   	                       background: "#fff"  
+							   	                   }
+							   	                )
 							        		   
-	
 							       			   qpbhsStr=qpbhsStr.substring(1);
 							       			   qrcodeCRSUrlsStr=qrcodeCRSUrlsStr.substring(1);
 							       			   qrcodeHGZUrlsStr=qrcodeHGZUrlsStr.substring(1);
 							       			   
-							       			   /*
 							       			   if(qpbhsStr!=""){
 								  	               editPreviewCrsPdfSet();
 								  	               
 								        		   var cpxh=$("#cpxh_inp").val();
 								       			   var gcrj=$("#gcrj_inp").val();
 								       			   var ndbh=$("#ndbh_inp").val();
-								       			   var label_type=$("#pdf_div #labelType_hid").val();
+								       			   var label_type=$("#previewPdf_div #labelType_hid").val();
 								       			
 								        		   $.post("insertAirBottleRecord",
 								       				   {cpxh:cpxh,qpbhsStr:qpbhsStr,qrcodeCRSUrlsStr:qrcodeCRSUrlsStr,
@@ -176,7 +164,6 @@ $(function(){
 								        		   	   }
 								        		   ,"json");
 							       			   }
-							       			   */
 							        	   	}
 	        						    }
         						    }
@@ -285,35 +272,37 @@ function createHGZQrcode(qpbh,pdfDivId){
 }
 
 function editPreviewCrsPdfSet(){
-	var id=$("#pdf_div #id_hid").val();
-    var cpxhLeft=$("#pdf_div #cpxh_span").css("margin-left");
+	var pdfDiv=$("#previewPdf_div").find("div[id^='pdf_div']").eq(0);
+	
+	var id=pdfDiv.find("#id_hid").val();
+    var cpxhLeft=pdfDiv.find("#cpxh_span").css("margin-left");
     cpxhLeft=cpxhLeft.substring(0,cpxhLeft.length-2);
-    var cpxhTop=$("#pdf_div #cpxh_span").css("margin-top");
+    var cpxhTop=pdfDiv.find("#cpxh_span").css("margin-top");
     cpxhTop=cpxhTop.substring(0,cpxhTop.length-2);
-    var qpbhLeft=$("#pdf_div #qpbh_span").css("margin-left");
+    var qpbhLeft=pdfDiv.find("#qpbh_span").css("margin-left");
     qpbhLeft=qpbhLeft.substring(0,qpbhLeft.length-2);
-    var qpbhTop=$("#pdf_div #qpbh_span").css("margin-top");
+    var qpbhTop=pdfDiv.find("#qpbh_span").css("margin-top");
     qpbhTop=qpbhTop.substring(0,qpbhTop.length-2);
-    var gcrjLeft=$("#pdf_div #gcrj_span").css("margin-left");
+    var gcrjLeft=pdfDiv.find("#gcrj_span").css("margin-left");
     gcrjLeft=gcrjLeft.substring(0,gcrjLeft.length-2);
-    var gcrjTop=$("#pdf_div #gcrj_span").css("margin-top");
+    var gcrjTop=pdfDiv.find("#gcrj_span").css("margin-top");
     gcrjTop=gcrjTop.substring(0,gcrjTop.length-2);
-    var ndbhLeft=$("#pdf_div #ndbh_span").css("margin-left");
+    var ndbhLeft=pdfDiv.find("#ndbh_span").css("margin-left");
     ndbhLeft=ndbhLeft.substring(0,ndbhLeft.length-2);
-    var ndbhTop=$("#pdf_div #ndbh_span").css("margin-top");
+    var ndbhTop=pdfDiv.find("#ndbh_span").css("margin-top");
     ndbhTop=ndbhTop.substring(0,ndbhTop.length-2);
     
-    var zzrqYLeft=$("#pdf_div #zzrqY_span").css("margin-left");
+    var zzrqYLeft=pdfDiv.find("#zzrqY_span").css("margin-left");
     zzrqYLeft=zzrqYLeft.substring(0,zzrqYLeft.length-2);
-    var zzrqYTop=$("#pdf_div #zzrqY_span").css("margin-top");
+    var zzrqYTop=pdfDiv.find("#zzrqY_span").css("margin-top");
     zzrqYTop=zzrqYTop.substring(0,zzrqYTop.length-2);
-    var zzrqMLeft=$("#pdf_div #zzrqM_span").css("margin-left");
+    var zzrqMLeft=pdfDiv.find("#zzrqM_span").css("margin-left");
     zzrqMLeft=zzrqMLeft.substring(0,zzrqMLeft.length-2);
-    var zzrqMTop=$("#pdf_div #zzrqM_span").css("margin-top");
+    var zzrqMTop=pdfDiv.find("#zzrqM_span").css("margin-top");
     zzrqMTop=zzrqMTop.substring(0,zzrqMTop.length-2);
-    var qrcodeLeft=$("#pdf_div #qrcode_img").css("margin-left");
+    var qrcodeLeft=pdfDiv.find("#qrcode_img").css("margin-left");
     qrcodeLeft=qrcodeLeft.substring(0,qrcodeLeft.length-2);
-    var qrcodeTop=$("#pdf_div #qrcode_img").css("margin-top");
+    var qrcodeTop=pdfDiv.find("#qrcode_img").css("margin-top");
     qrcodeTop=qrcodeTop.substring(0,qrcodeTop.length-2);
     
     console.log("cpxhLeft==="+cpxhLeft);
@@ -366,9 +355,9 @@ function previewPDF(labelType){
 			var previewPDFDiv=$("#previewPdf_div");
 			previewPDFDiv.empty();
 			previewPDFDiv.append("<input type=\"hidden\" id=\"pch_hid\" value=\""+pch+"\"/>");
+			previewPDFDiv.append("<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>");
 			previewPDFDiv.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;font-size: 18px;border:#000 solid 1px;\">"
 									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
-									+"<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>"
 									+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
 									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 									+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
