@@ -48,7 +48,9 @@ $(function(){
 							        		   //var zzrq=$("#zzrq_inp").val().replace(/\s*/g,'');
 							        		   var zzrqY=$("#zzrqY_inp").val();
 							        		   var zzrqM=$("#zzrqM_inp").val();
-							        		   var outputPdfDiv=$("#outputPdf_div");
+							        		   var previewPDFDiv=$("#previewPdf_div");
+							        		   var pdfDivHtml=$("#previewPdf_div #pdf_div").html();
+							        		   $("#previewPdf_div #pdf_div").remove();
 							        		   var pdfHeight=0;
 							        		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
 							                       var qpbhSuf;
@@ -58,26 +60,26 @@ $(function(){
 							                       else if(qpbhSuf.length==1)
 							                    	    qpbhSuf="00"+i;
 							                       var qpbh=qpqsbhPre+qpbhSuf;
-							                       if(!checkQpbhExist(qpbh))
-							                    	   continue;
+							                       //if(!checkQpbhExist(qpbh))
+							                    	   //continue;
 							                       var pageHeight=709;
 							                       pdfHeight+=pageHeight;
-							        			   outputPdfDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:500px;height: "+pageHeight+"px;border:#000 solid 1px;\">"+$("#pdf_div").html()+"</div>");
+							                       previewPDFDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:500px;height: "+pageHeight+"px;border:#000 solid 1px;\">"+pdfDivHtml+"</div>");
+							        			   
+							        			   createCRSQrcode(qpbh,"pdf_div"+qpbh);
+							        			   createHGZQrcode(qpbh,"pdf_div"+qpbh);
 							        		   }
 							        		   
 							        		   var qpbhsStr="";
 							        		   var qrcodeCRSUrlsStr="";
 							        		   var qrcodeHGZUrlsStr="";
-						        			   $("#pdf_div").empty();
-							        		   outputPdfDiv.find("div[id^='pdf_div']").each(function(i){
+							        		   $("#outputPdf_div").css("display","block");
+							        		   previewPDFDiv.find("div[id^='pdf_div']").each(function(i){
 							        			   var pdfDivId=$(this).attr("id");
 							        			   var qpbh=pdfDivId.substring(7,pdfDivId.length);
 							        			   qpbhsStr+=","+qpbh;
 							        			   qrcodeCRSUrlsStr+=","+$("#pdf_div #qrcode_img").attr("src");
 							        			   qrcodeHGZUrlsStr+=","+$("#pdf_div #qrcodeHGZUrl_hid").val();
-							        			   
-							        			   createCRSQrcode(qpbh,pdfDivId);
-							        			   createHGZQrcode(qpbh,pdfDivId);
 							
 												   //console.log($(this).find("img[id='qrcode_img']").attr("src"));
 												   
@@ -86,22 +88,24 @@ $(function(){
 							        			   $(this).find("span[id='qpbh_span']").text(qpbh);
 							        			   //if(pdfDivId=="pdf_divCB19001002")
 							        				   //return false;
-						        			   	   $("#pdf_div").css("border","0px");
+						        			   	   //$("#pdf_div").css("border","0px");
 							        			   //$("#pdf_div").append($("#"+pdfDivId).html());
-							        			   $("#pdf_div").append($("#"+pdfDivId).prop("outerHTML"));
+							        			   var oo=$(this).clone();
+							        			   console.log(oo);
+							        			   $("#outputPdf_div").append(oo);
 							        			   //console.log($("#pdf_div").html());
 							        			   
 								   	                
 							        		   });
 							        		   
-							        		   $("#pdf_div").css("height",pdfHeight+"px");
-							        		   var oo=$("#pdf_div").clone();
-							        		   oo.attr("id","aaa");
-							        		   $("body").append(oo);
+							        		   $("#outputPdf_div").css("height",pdfHeight+"px");
+							        		   //var oo=$("#pdf_div").clone();
+							        		   //oo.attr("id","aaa");
+							        		   //$("body").append(oo);
 							        		   
 							        		   html2canvas(
 								   	                   //document.getElementById("pdf_div"),
-								   	                   document.getElementById("aaa"),
+								   	                   document.getElementById("outputPdf_div"),
 								   	                   {
 								   	                       dpi: 172,//导出pdf清晰度
 								   	                       onrendered: function (canvas) {
@@ -140,9 +144,10 @@ $(function(){
 								   	                                   }
 								   	                               }
 								   	                           }
-								   	                           //pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
-								   	                           pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
-										        			   $("#pdf_div").css("border","#000 solid 1px");
+								   	                           pdf.save($("#previewPdf_div #pch_hid").val()+zzrqY+zzrqM+'.pdf');
+										                       //$("#outputPdf_div").empty();
+											           		   //$("#outputPdf_div").css("height","0px");
+											           		   //$("#outputPdf_div").css("display","none");
 								   	                       },
 								   	                       //背景设为白色（默认为黑色）
 								   	                       background: "#fff"  
@@ -154,6 +159,7 @@ $(function(){
 							       			   qrcodeCRSUrlsStr=qrcodeCRSUrlsStr.substring(1);
 							       			   qrcodeHGZUrlsStr=qrcodeHGZUrlsStr.substring(1);
 							       			   
+							       			   /*
 							       			   if(qpbhsStr!=""){
 								  	               editPreviewCrsPdfSet();
 								  	               
@@ -170,6 +176,7 @@ $(function(){
 								        		   	   }
 								        		   ,"json");
 							       			   }
+							       			   */
 							        	   	}
 	        						    }
         						    }
@@ -257,6 +264,7 @@ function removeChinesePdfLabel(pdfDiv){
 
 function createCRSQrcode(qpbh,pdfDivId){
    var url=path+"createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
+   $.ajaxSetup({async:false});
    $.post("createQrcode",
 	   {url:url,qpbh:qpbh},
 	   function(data){
@@ -267,6 +275,7 @@ function createCRSQrcode(qpbh,pdfDivId){
 
 function createHGZQrcode(qpbh,pdfDivId){
 	var url=path+"createLabel/toQrcodeInfo?action=hgz&qpbh="+qpbh;
+	$.ajaxSetup({async:false});
     $.post("createQrcode",
 	   {url:url,qpbh:qpbh},
 	   function(data){
@@ -352,10 +361,12 @@ function previewPDF(labelType){
 			var ndbh=$("#ndbh_inp").val();
 			var zzrqY=$("#zzrqY_inp").val();
 			var zzrqM=$("#zzrqM_inp").val();
+		    var pch=$("#qpqsbh_inp").val().substring(4,7);
 			
-			var previewPDFTd=$("#previewPDF_td");
-			previewPDFTd.empty();
-			previewPDFTd.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;font-size: 18px;border:#000 solid 1px;\">"
+			var previewPDFDiv=$("#previewPdf_div");
+			previewPDFDiv.empty();
+			previewPDFDiv.append("<input type=\"hidden\" id=\"pch_hid\" value=\""+pch+"\"/>");
+			previewPDFDiv.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;font-size: 18px;border:#000 solid 1px;\">"
 									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
 									+"<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>"
 									+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
@@ -706,6 +717,8 @@ function initWindowMarginLeft(){
 						</div>
 					</td>
 					<td id="previewPDF_td">
+						<div id="previewPdf_div" style="width: 500px;margin:0 auto;margin-top: 10px;">
+						</div>
 					</td>
 					<!-- 
 					<div id="pdf_div" style="width:500px;height: 300px;border:#000 solid 1px;">
@@ -719,11 +732,11 @@ function initWindowMarginLeft(){
 					 -->
 				</tr>
 			</table>
-			<div id="outputPdf_div" style="display: none;">
-			</div>
 		</form>
 	</div>
 	<%@include file="foot.jsp"%>
+	<div id="outputPdf_div" style="width: 500px;margin:0 auto;display: none;">
+	</div>
 </div>
 </body>
 </html>
