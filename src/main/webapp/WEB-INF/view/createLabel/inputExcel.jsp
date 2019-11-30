@@ -40,7 +40,7 @@ $(function(){
 		pagination:true,
 		pageSize:10,
 		columns:[[
-            {field:"cpxh",title:"产品型号",width:100,sortable:true},
+            {field:"cpxh_qc",title:"产品型号",width:100,sortable:true},
             {field:"qpbh",title:"气瓶编号",width:150,sortable:true},
             {field:"gcrj",title:"公称容积",width:80,sortable:true},
             {field:"ndbh",title:"内胆壁厚",width:80,sortable:true},
@@ -123,7 +123,7 @@ $(function(){
 		pagination:true,
 		pageSize:10,
 		columns:[[
-            {field:"cpxh",title:"产品型号",width:100,sortable:true},
+            {field:"cpxh_qc",title:"产品型号",width:100,sortable:true},
             {field:"qpbh",title:"气瓶编号",width:150,sortable:true},
             {field:"zl",title:"重量",width:80,sortable:true},
             {field:"scrj",title:"实测容积",width:80,sortable:true},
@@ -205,7 +205,7 @@ function getQPJAStr(){
 	for(var i=0;i<rows.length;i++){
 		if(i>0)
 			qpJAStr+=",";
-        qpJAStr+="{'qpbh':'"+rows[i].qpbh+"','zl':'"+rows[i].zl+"','scrj':'"+rows[i].scrj+"','qpzjxh':'"+rows[i].qpzjxh+"','qpzzdw':'"+rows[i].qpzzdw+"'}";
+        qpJAStr+="{'cpxh_qc':'"+rows[i].cpxh_qc+"','qpbh':'"+rows[i].qpbh+"','zl':'"+rows[i].zl+"','scrj':'"+rows[i].scrj+"','qpzjxh':'"+rows[i].qpzjxh+"','qpzzdw':'"+rows[i].qpzzdw+"'}";
 	}
 	qpJAStr+="]";
 	return qpJAStr;

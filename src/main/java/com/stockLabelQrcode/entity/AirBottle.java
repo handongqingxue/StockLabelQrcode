@@ -21,6 +21,12 @@ public class AirBottle implements Serializable {
 	public void setCpxh(String cpxh) {
 		this.cpxh = cpxh;
 	}
+	public String getCpxh_qc() {
+		return cpxh_qc;
+	}
+	public void setCpxh_qc(String cpxh_qc) {
+		this.cpxh_qc = cpxh_qc;
+	}
 	public String getQpbh() {
 		return qpbh;
 	}
@@ -99,7 +105,8 @@ public class AirBottle implements Serializable {
 	public void setInput(Boolean input) {
 		this.input = input;
 	}
-	private String cpxh;//产品型号
+	private String cpxh;//产品型号（简称）
+	private String cpxh_qc;//产品型号（全称）
 	private String qpbh;//气瓶编号
 	private String gcrj;//公称容积
 	private String ndbh;//内胆壁厚

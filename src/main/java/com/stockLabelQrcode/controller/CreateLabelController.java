@@ -420,13 +420,14 @@ public class CreateLabelController {
         	String[] qpbhArr = qpbhsStr.split(",");//这是上方表格里选中的数据
         	JSONArray qpJA = new JSONArray(qpJAStr);//这是下方Excel表格里的数据
         	
-			    for (int i = 1; i < qpJA.length(); i++) {  
+			    for (int i = 0; i < qpJA.length(); i++) {  
 			    	JSONObject qpJO = (JSONObject)qpJA.get(i);
 			    	String qpbh1 = qpJO.get("qpbh").toString();
 			    	if(StringUtils.isEmpty(qpbh1))
 			    		continue;
 			    	for (String qpbh : qpbhArr) {
 				        if(qpbh.equals(qpbh1)) {
+				        	String cpxh_qc = qpJO.get("cpxh_qc").toString();
 				        	String zl = qpJO.get("zl").toString();
 				        	String scrj = qpJO.get("scrj").toString();
 				        	String qpzjxh = qpJO.get("qpzjxh").toString();
@@ -440,6 +441,7 @@ public class CreateLabelController {
 					        
 					        AirBottle airBottle=new AirBottle();
 					        airBottle.setQpbh(qpbh);
+					        airBottle.setCpxh_qc(cpxh_qc);
 					        airBottle.setZl(zl);
 					        airBottle.setScrj(scrj);
 					        airBottle.setQpzjxh(qpzjxh);
@@ -495,7 +497,7 @@ public class CreateLabelController {
 			        }
 			        System.out.println("  ");
 			        */
-			    	String cpxh = sheet.getCell(0, i).getContents();
+			    	String cpxh_qc = sheet.getCell(0, i).getContents();
 			    	String qpbh = sheet.getCell(1, i).getContents();
 		        	String zl = sheet.getCell(2, i).getContents();
 		        	String scrj = sheet.getCell(3, i).getContents();
@@ -507,7 +509,7 @@ public class CreateLabelController {
 			        System.out.println("qpzzdw==="+qpzzdw);
 			        
 			        AirBottle airBottle=new AirBottle();
-			        airBottle.setCpxh(cpxh);
+			        airBottle.setCpxh_qc(cpxh_qc);
 			        airBottle.setQpbh(qpbh);
 			        airBottle.setZl(zl);
 			        airBottle.setScrj(scrj);

@@ -13,7 +13,7 @@
      <span style="margin-top: 60px;margin-left: 20px;position: absolute;">${requestScope.airBottle.qpbh }</span>
      <span style="margin-top: 100px;margin-left: 20px;position: absolute;">${requestScope.airBottle.zl }</span>
      <span style="margin-top: 140px;margin-left: 20px;position: absolute;">${requestScope.airBottle.scrj }</span>
-     <span style="margin-top: 180px;margin-left: 20px;position: absolute;">${requestScope.airBottle.zzrq }</span>
+     <span style="margin-top: 180px;margin-left: 20px;position: absolute;">${requestScope.airBottle.zzrq_y }${requestScope.airBottle.zzrq_m }</span>
      <span style="margin-top: 220px;margin-left: 20px;position: absolute;">${requestScope.airBottle.qpzzdw }</span>
      <span style="margin-top: 260px;margin-left: 20px;position: absolute;">支架型号：${requestScope.airBottle.qpzjxh }</span>
 </div>

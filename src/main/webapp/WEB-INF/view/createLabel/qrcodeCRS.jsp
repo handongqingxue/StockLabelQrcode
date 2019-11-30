@@ -11,7 +11,7 @@
 <div style="width:100%;height: 300px;margin:0 auto;margin-top:10px;">
      <span style="margin-top: 20px;margin-left: 20px;position: absolute;">${requestScope.airBottle.cpxh }</span>
      <span style="margin-top: 60px;margin-left: 20px;position: absolute;">${requestScope.airBottle.qpbh }</span>
-     <span style="margin-top: 100px;margin-left: 20px;position: absolute;">${requestScope.airBottle.zzrq }</span>
+     <span style="margin-top: 100px;margin-left: 20px;position: absolute;">${requestScope.airBottle.zzrq_y }${requestScope.airBottle.zzrq_m }</span>
 </div>
 </body>
 </html>

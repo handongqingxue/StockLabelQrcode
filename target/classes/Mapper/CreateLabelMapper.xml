@@ -254,6 +254,9 @@
  	</insert>
  	<update id="updateAirBottle" parameterType="com.stockLabelQrcode.entity.AirBottle">
  		update air_bottle set 
+ 		<if test="cpxh_qc!=null">
+ 			cpxh_qc=#{cpxh_qc},
+ 		</if>
  		<if test="zl!=null">
  			zl=#{zl},
  		</if>
