@@ -250,10 +250,11 @@ function removeChinesePdfLabel(pdfDiv){
 }
 
 function createCRSQrcode(qpbh,pdfDivId){
-   var url=path+"createLabel/toQrcodeInfo?action=crs&qpbh="+qpbh;
+   var action="crs";
+   var url=path+"createLabel/toQrcodeInfo?action="+action+"&qpbh="+qpbh;
    $.ajaxSetup({async:false});
    $.post("createQrcode",
-	   {url:url,qpbh:qpbh},
+	   {url:url,action:action,qpbh:qpbh},
 	   function(data){
 		   $("#"+pdfDivId).find("img[id='qrcode_img']").attr("src",data.qrcodeUrl);
    	   }
@@ -261,10 +262,11 @@ function createCRSQrcode(qpbh,pdfDivId){
 }
 
 function createHGZQrcode(qpbh,pdfDivId){
-	var url=path+"createLabel/toQrcodeInfo?action=hgz&qpbh="+qpbh;
+	var action="hgz";
+	var url=path+"createLabel/toQrcodeInfo?action="+action+"&qpbh="+qpbh;
 	$.ajaxSetup({async:false});
     $.post("createQrcode",
-	   {url:url,qpbh:qpbh},
+	   {url:url,action:action,qpbh:qpbh},
 	   function(data){
 		   $("#"+pdfDivId).find("#qrcodeHGZUrl_hid").val(data.qrcodeUrl);
    	   }

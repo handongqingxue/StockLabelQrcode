@@ -701,10 +701,10 @@ public class CreateLabelController {
 	 */
 	@RequestMapping(value="/createQrcode")
 	@ResponseBody
-	public Map<String, Object> createQrcode(String url, String qpbh) {
+	public Map<String, Object> createQrcode(String url, String action, String qpbh) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		String fileName = qpbh+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+		String fileName = action+qpbh+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
 		String avaPath="/GoodsPublic/upload/"+fileName;
 		String path = "D:/resource";
         Qrcode.createQrCode(url, path, fileName);
