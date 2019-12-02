@@ -32,7 +32,7 @@ $(function(){
 function outputPdf(){
 	$("#outputPdf_div").css("display","block");
 	$("#previewPdf_div div[id^='pdf_div']").each(function(){
-		$(this).css("border","0px");
+		$(this).css("border-color","#fff");
 		$("#outputPdf_div").append($(this).clone());
 	});
     $("#outputPdf_div").css("height",pdfHeight+"px");
@@ -77,7 +77,7 @@ function outputPdf(){
                 $("#outputPdf_div").empty();
     		    $("#outputPdf_div").css("height","0px");
     			$("#outputPdf_div").css("display","none");
-    			$("#previewPdf_div div[id^='pdf_div']").css("border","#000 solid 1px");
+    			$("#previewPdf_div div[id^='pdf_div']").css("border-color","#000");
             },
             //背景设为白色（默认为黑色）
             background: "#fff"  

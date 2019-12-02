@@ -278,7 +278,7 @@ function checkPreviewPdfHtml(){
 
 function outputPdf(){
 	if(checkPreviewPdfHtml()){
-	   	$("#pdf_div").css("border","0px");
+	   	$("#pdf_div").css("border-color","#fff");
 		html2canvas(
            document.getElementById("pdf_div"),
            {
@@ -320,7 +320,7 @@ function outputPdf(){
                    var zzrqY=$("#pdf_div #zzrqY_span").text();
                    var zzrqM=$("#pdf_div #zzrqM_span").text();
                    pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
-    			   $("#pdf_div").css("border","#000 solid 1px");
+    			   $("#pdf_div").css("border-color","#000");
                },
                //背景设为白色（默认为黑色）
                background: "#fff"  

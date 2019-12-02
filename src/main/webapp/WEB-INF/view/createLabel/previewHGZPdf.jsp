@@ -46,7 +46,7 @@ $(function(){
 
 function singleOutputPdf(){
 	var pdfDiv=$("#previewPdf_div div[id^='pdf_div']").eq(0);
-	pdfDiv.css("border","0px");
+	pdfDiv.css("border-color","#fff");
 	var pdfDivId=pdfDiv.attr("id");
     var zzrqY=pdfDiv.attr("zzrqY");
     var zzrqM=pdfDiv.attr("zzrqM");
@@ -89,7 +89,7 @@ function singleOutputPdf(){
                    }
                }
                pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
-           	   pdfDiv.css("border","#000 solid 1px");
+           	   pdfDiv.css("border-color","#000");
            },
            //背景设为白色（默认为黑色）
            background: "#fff"  
@@ -100,7 +100,7 @@ function singleOutputPdf(){
 function batchOutputPdf(){
 	$("#outputPdf_div").css("display","block");
 	$("#previewPdf_div div[id^='pdf_div']").each(function(){
-		$(this).css("border","0px");
+		$(this).css("border-color","#fff");
 		$("#outputPdf_div").append($(this).clone());
 	});
     $("#outputPdf_div").css("height",pdfHeight+"px");
@@ -147,7 +147,7 @@ function batchOutputPdf(){
                 $("#outputPdf_div").empty();
     		    $("#outputPdf_div").css("height","0px");
     			$("#outputPdf_div").css("display","none");
-    			$("#previewPdf_div div[id^='pdf_div']").css("border","#000 solid 1px");
+    			$("#previewPdf_div div[id^='pdf_div']").css("border-color","#000");
             },
             //背景设为白色（默认为黑色）
             background: "#fff"  
