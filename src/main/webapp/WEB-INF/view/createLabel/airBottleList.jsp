@@ -78,7 +78,7 @@ $(function(){
 				$.messager.alert("提示","请选择要预览的Pdf信息！","warning");
 				return false;
 			}
-			var jsonStr="[{\"cpxh\":\""+row.cpxh+"\",\"qpbh\":\""+row.qpbh+"\",\"zl\":\""+row.zl+"\",\"scrj\":\""+row.scrj+"\",\"zzrq_y\":\""+row.zzrq_y+"\",\"zzrq_m\":\""+row.zzrq_m+"\",\"qrcode_hgz_url\":\""+row.qrcode_hgz_url+"\"}]";
+			var jsonStr="[{\"cpxh_qc\":\""+row.cpxh_qc+"\",\"qpbh\":\""+row.qpbh+"\",\"zl\":\""+row.zl+"\",\"scrj\":\""+row.scrj+"\",\"zzrq_y\":\""+row.zzrq_y+"\",\"zzrq_m\":\""+row.zzrq_m+"\",\"qrcode_hgz_url\":\""+row.qrcode_hgz_url+"\"}]";
 			//https://blog.csdn.net/xiaomage1314/article/details/77945425
 			window.open("toPreviewHGZPdf?action=single&jsonStr="+escape(jsonStr),"newwindow","width=300;");
 		}
@@ -104,7 +104,8 @@ $(function(){
 		pagination:true,
 		pageSize:20,
 		columns:[[
-            {field:"cpxh",title:"产品型号",width:100,sortable:true},
+            {field:"cpxh",title:"产品型号（简称）",width:150,sortable:true},
+            {field:"cpxh_qc",title:"产品型号（全称）",width:150,sortable:true},
             {field:"qpbh",title:"气瓶编号",width:150,sortable:true},
             {field:"gcrj",title:"公称容积",width:80,sortable:true},
             {field:"ndbh",title:"内胆壁厚",width:80,sortable:true},
@@ -120,7 +121,7 @@ $(function(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{cpxh:"<div style=\"text-align:center;\">暂无分类</div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"cpxh",colspan:10});
+				$(this).datagrid("mergeCells",{index:0,field:"cpxh",colspan:11});
 				data.total=0;
 			}
 			

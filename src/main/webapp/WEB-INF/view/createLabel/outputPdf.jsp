@@ -426,7 +426,7 @@ function setFitWidthInParent(o){
 		</table>
 	</div>
 	<div id="previewPdf_div">
-		<div id="pdf_div" style="width:500px;height: 300px;border:#000 solid 1px;">
+		<div id="pdf_div" style="width:500px;height: 300px;font-size: 20px;border:#000 solid 1px;">
 			<!-- 
 			 <img alt="" src="<%=basePath %>/resource/images/qrcode.png" style="width: 80px;height: 80px;margin-top: 10px;margin-left: 300px;position: absolute;">
 		     <span style="margin-top: 20px;margin-left: 150px;position: absolute;">356-70</span>

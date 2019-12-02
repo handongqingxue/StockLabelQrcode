@@ -356,7 +356,7 @@ function previewPDF(labelType){
 			previewPDFDiv.empty();
 			previewPDFDiv.append("<input type=\"hidden\" id=\"pch_hid\" value=\""+pch+"\"/>");
 			previewPDFDiv.append("<input id=\"labelType_hid\" type=\"hidden\" value=\""+labelType+"\"/>");
-			previewPDFDiv.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;font-size: 18px;border:#000 solid 1px;\">"
+			previewPDFDiv.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;font-size: 20px;border:#000 solid 1px;\">"
 									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
 									+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
 									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"

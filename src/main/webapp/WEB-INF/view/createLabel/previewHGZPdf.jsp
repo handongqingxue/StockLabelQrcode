@@ -46,6 +46,7 @@ $(function(){
 
 function singleOutputPdf(){
 	var pdfDiv=$("#previewPdf_div div[id^='pdf_div']").eq(0);
+	pdfDiv.css("border","0px");
 	var pdfDivId=pdfDiv.attr("id");
     var zzrqY=pdfDiv.attr("zzrqY");
     var zzrqM=pdfDiv.attr("zzrqM");
@@ -88,6 +89,7 @@ function singleOutputPdf(){
                    }
                }
                pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
+           	   pdfDiv.css("border","#000 solid 1px");
            },
            //背景设为白色（默认为黑色）
            background: "#fff"  
@@ -98,6 +100,7 @@ function singleOutputPdf(){
 function batchOutputPdf(){
 	$("#outputPdf_div").css("display","block");
 	$("#previewPdf_div div[id^='pdf_div']").each(function(){
+		$(this).css("border","0px");
 		$("#outputPdf_div").append($(this).clone());
 	});
     $("#outputPdf_div").css("height",pdfHeight+"px");
@@ -144,6 +147,7 @@ function batchOutputPdf(){
                 $("#outputPdf_div").empty();
     		    $("#outputPdf_div").css("height","0px");
     			$("#outputPdf_div").css("display","none");
+    			$("#previewPdf_div div[id^='pdf_div']").css("border","#000 solid 1px");
             },
             //背景设为白色（默认为黑色）
             background: "#fff"  
@@ -162,9 +166,9 @@ function initPreviewPdfDiv(jsonStr){
 		var airBottleJO=airBottleJA[i];
         var pageHeight=708.75;
         pdfHeight+=pageHeight;
-		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: "+pageHeight+"px;margin:0 auto;border:#000 solid 1px;\">"
+		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: "+pageHeight+"px;font-size: 20px;margin:0 auto;border:#000 solid 1px;\">"
 								+"<img alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\" style=\"width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;\">"
-								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
+								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh_qc+"</span>"
 								+"<span style=\"margin-top: 60px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
 								+"<span style=\"margin-top: 100px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
 								+"<span style=\"margin-top: 140px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"

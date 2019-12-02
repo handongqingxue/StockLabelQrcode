@@ -32,6 +32,7 @@ $(function(){
 function outputPdf(){
 	$("#outputPdf_div").css("display","block");
 	$("#previewPdf_div div[id^='pdf_div']").each(function(){
+		$(this).css("border","0px");
 		$("#outputPdf_div").append($(this).clone());
 	});
     $("#outputPdf_div").css("height",pdfHeight+"px");
@@ -76,6 +77,7 @@ function outputPdf(){
                 $("#outputPdf_div").empty();
     		    $("#outputPdf_div").css("height","0px");
     			$("#outputPdf_div").css("display","none");
+    			$("#previewPdf_div div[id^='pdf_div']").css("border","#000 solid 1px");
             },
             //背景设为白色（默认为黑色）
             background: "#fff"  
@@ -114,7 +116,7 @@ function initPreviewPdfDiv(jsonStr){
 
                 var pageHeight=708.75;
                 pdfHeight+=pageHeight;
-                previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: "+pageHeight+"px;margin:0 auto;border:#000 solid 1px;\">"
+                previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: "+pageHeight+"px;font-size: 20px;margin:0 auto;border:#000 solid 1px;\">"
 						+"<img id=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_crs_url+"\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 						+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
 						+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
