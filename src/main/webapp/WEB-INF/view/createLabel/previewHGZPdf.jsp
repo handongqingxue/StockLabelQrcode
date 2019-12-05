@@ -164,15 +164,17 @@ function initPreviewPdfDiv(jsonStr){
     previewPdfDiv.append("<input type=\"hidden\" id=\"zzrq_hid\" value=\""+zzrq+"\"/>");
 	for(var i=0;i<airBottleJA.length;i++){
 		var airBottleJO=airBottleJA[i];
-        var pageHeight=708.75;
+        //var pageHeight=708.75;
+        var pageHeight=542.5;
         pdfHeight+=pageHeight;
-		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: "+pageHeight+"px;font-size: 20px;margin:0 auto;border:#000 solid 1px;\">"
+        //332
+		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:383px;height: "+pageHeight+"px;font-size: 30px;margin:0 auto;border:#000 solid 1px;\">"
 								+"<img alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\" style=\"width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;\">"
 								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh_qc+"</span>"
-								+"<span style=\"margin-top: 60px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
-								+"<span style=\"margin-top: 100px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
-								+"<span style=\"margin-top: 140px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
-								+"<span style=\"margin-top: 180px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq_y+airBottleJO.zzrq_m+"</span>"
+								+"<span style=\"margin-top: 105px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
+								+"<span style=\"margin-top: 200px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
+								+"<span style=\"margin-top: 305px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
+								+"<span style=\"margin-top: 490px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq_y+airBottleJO.zzrq_m+"</span>"
 							+"</div>");
 	}
 }
@@ -182,7 +184,7 @@ function initPreviewPdfDiv(jsonStr){
 <div style="margin-top: 10px;text-align: center;">
 	<a id="output_but">导出为PDF</a>
 </div>
-<div id="previewPdf_div" style="width: 500px;margin:0 auto;margin-top: 10px;">
+<div id="previewPdf_div" style="width: 383px;margin:0 auto;margin-top: 10px;">
 	<!-- 
 	<div id="pdf_div" style="width:400px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;">
 		 <img alt="" src="<%=basePath %>/resource/images/qrcode.png" style="width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;">
@@ -194,7 +196,7 @@ function initPreviewPdfDiv(jsonStr){
 	</div>
 	 -->
 </div>
-<div id="outputPdf_div" style="width: 500px;margin:0 auto;display: none;">
+<div id="outputPdf_div" style="width: 383px;margin:0 auto;display: none;">
 </div>
 </body>
 </html>
