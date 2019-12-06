@@ -5,6 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>预览Pdf</title>
+<style type="text/css">
+
+</style>
 <%@include file="js.jsp"%>
 <!-- 
 <script src="https://cdn.bootcss.com/jspdf/1.5.3/jspdf.debug.js"></script>
@@ -48,7 +51,7 @@ $(function(){
 
 function singleOutputPdf(){
 	var pdfDiv=$("#previewPdf_div div[id^='pdf_div']").eq(0);
-	//pdfDiv.css("border-color","#fff");
+	pdfDiv.css("border-color","#fff");
 	var pdfDivId=pdfDiv.attr("id");
     var zzrqY=pdfDiv.attr("zzrqY");
     var zzrqM=pdfDiv.attr("zzrqM");
@@ -91,7 +94,7 @@ function singleOutputPdf(){
                    }
                }
                pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
-           	   //pdfDiv.css("border-color","#000");
+           	   pdfDiv.css("border-color","#000");
            },
            //背景设为白色（默认为黑色）
            background: "#fff"  
@@ -102,7 +105,7 @@ function singleOutputPdf(){
 function batchOutputPdf(){
 	$("#outputPdf_div").css("display","block");
 	$("#previewPdf_div div[id^='pdf_div']").each(function(){
-		//$(this).css("border-color","#fff");
+		$(this).css("border-color","#fff");
 		$("#outputPdf_div").append($(this).clone());
 		
 	});
@@ -171,8 +174,8 @@ function createPdf(){
             	   $("#outputPdf_div").empty();
        		       $("#outputPdf_div").css("height","0px");
        			   $("#outputPdf_div").css("display","none");
+          		   $("#previewPdf_div div[id^='pdf_div']").css("border-color","#000");
                }
-   			//$("#previewPdf_div div[id^='pdf_div']").css("border-color","#000");
            },
            //背景设为白色（默认为黑色）
            background: "#fff"  
@@ -211,14 +214,14 @@ function initPreviewPdfDiv(jsonStr){
         //332
         var marginTop=0;
         if(i>0){
-        	marginTop=42;
+        	marginTop=20;
         }
 		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:383px;height: "+pageHeight+"px;font-size: 30px;margin:0 auto;margin-top:"+marginTop+"px;border:#000 solid 1px;\">"
-								+"<img alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\" style=\"width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;\">"
+								+"<img alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\" style=\"width: 180px;height: 180px;margin-top: 310px;margin-left: 150px;position: absolute;\">"
 								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh_qc+"</span>"
-								+"<span style=\"margin-top: 105px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
-								+"<span style=\"margin-top: 200px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
-								+"<span style=\"margin-top: 305px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
+								+"<span style=\"margin-top: 125px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
+								+"<span style=\"margin-top: 235px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
+								+"<span style=\"margin-top: 345px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
 								+"<span style=\"margin-top: 460px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq_y+airBottleJO.zzrq_m+"</span>"
 							+"</div>");
 	}
