@@ -64,6 +64,7 @@
 }
 .item_div{
 	width:383px;
+	height: 542.5px;
 	font-size: 30px;
 	margin:0 auto;
 	border:#000 solid 1px;
@@ -110,7 +111,6 @@
 <script type="text/javascript" src="<%=basePath %>resource/js/pdf/html2canvas.min.js"></script>
 <script type="text/javascript">
 var path='<%=basePath %>';
-//var pdfHeight=0;
 var outputIndex=0;
 var outputCount=0;
 var t;
@@ -201,23 +201,6 @@ function batchOutputPdf(){
     outputCount=$("#previewPdf_div div[id^='pdf_div']").length;
 	$("#previewPdf_div div[id^='pdf_div']").css("border-color","#fff");
 	$("#outputPdf_div").css("display","block");
-	/*
-	$("#previewPdf_div div[id^='pdf_div']").each(function(){
-		$(this).css("border-color","#fff");
-		$("#outputPdf_div").append($(this).clone());
-		
-		var qpbh=$(this).attr("id").substring(7);
-		$("#outputPdf_div div[id^='pdf_div']").attr("id","pdf2_div"+qpbh);
-		createPdf(qpbh);
-	});
-	*/
-	/*
-	$("#outputPdf_div div[id^='pdf_div']").each(function(){
-		var qpbh=$(this).attr("id").substring(7);
-		$(this).attr("id","pdf2_div"+qpbh);
-	});
-	*/
-    //$("#outputPdf_div").css("height",pdfHeight+"px");
 	createPdf();
 }
 
@@ -279,7 +262,6 @@ function createPdf(){
            	   	   },3000);
             	   outputIndex=0;
             	   outputCount=0;
-            	   //$("#outputPdf_div").empty();
        		       $("#outputPdf_div").css("height","0px");
        			   $("#outputPdf_div").css("display","none");
           		   $("#previewPdf_div div[id^='pdf_div']").css("border-color","#000");
@@ -316,17 +298,13 @@ function initPreviewPdfDiv(jsonStr){
     previewPdfDiv.append("<input type=\"hidden\" id=\"zzrq_hid\" value=\""+zzrq+"\"/>");
 	for(var i=0;i<airBottleJA.length;i++){
 		var airBottleJO=airBottleJA[i];
-        //var pageHeight=708.75;
-        var pageHeight=542.5;
-        //pdfHeight+=pageHeight;
-        //332
         var marginTop=0;
         if(i>0){
         	marginTop=20;
         }
-		previewPdfDiv.append("<div class=\"item_div\" id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"height: "+pageHeight+"px;margin-top:"+marginTop+"px;\">"
-								+"<img class=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\">"
-								//+"<img class=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\">"
+		previewPdfDiv.append("<div class=\"item_div\" id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"margin-top:"+marginTop+"px;\">"
+								//+"<img class=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\">"
+								+"<img class=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\">"
 								+"<span class=\"cpxh_qc_span\">"+airBottleJO.cpxh_qc+"</span>"
 								+"<span class=\"qpbh_span\">"+airBottleJO.qpbh+"</span>"
 								+"<span class=\"zl_span\">"+airBottleJO.zl+"</span>"
@@ -349,16 +327,6 @@ function initPreviewPdfDiv(jsonStr){
 	<a id="output_but">导出为PDF</a>
 </div>
 <div class="previewPdf_div" id="previewPdf_div">
-	<!-- 
-	<div id="pdf_div" style="width:400px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;">
-		 <img alt="" src="<%=basePath %>/resource/images/qrcode.png" style="width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;">
-	     <span style="margin-top: 20px;margin-left: 20px;position: absolute;">356-70</span>
-	     <span style="margin-top: 60px;margin-left: 20px;position: absolute;">CB190</span>
-	     <span style="margin-top: 100px;margin-left: 20px;position: absolute;">70L</span>
-	     <span style="margin-top: 140px;margin-left: 20px;position: absolute;">5.0</span>
-	     <span style="margin-top: 180px;margin-left: 20px;position: absolute;">2019&nbsp;&nbsp;&nbsp;&nbsp;1</span>
-	</div>
-	 -->
 </div>
 <div class="outputPdf_div" id="outputPdf_div">
 </div>
