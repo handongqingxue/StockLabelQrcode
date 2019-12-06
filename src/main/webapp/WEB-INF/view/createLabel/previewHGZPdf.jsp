@@ -110,7 +110,7 @@
 <script type="text/javascript" src="<%=basePath %>resource/js/pdf/html2canvas.min.js"></script>
 <script type="text/javascript">
 var path='<%=basePath %>';
-var pdfHeight=0;
+//var pdfHeight=0;
 var outputIndex=0;
 var outputCount=0;
 var t;
@@ -197,26 +197,37 @@ function singleOutputPdf(){
 }
 
 function batchOutputPdf(){
+    outputIndex=0;
+    outputCount=$("#previewPdf_div div[id^='pdf_div']").length;
+	$("#previewPdf_div div[id^='pdf_div']").css("border-color","#fff");
 	$("#outputPdf_div").css("display","block");
+	/*
 	$("#previewPdf_div div[id^='pdf_div']").each(function(){
 		$(this).css("border-color","#fff");
 		$("#outputPdf_div").append($(this).clone());
 		
+		var qpbh=$(this).attr("id").substring(7);
+		$("#outputPdf_div div[id^='pdf_div']").attr("id","pdf2_div"+qpbh);
+		createPdf(qpbh);
 	});
+	*/
+	/*
 	$("#outputPdf_div div[id^='pdf_div']").each(function(){
 		var qpbh=$(this).attr("id").substring(7);
 		$(this).attr("id","pdf2_div"+qpbh);
 	});
-    $("#outputPdf_div").css("height",pdfHeight+"px");
-    outputIndex=0;
-    outputCount=$("#outputPdf_div div[id^='pdf2_div']").length;
+	*/
+    //$("#outputPdf_div").css("height",pdfHeight+"px");
 	createPdf();
 }
 
 function createPdf(){
 	if(t!=undefined)
 		clearTimeout(t);
-	var qpbh=$("#previewPdf_div div[id^='pdf_div']").eq(outputIndex).attr("id").substring(7);
+	var preItemDiv=$("#previewPdf_div div[id^='pdf_div']").eq(outputIndex);
+	$("#outputPdf_div").append(preItemDiv.clone());
+	var qpbh=preItemDiv.attr("id").substring(7);
+	$("#outputPdf_div div[id^='pdf_div']").attr("id","pdf2_div"+qpbh);
 	
 	html2canvas(
        document.getElementById("pdf2_div"+qpbh),
@@ -258,8 +269,9 @@ function createPdf(){
                pdf.save(qpbh+zzrq+'.pdf');
                outputIndex++;
         	   showProDiv(true);
+        	   $("#outputPdf_div").empty();
                if(outputIndex<outputCount){
-           	   	   t=setTimeout("createPdf()",10000);
+           	   	   t=setTimeout("createPdf()",3000);
                }
                else{
            	   	   setTimeout(function(){
@@ -267,7 +279,7 @@ function createPdf(){
            	   	   },3000);
             	   outputIndex=0;
             	   outputCount=0;
-            	   $("#outputPdf_div").empty();
+            	   //$("#outputPdf_div").empty();
        		       $("#outputPdf_div").css("height","0px");
        			   $("#outputPdf_div").css("display","none");
           		   $("#previewPdf_div div[id^='pdf_div']").css("border-color","#000");
@@ -306,15 +318,15 @@ function initPreviewPdfDiv(jsonStr){
 		var airBottleJO=airBottleJA[i];
         //var pageHeight=708.75;
         var pageHeight=542.5;
-        pdfHeight+=pageHeight;
+        //pdfHeight+=pageHeight;
         //332
         var marginTop=0;
         if(i>0){
         	marginTop=20;
         }
 		previewPdfDiv.append("<div class=\"item_div\" id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"height: "+pageHeight+"px;margin-top:"+marginTop+"px;\">"
-								//+"<img class=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\">"
-								+"<img class=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\">"
+								+"<img class=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\">"
+								//+"<img class=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\">"
 								+"<span class=\"cpxh_qc_span\">"+airBottleJO.cpxh_qc+"</span>"
 								+"<span class=\"qpbh_span\">"+airBottleJO.qpbh+"</span>"
 								+"<span class=\"zl_span\">"+airBottleJO.zl+"</span>"
