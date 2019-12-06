@@ -6,7 +6,100 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>预览Pdf</title>
 <style type="text/css">
-
+.pro_div{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.5);
+	position: fixed;
+	z-index: 1;
+	display: none;
+}
+.pro_div .outputIndex_div{
+	width: 300px;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	font-size: 30px;
+	text-align:center;
+	margin: 0 auto;
+	margin-top: 250px;
+}
+.pro_div .outputCount_div{
+	width: 300px;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	font-size: 30px;
+	text-align:center;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+.pro_div .proBar_div{
+	width: 1000px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #fff;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+.pro_div .percent_div{
+	width: 0px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #00f;
+}
+.opb_div{
+	margin-top: 10px;
+	text-align: center;
+}
+.previewPdf_div{
+	width: 383px;
+	margin:0 auto;
+	margin-top: 10px;
+}
+.outputPdf_div{
+	width: 383px;
+	margin:0 auto;
+	display: none;
+}
+.item_div{
+	width:383px;
+	font-size: 30px;
+	margin:0 auto;
+	border:#000 solid 1px;
+}
+.item_div .qrcode_img{
+	width: 180px;
+	height: 180px;
+	margin-top: 310px;
+	margin-left: 150px;
+	position: absolute;
+}
+.item_div .cpxh_qc_span{
+	margin-top: 20px;
+	margin-left: 20px;
+	position: absolute;
+}
+.item_div .qpbh_span{
+	margin-top: 125px;
+	margin-left: 20px;
+	position: absolute;
+}
+.item_div .zl_span{
+	margin-top: 235px;
+	margin-left: 20px;
+	position: absolute;
+}
+.item_div .scrj_span{
+	margin-top: 345px;
+	margin-left: 20px;
+	position: absolute;
+}
+.item_div .zzrq_span{
+	margin-top: 460px;
+	margin-left: 20px;
+	position: absolute;
+}
 </style>
 <%@include file="js.jsp"%>
 <!-- 
@@ -20,6 +113,7 @@ var path='<%=basePath %>';
 var pdfHeight=0;
 var outputIndex=0;
 var outputCount=0;
+var t;
 $(function(){
 	var jsonStr="";
 	if('${param.action}'=="single"){
@@ -120,6 +214,8 @@ function batchOutputPdf(){
 }
 
 function createPdf(){
+	if(t!=undefined)
+		clearTimeout(t);
 	var qpbh=$("#previewPdf_div div[id^='pdf_div']").eq(outputIndex).attr("id").substring(7);
 	
 	html2canvas(
@@ -163,7 +259,7 @@ function createPdf(){
                outputIndex++;
         	   showProDiv(true);
                if(outputIndex<outputCount){
-           	   	   setTimeout("createPdf()",3000);
+           	   	   t=setTimeout("createPdf()",10000);
                }
                else{
            	   	   setTimeout(function(){
@@ -216,30 +312,31 @@ function initPreviewPdfDiv(jsonStr){
         if(i>0){
         	marginTop=20;
         }
-		previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:383px;height: "+pageHeight+"px;font-size: 30px;margin:0 auto;margin-top:"+marginTop+"px;border:#000 solid 1px;\">"
-								+"<img alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\" style=\"width: 180px;height: 180px;margin-top: 310px;margin-left: 150px;position: absolute;\">"
-								+"<span style=\"margin-top: 20px;margin-left: 20px;position: absolute;\">"+airBottleJO.cpxh_qc+"</span>"
-								+"<span style=\"margin-top: 125px;margin-left: 20px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
-								+"<span style=\"margin-top: 235px;margin-left: 20px;position: absolute;\">"+airBottleJO.zl+"</span>"
-								+"<span style=\"margin-top: 345px;margin-left: 20px;position: absolute;\">"+airBottleJO.scrj+"</span>"
-								+"<span style=\"margin-top: 460px;margin-left: 20px;position: absolute;\">"+airBottleJO.zzrq_y+airBottleJO.zzrq_m+"</span>"
+		previewPdfDiv.append("<div class=\"item_div\" id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"height: "+pageHeight+"px;margin-top:"+marginTop+"px;\">"
+								//+"<img class=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\">"
+								+"<img class=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\">"
+								+"<span class=\"cpxh_qc_span\">"+airBottleJO.cpxh_qc+"</span>"
+								+"<span class=\"qpbh_span\">"+airBottleJO.qpbh+"</span>"
+								+"<span class=\"zl_span\">"+airBottleJO.zl+"</span>"
+								+"<span class=\"scrj_span\">"+airBottleJO.scrj+"</span>"
+								+"<span class=\"zzrq_span\">"+airBottleJO.zzrq_y+airBottleJO.zzrq_m+"</span>"
 							+"</div>");
 	}
 }
 </script>
 </head>
 <body>
-<div class="pro_div" id="pro_div" style="width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);position: fixed;z-index: 1;display: none;">
-	<div class="outputIndex_div" id="outputIndex_div" style="width: 300px;height: 50px;line-height: 50px;color: #fff;font-size: 30px;text-align:center;margin: 0 auto;margin-top: 250px;"></div>
-	<div class="outputCount_div" id="outputCount_div" style="width: 300px;height: 50px;line-height: 50px;color: #fff;font-size: 30px;text-align:center;margin: 0 auto;margin-top: 30px;"></div>
-	<div class="proBar_div" id="proBar_div" style="width: 1000px;height: 30px;line-height: 30px;background-color: #fff;margin: 0 auto;margin-top: 40px;">
-		<div class="percent_div" id="percent_div" style="width: 0px;height: 30px;line-height: 30px;background-color: #00f;"></div>
+<div class="pro_div" id="pro_div">
+	<div class="outputIndex_div" id="outputIndex_div"></div>
+	<div class="outputCount_div" id="outputCount_div"></div>
+	<div class="proBar_div" id="proBar_div">
+		<div class="percent_div" id="percent_div"></div>
 	</div>
 </div>
-<div style="margin-top: 10px;text-align: center;">
+<div class="opb_div">
 	<a id="output_but">导出为PDF</a>
 </div>
-<div id="previewPdf_div" style="width: 383px;margin:0 auto;margin-top: 10px;">
+<div class="previewPdf_div" id="previewPdf_div">
 	<!-- 
 	<div id="pdf_div" style="width:400px;height: 300px;margin:0 auto;margin-top:10px;border:#000 solid 1px;">
 		 <img alt="" src="<%=basePath %>/resource/images/qrcode.png" style="width: 180px;height: 180px;margin-top: 80px;margin-left: 150px;position: absolute;">
@@ -251,7 +348,7 @@ function initPreviewPdfDiv(jsonStr){
 	</div>
 	 -->
 </div>
-<div id="outputPdf_div" style="width: 383px;margin:0 auto;display: none;">
+<div class="outputPdf_div" id="outputPdf_div">
 </div>
 </body>
 </html>
