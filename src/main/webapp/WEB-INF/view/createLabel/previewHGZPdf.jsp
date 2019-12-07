@@ -310,8 +310,8 @@ function initPreviewPdfDiv(jsonStr){
         	marginTop=20;
         }
 		previewPdfDiv.append("<div class=\"item_div\" id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"margin-top:"+marginTop+"px;\">"
-								//+"<img class=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\">"
-								+"<img class=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\">"
+								+"<img class=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_hgz_url+"\">"
+								//+"<img class=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\">"
 								+"<span class=\"cpxh_qc_span\">"+airBottleJO.cpxh_qc+"</span>"
 								+"<span class=\"qpbh_span\">"+airBottleJO.qpbh+"</span>"
 								+"<span class=\"zl_span\">"+airBottleJO.zl+"</span>"

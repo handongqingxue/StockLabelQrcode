@@ -142,7 +142,7 @@ $(function(){
 function checkQX(){
 	if('${sessionScope.user.userName}'!="admin"){
 		var trs=$("#tab1_div .datagrid-btable tr");
-		for(var i=1;i<trs.length;i++){
+		for(var i=0;i<trs.length;i++){
 			trs.eq(i).find("td").eq(9).find("a").removeAttr("href");
 		}
 	}
