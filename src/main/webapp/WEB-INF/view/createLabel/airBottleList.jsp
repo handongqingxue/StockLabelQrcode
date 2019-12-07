@@ -17,14 +17,14 @@ $(function(){
 		}
 	});
 	
-	$("#remove_but").linkbutton({
+	removeBut=$("#remove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
 			deleteById();
 		}
 	});
 	
-	$("#batchRemove_but").linkbutton({
+	batchRemoveBut=$("#batchRemove_but").linkbutton({
 		iconCls:"icon-remove",
 		onClick:function(){
 			openDeleteDiv(1);
@@ -112,7 +112,9 @@ $(function(){
             {field:"zl",title:"重量",width:80,sortable:true},
             {field:"scrj",title:"实测容积",width:80,sortable:true},
             {field:"qpzjxh",title:"气瓶支架型号",width:100,sortable:true},
-            {field:"zzrq",title:"制造日期",width:100,sortable:true},
+            {field:"zzrq_y",title:"制造日期",width:100,sortable:true,formatter:function(value,row){
+            	return value+"-"+row.zzrq_m;
+            }},
             {field:"qpzzdw",title:"气瓶制造单位",width:300,sortable:true},
             {field:"id",title:"操作",width:100,formatter:function(value,row){
             	return "<a href=\"${pageContext.request.contextPath}/createLabel/goEditAirBottle?id="+value+"\">编辑</a>";
@@ -126,6 +128,8 @@ $(function(){
 			}
 			
 			resetTabStyle();
+
+			checkQX();
 		}
 	});
 	
@@ -216,6 +220,21 @@ $(function(){
 	openDeleteDiv(0);
 	openBatPrePdfDiv(0);
 });
+
+function checkQX(){
+	if('${sessionScope.user.userName}'=="admin"){
+		removeBut.linkbutton("enable");
+		batchRemoveBut.linkbutton("enable");
+	}
+	else{
+		removeBut.linkbutton("disable");
+		batchRemoveBut.linkbutton("disable");
+		var trs=$("#tab1_div .datagrid-btable tr");
+		for(var i=1;i<trs.length;i++){
+			trs.eq(i).find("td").eq(10).find("a").removeAttr("href");
+		}
+	}
+}
 
 function openDeleteDiv(flag){
 	deleteDialog.dialog({

@@ -201,6 +201,9 @@ function batchOutputPdf(){
     outputCount=$("#previewPdf_div div[id^='pdf_div']").length;
 	$("#previewPdf_div div[id^='pdf_div']").css("border-color","#fff");
 	$("#outputPdf_div").css("display","block");
+    $("#previewPdf_div").css("height","542.5px");
+    $("#previewPdf_div div[id^='pdf_div']").css("margin-top","10px");
+    $("#previewPdf_div div[id^='pdf_div']").css("display","none");
 	createPdf();
 }
 
@@ -208,6 +211,10 @@ function createPdf(){
 	if(t!=undefined)
 		clearTimeout(t);
 	var preItemDiv=$("#previewPdf_div div[id^='pdf_div']").eq(outputIndex);
+	preItemDiv.css("display","block");
+	if(outputIndex>0){
+		$("#previewPdf_div div[id^='pdf_div']").eq(outputIndex-1).css("display","none");
+	}
 	$("#outputPdf_div").append(preItemDiv.clone());
 	var qpbh=preItemDiv.attr("id").substring(7);
 	$("#outputPdf_div div[id^='pdf_div']").attr("id","pdf2_div"+qpbh);

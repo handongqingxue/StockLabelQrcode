@@ -47,7 +47,9 @@ $(function(){
             {field:"zl",title:"重量",width:80,sortable:true},
             {field:"scrj",title:"实测容积",width:80,sortable:true},
             {field:"qpzjxh",title:"气瓶支架型号",width:100,sortable:true},
-            {field:"zzrq",title:"制造日期",width:100,sortable:true},
+            {field:"zzrq_y",title:"制造日期",width:100,sortable:true,formatter:function(value,row){
+            	return value+"-"+row.zzrq_m;
+            }},
             {field:"qpzzdw",title:"气瓶制造单位",width:300,sortable:true},
             {field:"id",title:"操作",width:100,formatter:function(value,row){
             	return "<a href=\"${pageContext.request.contextPath}/createLabel/goEditAirBottle?id="+value+"\">编辑</a>";
@@ -61,6 +63,8 @@ $(function(){
 			}
 			
 			resetTabStyle();
+			
+			checkQX();
 		}
 	});
 	
@@ -134,6 +138,15 @@ $(function(){
 	tab2.datagrid("appendRow",{cpxh:"<div style=\"text-align:center;\">暂无数据</div>"});
 	tab2.datagrid("mergeCells",{index:0,field:"cpxh",colspan:6});
 });
+
+function checkQX(){
+	if('${sessionScope.user.userName}'!="admin"){
+		var trs=$("#tab1_div .datagrid-btable tr");
+		for(var i=1;i<trs.length;i++){
+			trs.eq(i).find("td").eq(9).find("a").removeAttr("href");
+		}
+	}
+}
 
 function inputExcelByQpbh(){
 	var row=tab1.datagrid("getSelected");
