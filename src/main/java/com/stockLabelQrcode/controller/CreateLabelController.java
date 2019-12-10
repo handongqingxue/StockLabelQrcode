@@ -705,8 +705,8 @@ public class CreateLabelController {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		String fileName = action+qpbh+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
-		String avaPath="/GoodsPublic/upload/"+fileName;
-		String path = "D:/resource";
+		String avaPath="/StockLabelQrcode/upload/"+fileName;
+		String path = "D:/resource/StockLabelQrcode";
         Qrcode.createQrCode(url, path, fileName);
         
         jsonMap.put("qrcodeUrl", avaPath);

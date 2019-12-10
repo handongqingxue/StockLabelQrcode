@@ -34,9 +34,9 @@ public class FileUploadUtils {
 				//            String writeTempPath = "/home/terabithia";
 
 				
-			String avaPath ="/GoodsPublic/upload/"+fileName;
+			String avaPath ="/StockLabelQrcode/upload/"+fileName;
 //			String writeTempPath = request.getSession().getServletContext().getRealPath("/");
-			String realPath="D:\\resource\\";
+			String realPath="D:\\resource\\StockLabelQrcode\\";
 			System.out.println(avaPath);
 				/**
 				 * @author 马鹏昊
