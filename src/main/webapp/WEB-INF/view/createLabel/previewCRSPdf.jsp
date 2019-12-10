@@ -269,9 +269,9 @@ function initPreviewPdfDiv(jsonStr){
 				var qrcodeLeft=crsPdfSet.qrcode_left;
 				var qrcodeTop=crsPdfSet.qrcode_top;
 
-                previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: 708.75px;font-size: 20px;margin:0 auto;border:#000 solid 1px;\">"
-						+"<img id=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_crs_url+"\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
-						//+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+                previewPdfDiv.append("<div id=\"pdf_div"+airBottleJO.qpbh+"\" zzrqY=\""+airBottleJO.zzrq_y+"\" zzrqM=\""+airBottleJO.zzrq_m+"\" style=\"width:500px;height: 708.75px;font-size: 18px;margin:0 auto;border:#000 solid 1px;\">"
+						+"<img id=\"qrcode_img\" alt=\"\" src=\""+airBottleJO.qrcode_crs_url+"\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+						//+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"resource/images/qrcode.png\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 						+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+airBottleJO.cpxh+"</span>"
 						+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+airBottleJO.qpbh+"</span>"
 						+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+airBottleJO.gcrj+"</span>"

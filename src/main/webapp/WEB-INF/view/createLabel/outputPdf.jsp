@@ -103,7 +103,7 @@ function previewPdf(){
 			var pdfDiv=$("#pdf_div");
 			pdfDiv.empty();
 			pdfDiv.append("<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
-					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_crs_url+"\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_crs_url+"\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 					+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+row.cpxh+"</span>"
 					+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+row.qpbh+"</span>"
 					+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+row.gcrj+"</span>"
@@ -426,7 +426,7 @@ function setFitWidthInParent(o){
 		</table>
 	</div>
 	<div id="previewPdf_div">
-		<div id="pdf_div" style="width:500px;height: 300px;font-size: 20px;border:#000 solid 1px;">
+		<div id="pdf_div" style="width:500px;height: 300px;font-size: 18px;border:#000 solid 1px;">
 			<!-- 
 			 <img alt="" src="<%=basePath %>/resource/images/qrcode.png" style="width: 80px;height: 80px;margin-top: 10px;margin-left: 300px;position: absolute;">
 		     <span style="margin-top: 20px;margin-left: 150px;position: absolute;">356-70</span>

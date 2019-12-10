@@ -64,15 +64,15 @@
 }
 .item_div{
 	width:383px;
-	height: 542.5px;
-	font-size: 30px;
+	height: 442.5px;
+	font-size: 35px;
 	margin:0 auto;
 	border:#000 solid 1px;
 }
 .item_div .qrcode_img{
 	width: 180px;
-	height: 180px;
-	margin-top: 310px;
+	height: 220px;
+	margin-top: 217px;
 	margin-left: 150px;
 	position: absolute;
 }
@@ -82,22 +82,22 @@
 	position: absolute;
 }
 .item_div .qpbh_span{
-	margin-top: 125px;
+	margin-top: 105px;
 	margin-left: 20px;
 	position: absolute;
 }
 .item_div .zl_span{
-	margin-top: 235px;
+	margin-top: 199px;
 	margin-left: 20px;
 	position: absolute;
 }
 .item_div .scrj_span{
-	margin-top: 345px;
+	margin-top: 293px;
 	margin-left: 20px;
 	position: absolute;
 }
 .item_div .zzrq_span{
-	margin-top: 460px;
+	margin-top: 390px;
 	margin-left: 20px;
 	position: absolute;
 }
