@@ -428,8 +428,8 @@ public class CreateLabelController {
 			    	for (String qpbh : qpbhArr) {
 				        if(qpbh.equals(qpbh1)) {
 				        	String cpxh_qc = qpJO.get("cpxh_qc").toString();
-				        	String zl = qpJO.get("zl").toString();
-				        	String scrj = qpJO.get("scrj").toString();
+				        	String zl = qpJO.get("zl").toString().replaceAll("\"", "");
+				        	String scrj = qpJO.get("scrj").toString().replaceAll("\"", "");
 				        	String qpzjxh = qpJO.get("qpzjxh").toString();
 				        	String qpzzdw = qpJO.get("qpzzdw").toString();
 				        	/*
@@ -499,8 +499,8 @@ public class CreateLabelController {
 			        */
 			    	String cpxh_qc = sheet.getCell(0, i).getContents();
 			    	String qpbh = sheet.getCell(1, i).getContents();
-		        	String zl = sheet.getCell(2, i).getContents();
-		        	String scrj = sheet.getCell(3, i).getContents();
+		        	String zl = sheet.getCell(2, i).getContents().replaceAll("\"", "");
+		        	String scrj = sheet.getCell(3, i).getContents().replaceAll("\"", "");
 		        	String qpzjxh = sheet.getCell(4, i).getContents();
 		        	String qpzzdw = sheet.getCell(5, i).getContents();
 			        System.out.println("zl==="+zl);
