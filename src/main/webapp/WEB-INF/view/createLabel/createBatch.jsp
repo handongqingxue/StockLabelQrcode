@@ -6,6 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>创建批次界面</title>
 <%@include file="js.jsp"%>
+<style type="text/css">
+.center_con_div{
+	margin-left:205px;
+	position: absolute;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+</style>
 <!-- 
 <script src="https://cdn.bootcss.com/jspdf/1.5.3/jspdf.debug.js"></script>
 <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
@@ -14,13 +22,38 @@
 <script type="text/javascript" src="<%=basePath %>resource/js/pdf/html2canvas.min.js"></script>
 <script type="text/javascript">
 var path='<%=basePath %>';
+var adNum=0;
 $(function(){
+	initAddDialog();//0
+
+	initDialogPosition();//将不同窗体移动到主要内容区域
+});
+
+function initDialogPosition(){
+	var centerConDiv=$("#center_con_div");
+	centerConDiv.css("height",setFitHeightInParent(".layui-side")+"px");
+	
+	//基本属性组
+	var edpw=$("body").find(".panel.window").eq(adNum);
+	var edws=$("body").find(".window-shadow").eq(adNum);
+
+	var ccDiv=$("#center_con_div");
+	ccDiv.append(edpw);
+	ccDiv.append(edws);
+	ccDiv.css("width",setFitWidthInParent("body","center_con_div")+"px");
+}
+
+function initAddDialog(){
+	//alert(setFitHeightInParent(".layui-side"))
 	$("#add_div").dialog({
 		title:"创建批次",
 		width:setFitWidthInParent("body"),
-		height:setFitHeightInParent(".layui-side"),
-		top:80,
-		left:200,
+		//height:setFitHeightInParent(".layui-side"),
+		height:749,
+		top:0,
+		left:0,
+		//top:80,
+		//left:200,
 		buttons:[
            {text:"中文标签",id:"chinese_but",iconCls:"icon-ok",handler:function(){
         	   previewPDF(1);
@@ -227,7 +260,7 @@ $(function(){
 	
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
-});
+}
 
 function removeChinesePdfLabel(pdfDiv){
    pdfDiv.find("#cpxhTit1_span").remove();
@@ -593,11 +626,13 @@ function setFitHeightInParent(o){
 }
 
 function initWindowMarginLeft(){
-	var addDivWidth=$("#add_div").css("width");
-	addDivWidth=addDivWidth.substring(0,addDivWidth.length-2);
+	var bodyWidth=$("body").css("width");
+	bodyWidth=bodyWidth.substring(0,bodyWidth.length-2);
+	var laySideWidth=$(".layui-side").css("width");
+	laySideWidth=laySideWidth.substring(0,laySideWidth.length-2);
 	var pwWidth=$(".panel.window").css("width");
 	pwWidth=pwWidth.substring(0,pwWidth.length-2);
-	return ((addDivWidth-pwWidth)/2)+"px";
+	return ((bodyWidth-laySideWidth-pwWidth)/2)+"px";
 }
 </script>
 </head>
@@ -605,6 +640,7 @@ function initWindowMarginLeft(){
 <div class="layui-layout layui-layout-admin">
 	<%@include file="top.jsp"%>
 	<%@include file="left.jsp"%>
+	<div class="center_con_div" id="center_con_div"></div>
 	<div id="add_div">
 		<form id="form1" name="form1" method="post" action="editGoods" enctype="multipart/form-data">
 			<table>
