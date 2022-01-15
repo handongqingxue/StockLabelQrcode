@@ -95,6 +95,15 @@
 	 		<if test="cpxh_top!=null">
 	 			cpxh_top,
 	 		</if>
+	 		<if test="tybm_left!=null">
+	 			tybm_left,
+	 		</if>
+	 		<if test="tybm_top!=null">
+	 			tybm_top,
+	 		</if>
+	 		<if test="tybm_font_size!=null">
+	 			tybm_font_size,
+	 		</if>
 	 		<if test="qpbh_left!=null">
 	 			qpbh_left,
 	 		</if>
@@ -145,6 +154,15 @@
 	 		</if>
 	 		<if test="cpxh_top!=null">
 	 			#{cpxh_top},
+	 		</if>
+	 		<if test="tybm_left!=null">
+	 			#{tybm_left},
+	 		</if>
+	 		<if test="tybm_top!=null">
+	 			#{tybm_top},
+	 		</if>
+	 		<if test="tybm_font_size!=null">
+	 			#{tybm_font_size},
 	 		</if>
 	 		<if test="qpbh_left!=null">
 	 			#{qpbh_left},

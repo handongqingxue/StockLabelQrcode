@@ -87,6 +87,9 @@ function previewPdf(){
 			var id=crsPdfSet.id;
 			var cpxhLeft=crsPdfSet.cpxh_left;
 			var cpxhTop=crsPdfSet.cpxh_top;
+			var tybmLeft=crsPdfSet.tybm_left;
+			var tybmTop=crsPdfSet.tybm_top;
+			var tybmFontSize=crsPdfSet.tybm_font_size;
 			var qpbhLeft=crsPdfSet.qpbh_left;
 			var qpbhTop=crsPdfSet.qpbh_top;
 			var gcrjLeft=crsPdfSet.gcrj_left;
@@ -106,6 +109,7 @@ function previewPdf(){
 			pdfDiv.append("<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
 					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_crs_url+"\" style=\"width: 80px;height: 80px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 					+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+row.cpxh+"</span>"
+					+"<span id=\"tybm_span\" style=\"margin-top: "+tybmTop+"px;margin-left: "+tybmLeft+"px;font-size:"+tybmFontSize+"px;position: absolute;\">"+row.tybm+"</span>"
 					+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+row.qpbh+"</span>"
 					+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+row.gcrj+"</span>"
 					+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+row.ndbh+"</span>"

@@ -91,6 +91,12 @@
 	margin-left: 20px;
 	position: absolute;
 }
+.item_div .tybm_span{
+	margin-top: 207px;
+	margin-left: 170px;
+	font-size: 21px;
+	position: absolute;
+}
 .item_div .scrj_span{
 	margin-top: 293px;
 	margin-left: 20px;
@@ -315,6 +321,7 @@ function initPreviewPdfDiv(jsonStr){
 								+"<span class=\"cpxh_qc_span\">"+airBottleJO.cpxh_qc+"</span>"
 								+"<span class=\"qpbh_span\">"+airBottleJO.qpbh+"</span>"
 								+"<span class=\"zl_span\">"+airBottleJO.zl+"</span>"
+								+"<span class=\"tybm_span\">"+airBottleJO.tybm+"</span>"
 								+"<span class=\"scrj_span\">"+airBottleJO.scrj+"</span>"
 								+"<span class=\"zzrq_span\">"+airBottleJO.zzrq_y+airBottleJO.zzrq_m+"</span>"
 							+"</div>");

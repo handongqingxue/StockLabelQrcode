@@ -147,6 +147,9 @@ public class CreateLabelController {
 			pCrsPdfSet=new PreviewCRSPDFSet();
 			pCrsPdfSet.setCpxh_left(pCrsPdf.getCpxh_left());
 			pCrsPdfSet.setCpxh_top(pCrsPdf.getCpxh_top());
+			pCrsPdfSet.setTybm_left(pCrsPdf.getTybm_left());
+			pCrsPdfSet.setTybm_top(pCrsPdf.getTybm_top());
+			pCrsPdfSet.setTybm_font_size(pCrsPdf.getTybm_font_size());
 			pCrsPdfSet.setQpbh_left(pCrsPdf.getQpbh_left());
 			pCrsPdfSet.setQpbh_top(pCrsPdf.getQpbh_top());
 			pCrsPdfSet.setGcrj_left(pCrsPdf.getGcrj_left());

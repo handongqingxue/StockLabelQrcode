@@ -21,6 +21,24 @@ public class PreviewCRSPDF implements Serializable {
 	public void setCpxh_top(float cpxh_top) {
 		this.cpxh_top = cpxh_top;
 	}
+	public float getTybm_left() {
+		return tybm_left;
+	}
+	public void setTybm_left(float tybm_left) {
+		this.tybm_left = tybm_left;
+	}
+	public float getTybm_top() {
+		return tybm_top;
+	}
+	public void setTybm_top(float tybm_top) {
+		this.tybm_top = tybm_top;
+	}
+	public float getTybm_font_size() {
+		return tybm_font_size;
+	}
+	public void setTybm_font_size(float tybm_font_size) {
+		this.tybm_font_size = tybm_font_size;
+	}
 	public float getQpbh_left() {
 		return qpbh_left;
 	}
@@ -100,6 +118,9 @@ public class PreviewCRSPDF implements Serializable {
 		this.label_type = label_type;
 	}
 	private float cpxh_top;//产品型号距离上边多远
+	private float tybm_left;//统一编码距离左边多远
+	private float tybm_top;//统一编码距离上边多远
+	private float tybm_font_size;//统一编码字体大小
 	private float qpbh_left;//气瓶编号距离左边多远
 	private float qpbh_top;//气瓶编号距离上边多远
 	private float gcrj_left;//公称容积距离左边多远
