@@ -43,6 +43,7 @@ $(function(){
 		pageSize:20,
 		columns:[[
             {field:"cpxh",title:"产品型号",width:100,sortable:true},
+            {field:"tybm",title:"统一编码",width:150,sortable:true},
             {field:"qpbh",title:"气瓶编号",width:150,sortable:true},
             {field:"gcrj",title:"公称容积",width:80,sortable:true},
             {field:"ndbh",title:"内胆壁厚",width:80,sortable:true},
@@ -55,7 +56,7 @@ $(function(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{cpxh:"<div style=\"text-align:center;\">暂无分类</div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"cpxh",colspan:9});
+				$(this).datagrid("mergeCells",{index:0,field:"cpxh",colspan:10});
 				data.total=0;
 			}
 			

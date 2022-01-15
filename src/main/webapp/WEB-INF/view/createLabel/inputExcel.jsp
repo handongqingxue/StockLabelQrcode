@@ -51,14 +51,15 @@ $(function(){
             	return value+"-"+row.zzrq_m;
             }},
             {field:"qpzzdw",title:"气瓶制造单位",width:300,sortable:true},
+            {field:"tybm",title:"统一编码",width:150,sortable:true},
             {field:"id",title:"操作",width:100,formatter:function(value,row){
             	return "<a href=\"${pageContext.request.contextPath}/createLabel/goEditAirBottle?id="+value+"\">编辑</a>";
             }}
         ]],
         onLoadSuccess:function(data){
 			if(data.total==0){
-				$(this).datagrid("appendRow",{cpxh:"<div style=\"text-align:center;\">暂无分类</div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"cpxh",colspan:10});
+				$(this).datagrid("appendRow",{cpxh_qc:"<div style=\"text-align:center;\">暂无分类</div>"});
+				$(this).datagrid("mergeCells",{index:0,field:"cpxh_qc",colspan:11});
 				data.total=0;
 			}
 			
@@ -132,11 +133,12 @@ $(function(){
             {field:"zl",title:"重量",width:80,sortable:true},
             {field:"scrj",title:"实测容积",width:80,sortable:true},
             {field:"qpzjxh",title:"气瓶支架型号",width:100,sortable:true},
-            {field:"qpzzdw",title:"气瓶制造单位",width:300,sortable:true}
+            {field:"qpzzdw",title:"气瓶制造单位",width:300,sortable:true},
+            {field:"tybm",title:"统一编码",width:150,sortable:true}
         ]]
 	});
-	tab2.datagrid("appendRow",{cpxh:"<div style=\"text-align:center;\">暂无数据</div>"});
-	tab2.datagrid("mergeCells",{index:0,field:"cpxh",colspan:6});
+	tab2.datagrid("appendRow",{cpxh_qc:"<div style=\"text-align:center;\">暂无数据</div>"});
+	tab2.datagrid("mergeCells",{index:0,field:"cpxh_qc",colspan:7});
 });
 
 function checkQX(){
@@ -218,7 +220,7 @@ function getQPJAStr(){
 	for(var i=0;i<rows.length;i++){
 		if(i>0)
 			qpJAStr+=",";
-        qpJAStr+="{'cpxh_qc':'"+rows[i].cpxh_qc+"','qpbh':'"+rows[i].qpbh+"','zl':'"+rows[i].zl+"','scrj':'"+rows[i].scrj+"','qpzjxh':'"+rows[i].qpzjxh+"','qpzzdw':'"+rows[i].qpzzdw+"'}";
+        qpJAStr+="{'cpxh_qc':'"+rows[i].cpxh_qc+"','qpbh':'"+rows[i].qpbh+"','zl':'"+rows[i].zl+"','scrj':'"+rows[i].scrj+"','qpzjxh':'"+rows[i].qpzjxh+"','qpzzdw':'"+rows[i].qpzzdw+"','cjljdz':'"+rows[i].cjljdz+"','tybm':'"+rows[i].tybm+"'}";
 	}
 	qpJAStr+="]";
 	return qpJAStr;

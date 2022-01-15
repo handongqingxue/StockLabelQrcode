@@ -269,13 +269,17 @@ public class CreateLabelController {
 		
 		//http://localhost:8088/GoodsPublic/createLabel/toQrcode?action=crs&qpbh=CB19001006
 		AirBottle airBottle = createLabelService.getAirBottleByQpbh(qpbh);
-		
-		request.setAttribute("airBottle", airBottle);
 		String url=null;
-		if("crs".equals(action))
-			url="/createLabel/qrcodeCRS";
-		else if("hgz".equals(action))
-			url="/createLabel/qrcodeHGZ";
+		String cjljdz = airBottle.getCjljdz();
+		if(StringUtils.isEmpty(cjljdz)) {
+			request.setAttribute("airBottle", airBottle);
+			if("crs".equals(action))
+				url="/createLabel/qrcodeCRS";
+			else if("hgz".equals(action))
+				url="/createLabel/qrcodeHGZ";
+		}
+		else
+			url="redirect:"+cjljdz;
 		return url;
 	}
 	
@@ -432,11 +436,15 @@ public class CreateLabelController {
 				        	String scrj = qpJO.get("scrj").toString().replaceAll("\"", "");
 				        	String qpzjxh = qpJO.get("qpzjxh").toString();
 				        	String qpzzdw = qpJO.get("qpzzdw").toString();
+				        	String cjljdz = qpJO.get("cjljdz").toString();
+				        	String tybm = qpJO.get("tybm").toString();
 				        	/*
 					        System.out.println("zl==="+zl);
 					        System.out.println("scrj==="+scrj);
 					        System.out.println("qpzjxh==="+qpzjxh);
 					        System.out.println("qpzzdw==="+qpzzdw);
+					        System.out.println("cjljdz==="+cjljdz);
+					        System.out.println("tybm==="+tybm);
 					        */
 					        
 					        AirBottle airBottle=new AirBottle();
@@ -446,6 +454,8 @@ public class CreateLabelController {
 					        airBottle.setScrj(scrj);
 					        airBottle.setQpzjxh(qpzjxh);
 					        airBottle.setQpzzdw(qpzzdw);
+					        airBottle.setCjljdz(cjljdz);
+					        airBottle.setTybm(tybm);
 					        count += createLabelService.updateAirBottle(airBottle);
 				        }
 					}
@@ -503,10 +513,12 @@ public class CreateLabelController {
 		        	String scrj = sheet.getCell(3, i).getContents().replaceAll("\"", "");
 		        	String qpzjxh = sheet.getCell(4, i).getContents();
 		        	String qpzzdw = sheet.getCell(5, i).getContents();
+		        	String cjljdz = sheet.getCell(6, i).getContents();
 			        System.out.println("zl==="+zl);
 			        System.out.println("scrj==="+scrj);
 			        System.out.println("qpzjxh==="+qpzjxh);
 			        System.out.println("qpzzdw==="+qpzzdw);
+			        System.out.println("cjljdz==="+cjljdz);
 			        
 			        AirBottle airBottle=new AirBottle();
 			        airBottle.setCpxh_qc(cpxh_qc);
@@ -515,6 +527,9 @@ public class CreateLabelController {
 			        airBottle.setScrj(scrj);
 			        airBottle.setQpzjxh(qpzjxh);
 			        airBottle.setQpzzdw(qpzzdw);
+			        airBottle.setCjljdz(cjljdz);
+			        if(!StringUtils.isEmpty(cjljdz))
+			        	airBottle.setTybm(cjljdz.substring(cjljdz.lastIndexOf("/")+1, cjljdz.length()));
 			        abList.add(airBottle);
 			    }  
 			}

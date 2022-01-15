@@ -16,7 +16,7 @@
 </div>
 <div class="layui-header ">
 	<div class="layui-logo">
-		<a>库存标签二维码系统</a>
+		<a>气瓶标签打印系统</a>
 	</div>
 	<div style="margin-left: 250px;height: 40px;line-height: 40px;">
 		<div style="width: 100px;text-align: center;font-size: 16px;"><a href="<%=basePath%>createLabel/toCreateBatch">首页</a></div>

@@ -269,6 +269,12 @@
  		<if test="qpzzdw!=null">
  			qpzzdw=#{qpzzdw},
  		</if>
+ 		<if test="cjljdz!=null">
+ 			cjljdz=#{cjljdz},
+ 		</if>
+ 		<if test="tybm!=null">
+ 			tybm=#{tybm},
+ 		</if>
  		input=1
  		where qpbh=#{qpbh}
  	</update>

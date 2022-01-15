@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>库存标签二维码系统登录</title>
+<title>气瓶标签打印系统登录</title>
 <%@include file="js.jsp"%>
 <style>
 .beg-login-box {
@@ -44,7 +44,7 @@ body {
 <body>
 	<div class="beg-login-box">
 		<header>
-		<h1>库存标签二维码系统登录</h1>
+		<h1>气瓶标签打印系统登录</h1>
 		</header>
 		<div class="beg-login-main">
 			<form class="layui-form" method="post">

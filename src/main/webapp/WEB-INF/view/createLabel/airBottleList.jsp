@@ -106,6 +106,7 @@ $(function(){
 		columns:[[
             {field:"cpxh",title:"产品型号（简称）",width:150,sortable:true},
             {field:"cpxh_qc",title:"产品型号（全称）",width:150,sortable:true},
+            {field:"tybm",title:"统一编码",width:150,sortable:true},
             {field:"qpbh",title:"气瓶编号",width:150,sortable:true},
             {field:"gcrj",title:"公称容积",width:80,sortable:true},
             {field:"ndbh",title:"内胆壁厚",width:80,sortable:true},
@@ -123,7 +124,7 @@ $(function(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{cpxh:"<div style=\"text-align:center;\">暂无分类</div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"cpxh",colspan:11});
+				$(this).datagrid("mergeCells",{index:0,field:"cpxh",colspan:12});
 				data.total=0;
 			}
 			

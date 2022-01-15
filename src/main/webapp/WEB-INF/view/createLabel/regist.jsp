@@ -69,7 +69,7 @@ body .beg-login-bg {
 	<div class="register">
 		<div class="register_content register-form">
 			<div class="register_title">
-				<h2 class="title">库存标签二维码系统注册</h2>
+				<h2 class="title">气瓶标签打印系统注册</h2>
 			</div>
 			<form class="layui-form" method="post">
 				<input type="hidden" name="action" value="${param.action }"/>

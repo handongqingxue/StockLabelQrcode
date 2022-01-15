@@ -27,6 +27,12 @@ public class AirBottle implements Serializable {
 	public void setCpxh_qc(String cpxh_qc) {
 		this.cpxh_qc = cpxh_qc;
 	}
+	public String getTybm() {
+		return tybm;
+	}
+	public void setTybm(String tybm) {
+		this.tybm = tybm;
+	}
 	public String getQpbh() {
 		return qpbh;
 	}
@@ -81,6 +87,12 @@ public class AirBottle implements Serializable {
 	public void setQpzzdw(String qpzzdw) {
 		this.qpzzdw = qpzzdw;
 	}
+	public String getCjljdz() {
+		return cjljdz;
+	}
+	public void setCjljdz(String cjljdz) {
+		this.cjljdz = cjljdz;
+	}
 	public String getQrcode_crs_url() {
 		return qrcode_crs_url;
 	}
@@ -107,6 +119,7 @@ public class AirBottle implements Serializable {
 	}
 	private String cpxh;//产品型号（简称）
 	private String cpxh_qc;//产品型号（全称）
+	private String tybm;//统一编码
 	private String qpbh;//气瓶编号
 	private String gcrj;//公称容积
 	private String ndbh;//内胆壁厚
@@ -116,6 +129,7 @@ public class AirBottle implements Serializable {
 	private String zzrq_y;//制造日期年份
 	private String zzrq_m;//制造日期月份
 	private String qpzzdw;//气瓶制造单位
+	private String cjljdz;//超级链接地址
 	private String qrcode_crs_url;//缠绕式二维码链接
 	private String qrcode_hgz_url;//合格证式二维码链接
 	private int label_type;//标签类型：1.中文标签、2.ISO标签、3.ECE标签
