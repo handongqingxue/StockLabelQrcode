@@ -23,6 +23,8 @@
 <script type="text/javascript">
 var path='<%=basePath %>';
 var adNum=0;
+var qyscxkdh="112";//企业生产许可代号
+var cjdh="2";//车间代号
 $(function(){
 	initAddDialog();//0
 
@@ -49,7 +51,7 @@ function initAddDialog(){
 		title:"创建批次",
 		width:setFitWidthInParent("body"),
 		//height:setFitHeightInParent(".layui-side"),
-		height:749,
+		height:743,
 		top:0,
 		left:0,
 		//top:80,
@@ -314,6 +316,10 @@ function editPreviewCrsPdfSet(){
     cpxhLeft=cpxhLeft.substring(0,cpxhLeft.length-2);
     var cpxhTop=pdfDiv.find("#cpxh_span").css("margin-top");
     cpxhTop=cpxhTop.substring(0,cpxhTop.length-2);
+    var tybmLeft=pdfDiv.find("#tybm_span").css("margin-left");
+    tybmLeft=tybmLeft.substring(0,tybmLeft.length-2);
+    var tybmTop=pdfDiv.find("#tybm_span").css("margin-top");
+    tybmTop=tybmTop.substring(0,tybmTop.length-2);
     var qpbhLeft=pdfDiv.find("#qpbh_span").css("margin-left");
     qpbhLeft=qpbhLeft.substring(0,qpbhLeft.length-2);
     var qpbhTop=pdfDiv.find("#qpbh_span").css("margin-top");
@@ -342,6 +348,8 @@ function editPreviewCrsPdfSet(){
     
     console.log("cpxhLeft==="+cpxhLeft);
     console.log("cpxhTop==="+cpxhTop);
+    console.log("tybmLeft==="+tybmLeft);
+    console.log("tybmTop==="+tybmTop);
     console.log("qpbhLeft==="+qpbhLeft);
     console.log("qpbhTop==="+qpbhTop);
     console.log("gcrjLeft==="+gcrjLeft);
@@ -349,7 +357,7 @@ function editPreviewCrsPdfSet(){
     console.log("ndbhLeft==="+ndbhLeft);
     console.log("ndbhTop==="+ndbhTop);
     $.post("editPreviewCrsPdfSet",
-   		{id:id,cpxh_left:cpxhLeft,cpxh_top:cpxhTop,qpbh_left:qpbhLeft,qpbh_top:qpbhTop,gcrj_left:gcrjLeft,gcrj_top:gcrjTop,
+   		{id:id,cpxh_left:cpxhLeft,cpxh_top:cpxhTop,tybm_left:tybmLeft,tybm_top:tybmTop,qpbh_left:qpbhLeft,qpbh_top:qpbhTop,gcrj_left:gcrjLeft,gcrj_top:gcrjTop,
     	ndbh_left:ndbhLeft,ndbh_top:ndbhTop,zzrq_y_left:zzrqYLeft,zzrq_y_top:zzrqYTop,zzrq_m_left:zzrqMLeft,zzrq_m_top:zzrqMTop,qrcode_left:qrcodeLeft,qrcode_top:qrcodeTop},
    		function(){
     	
@@ -366,6 +374,9 @@ function previewPDF(labelType){
 			var id=crsPdfSet.id;
 			var cpxhLeft=crsPdfSet.cpxh_left;
 			var cpxhTop=crsPdfSet.cpxh_top;
+			var tybmLeft=crsPdfSet.tybm_left;
+			var tybmTop=crsPdfSet.tybm_top;
+			var tybmFontSize=crsPdfSet.tybm_font_size;
 			var qpbhLeft=crsPdfSet.qpbh_left;
 			var qpbhTop=crsPdfSet.qpbh_top;
 			var gcrjLeft=crsPdfSet.gcrj_left;
@@ -386,6 +397,7 @@ function previewPDF(labelType){
 			var zzrqY=$("#zzrqY_inp").val();
 			var zzrqM=$("#zzrqM_inp").val();
 		    var pch=$("#qpqsbh_inp").val().substring(4,7);
+		    var tybm=qyscxkdh+qpqsbh.substring(2,4)+cjdh+qpqsbh.substring(4);
 			
 			var previewPDFDiv=$("#previewPdf_div");
 			previewPDFDiv.empty();
@@ -394,8 +406,9 @@ function previewPDF(labelType){
 			previewPDFDiv.append("<div id=\"pdf_div\" style=\"width:500px;height: 300px;font-size: 20px;border:#000 solid 1px;\">"
 									+"<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
 									+"<input id=\"qrcodeHGZUrl_hid\" type=\"hidden\" />"
-									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 120px;height: 120px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
+									+"<img id=\"qrcode_img\" alt=\"\" src=\""+path+"/resource/images/qrcode.png\" style=\"width: 130px;height: 130px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
 									+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+cpxh+"</span>"
+									+"<span id=\"tybm_span\" style=\"margin-top: "+tybmTop+"px;margin-left: "+tybmLeft+"px;font-size:"+tybmFontSize+"px;font-weight: bold;position: absolute;\">"+tybm+"</span>"
 									+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+qpqsbh+"</span>"
 									+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+gcrj+"</span>"
 									+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+ndbh+"</span>"
@@ -644,42 +657,42 @@ function initWindowMarginLeft(){
 	<div id="add_div">
 		<form id="form1" name="form1" method="post" action="editGoods" enctype="multipart/form-data">
 			<table>
-				<tr style="height: 45px;">
+				<tr style="height: 43px;">
 					<td style="width:40%;">产品型号：</td>
 					<td>
 						<input id="cpxh_inp" name="" type="text" maxlength="20" placeholder="例如:356-70" onfocus="focusCPXH()" onblur="checkCPXH()"/>
 						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
-				<tr style="height: 45px;">
+				<tr style="height: 43px;">
 					<td>气瓶起始编号：</td>
 					<td>
 						<input id="qpqsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001001" value="CB19001001" onfocus="focusQpQsBh()" onblur="checkQpQsBh()"/>
 						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
-				<tr style="height: 45px;">
+				<tr style="height: 43px;">
 					<td>气瓶结束编号：</td>
 					<td>
 						<input id="qpjsbh_inp" name="" type="text" maxlength="20" placeholder="例如:CB19001003" value="CB19001002" onfocus="focusQpJsBh()" onblur="checkQpJsBh()"/>
 						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
-				<tr style="height: 45px;">
+				<tr style="height: 43px;">
 					<td>公称容积：</td>
 					<td>
 						<input id="gcrj_inp" name="" type="text" maxlength="20" placeholder="例如:70L" onfocus="focusGCRJ()" onblur="checkGCRJ()"/>
 						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
-				<tr style="height: 45px;">
+				<tr style="height: 43px;">
 					<td>内胆壁厚：</td>
 					<td>
 						<input id="ndbh_inp" name="" type="text" maxlength="20" placeholder="例如:5.0" onfocus="focusNDBH()" onblur="checkNDBH()"/>
 						<span style="color: #f00;">*</span>
 					</td>
 				</tr>
-				<tr style="height: 45px;">
+				<tr style="height: 43px;">
 					<td>制造日期：</td>
 					<td>
 						<input id="zzrqY_inp" name="" type="text" size="6" maxlength="4" placeholder="例如:2019" onblur="checkZZRQY()"/>
@@ -692,50 +705,57 @@ function initWindowMarginLeft(){
 				</tr>
 				<tr style="height: 360px;">
 					<td>
-						<div style="height: 45px;line-height: 45px;">PDF预览</div>
-						<div style="height: 45px;">
+						<div style="height: 43px;line-height: 43px;">PDF预览</div>
+						<div style="height: 43px;">
 							产品型号：
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('cpxh_span','up')">上移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('cpxh_span','down')">下移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('cpxh_span','left')">左移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('cpxh_span','right')">右移</a>
 						</div>
-						<div style="height: 45px;">
+						<div style="height: 43px;">
+							统一编码：
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('tybm_span','up')">上移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('tybm_span','down')">下移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('tybm_span','left')">左移</a>
+							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('tybm_span','right')">右移</a>
+						</div>
+						<div style="height: 43px;">
 							气瓶编号：
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qpbh_span','up')">上移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qpbh_span','down')">下移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qpbh_span','left')">左移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qpbh_span','right')">右移</a>
 						</div>
-						<div style="height: 45px;">
+						<div style="height: 43px;">
 							公称容积：
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('gcrj_span','up')">上移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('gcrj_span','down')">下移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('gcrj_span','left')">左移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('gcrj_span','right')">右移</a>
 						</div>
-						<div style="height: 45px;">
+						<div style="height: 43px;">
 							内胆壁厚：
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('ndbh_span','up')">上移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('ndbh_span','down')">下移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('ndbh_span','left')">左移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('ndbh_span','right')">右移</a>
 						</div>
-						<div style="height: 45px;">
+						<div style="height: 43px;">
 							制造日期（年）：
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrqY_span','up')">上移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrqY_span','down')">下移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrqY_span','left')">左移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrqY_span','right')">右移</a>
 						</div>
-						<div style="height: 45px;">
+						<div style="height: 43px;">
 							制造日期（月）：
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrqM_span','up')">上移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrqM_span','down')">下移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrqM_span','left')">左移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('zzrqM_span','right')">右移</a>
 						</div>
-						<div style="height: 45px;">
+						<div style="height: 43px;">
 							二维码：
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qrcode_img','up')">上移</a>
 							<a class="easyui-linkbutton" onclick="resetPDFHtmlLocation('qrcode_img','down')">下移</a>

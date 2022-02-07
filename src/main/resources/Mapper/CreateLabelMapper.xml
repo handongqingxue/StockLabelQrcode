@@ -329,6 +329,12 @@
  		<if test="cpxh_top!=null">
  			cpxh_top=#{cpxh_top},
  		</if>
+ 		<if test="tybm_left!=null">
+ 			tybm_left=#{tybm_left},
+ 		</if>
+ 		<if test="tybm_top!=null">
+ 			tybm_top=#{tybm_top},
+ 		</if>
  		<if test="qpbh_left!=null">
  			qpbh_left=#{qpbh_left},
  		</if>

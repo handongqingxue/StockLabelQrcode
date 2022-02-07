@@ -130,10 +130,10 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<!-- 
 			<version>5.1.42</version>
-			 -->
+			<!-- 
 			<version>8.0.11</version>
+			 -->
 		</dependency>
 		<!-- 生成验证码插件 -->
 		<dependency>
