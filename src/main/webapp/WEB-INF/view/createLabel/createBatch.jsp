@@ -85,7 +85,7 @@ function initAddDialog(){
 							        		   var zzrqM=$("#zzrqM_inp").val();
 							        		   var previewPDFDiv=$("#previewPdf_div");
 							        		   var pdfDivHtml=$("#previewPdf_div #pdf_div").html();
-							        		   $("#previewPdf_div #pdf_div").remove();
+							        		   $("#previewPdf_div div[id^='pdf_div']").remove();
 							        		   var pdfHeight=0;
 							        		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
 							                       var qpbhSuf;
