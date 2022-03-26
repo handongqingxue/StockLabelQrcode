@@ -177,6 +177,159 @@ function clonePreItemDiv(){
 }
 
 function createPdf(){
+	var scale=4;
+	var outputPdfDivWidth=$("#outputPdf_div").css("width");
+	outputPdfDivWidth=outputPdfDivWidth.substring(0,outputPdfDivWidth.length-2);
+	outputPdfDivWidth=outputPdfDivWidth*scale;
+	$("#outputPdf_div").css("width",outputPdfDivWidth+"px");
+	
+	$("#outputPdf_div div[id^='pdf_div']").each(function(){
+		var pdfItemDiv=$(this);
+		var pdfItemDivWidth=pdfItemDiv.css("width");
+		pdfItemDivWidth=pdfItemDivWidth.substring(0,pdfItemDivWidth.length-2);
+		pdfItemDivWidth=pdfItemDivWidth*scale;
+		pdfItemDiv.css("width",pdfItemDivWidth+"px");
+		
+		var pdfItemDivHeight=pdfItemDiv.css("height");
+		pdfItemDivHeight=pdfItemDivHeight.substring(0,pdfItemDivHeight.length-2);
+		pdfItemDivHeight=pdfItemDivHeight*scale;
+		pdfItemDiv.css("height",pdfItemDivHeight+"px");
+		
+		var cpxhSpan=pdfItemDiv.find("#cpxh_span");
+		var cpxhfs=cpxhSpan.css("font-size");
+		cpxhfs=cpxhfs.substring(0,cpxhfs.length-2);
+		cpxhfs=cpxhfs*scale;
+		cpxhSpan.css("font-size",cpxhfs+"px");
+		
+		var cpxhmt=cpxhSpan.css("margin-top");
+		cpxhmt=cpxhmt.substring(0,cpxhmt.length-2);
+		cpxhmt=cpxhmt*scale;
+		cpxhSpan.css("margin-top",cpxhmt+"px");
+		
+		var cpxhml=cpxhSpan.css("margin-left");
+		cpxhml=cpxhml.substring(0,cpxhml.length-2);
+		cpxhml=cpxhml*scale;
+		cpxhSpan.css("margin-left",cpxhml+"px");
+		
+		var tybmSpan=pdfItemDiv.find("#tybm_span");
+		var tybmfs=tybmSpan.css("font-size");
+		tybmfs=tybmfs.substring(0,tybmfs.length-2);
+		tybmfs=tybmfs*scale;
+		tybmSpan.css("font-size",tybmfs+"px");
+
+		var tybmmt=tybmSpan.css("margin-top");
+		tybmmt=tybmmt.substring(0,tybmmt.length-2);
+		tybmmt=tybmmt*scale;
+		tybmSpan.css("margin-top",tybmmt+"px");
+
+		var tybmml=tybmSpan.css("margin-left");
+		tybmml=tybmml.substring(0,tybmml.length-2);
+		tybmml=tybmml*scale;
+		tybmSpan.css("margin-left",tybmml+"px");
+		
+		var qpbhSpan=pdfItemDiv.find("#qpbh_span");
+		var qpbhfs=qpbhSpan.css("font-size");
+		qpbhfs=qpbhfs.substring(0,qpbhfs.length-2);
+		qpbhfs=qpbhfs*scale;
+		qpbhSpan.css("font-size",qpbhfs+"px");
+
+		var qpbhmt=qpbhSpan.css("margin-top");
+		qpbhmt=qpbhmt.substring(0,qpbhmt.length-2);
+		qpbhmt=qpbhmt*scale;
+		qpbhSpan.css("margin-top",qpbhmt+"px");
+
+		var qpbhml=qpbhSpan.css("margin-left");
+		qpbhml=qpbhml.substring(0,qpbhml.length-2);
+		qpbhml=qpbhml*scale;
+		qpbhSpan.css("margin-left",qpbhml+"px");
+		
+		var gcrjSpan=pdfItemDiv.find("#gcrj_span");
+		var gcrjfs=gcrjSpan.css("font-size");
+		gcrjfs=gcrjfs.substring(0,gcrjfs.length-2);
+		gcrjfs=gcrjfs*scale;
+		gcrjSpan.css("font-size",gcrjfs+"px");
+
+		var gcrjmt=gcrjSpan.css("margin-top");
+		gcrjmt=gcrjmt.substring(0,gcrjmt.length-2);
+		gcrjmt=gcrjmt*scale;
+		gcrjSpan.css("margin-top",gcrjmt+"px");
+
+		var gcrjml=gcrjSpan.css("margin-left");
+		gcrjml=gcrjml.substring(0,gcrjml.length-2);
+		gcrjml=gcrjml*scale;
+		gcrjSpan.css("margin-left",gcrjml+"px");
+		
+		var ndbhSpan=pdfItemDiv.find("#ndbh_span");
+		var ndbhfs=ndbhSpan.css("font-size");
+		ndbhfs=ndbhfs.substring(0,ndbhfs.length-2);
+		ndbhfs=ndbhfs*scale;
+		ndbhSpan.css("font-size",ndbhfs+"px");
+
+		var ndbhmt=ndbhSpan.css("margin-top");
+		ndbhmt=ndbhmt.substring(0,ndbhmt.length-2);
+		ndbhmt=ndbhmt*scale;
+		ndbhSpan.css("margin-top",ndbhmt+"px");
+
+		var ndbhml=ndbhSpan.css("margin-left");
+		ndbhml=ndbhml.substring(0,ndbhml.length-2);
+		ndbhml=ndbhml*scale;
+		ndbhSpan.css("margin-left",ndbhml+"px");
+		
+		var zzrqYSpan=pdfItemDiv.find("#zzrqY_span");
+		var zzrqYfs=zzrqYSpan.css("font-size");
+		zzrqYfs=zzrqYfs.substring(0,zzrqYfs.length-2);
+		zzrqYfs=zzrqYfs*scale;
+		zzrqYSpan.css("font-size",zzrqYfs+"px");
+
+		var zzrqYmt=zzrqYSpan.css("margin-top");
+		zzrqYmt=zzrqYmt.substring(0,zzrqYmt.length-2);
+		zzrqYmt=zzrqYmt*scale;
+		zzrqYSpan.css("margin-top",zzrqYmt+"px");
+
+		var zzrqYml=zzrqYSpan.css("margin-left");
+		zzrqYml=zzrqYml.substring(0,zzrqYml.length-2);
+		zzrqYml=zzrqYml*scale;
+		zzrqYSpan.css("margin-left",zzrqYml+"px");
+		
+		var zzrqMSpan=pdfItemDiv.find("#zzrqM_span");
+		var zzrqMfs=zzrqMSpan.css("font-size");
+		zzrqMfs=zzrqMfs.substring(0,zzrqMfs.length-2);
+		zzrqMfs=zzrqMfs*scale;
+		zzrqMSpan.css("font-size",zzrqMfs+"px");
+
+		var zzrqMmt=zzrqMSpan.css("margin-top");
+		zzrqMmt=zzrqMmt.substring(0,zzrqMmt.length-2);
+		zzrqMmt=zzrqMmt*scale;
+		zzrqMSpan.css("margin-top",zzrqMmt+"px");
+
+		var zzrqMml=zzrqMSpan.css("margin-left");
+		zzrqMml=zzrqMml.substring(0,zzrqMml.length-2);
+		zzrqMml=zzrqMml*scale;
+		zzrqMSpan.css("margin-left",zzrqMml+"px");
+		
+		var qrcodeImg=pdfItemDiv.find("#qrcode_img");
+		var qrcodew=qrcodeImg.css("width");
+		qrcodew=qrcodew.substring(0,qrcodew.length-2);
+		qrcodew=qrcodew*scale;
+		qrcodeImg.css("width",qrcodew+"px")
+		
+		var qrcodeh=qrcodeImg.css("height");
+		qrcodeh=qrcodeh.substring(0,qrcodeh.length-2);
+		qrcodeh=qrcodeh*scale;
+		qrcodeImg.css("height",qrcodeh+"px")
+		
+		var qrcodemt=qrcodeImg.css("margin-top");
+		qrcodemt=qrcodemt.substring(0,qrcodemt.length-2);
+		qrcodemt=qrcodemt*scale;
+		qrcodeImg.css("margin-top",qrcodemt+"px")
+		
+		var qrcodeml=qrcodeImg.css("margin-left");
+		qrcodeml=qrcodeml.substring(0,qrcodeml.length-2);
+		qrcodeml=qrcodeml*scale;
+		qrcodeImg.css("margin-left",qrcodeml+"px")
+	});
+	
+	//return false;
 	html2canvas(
        document.getElementById("outputPdf_div"),
        {
