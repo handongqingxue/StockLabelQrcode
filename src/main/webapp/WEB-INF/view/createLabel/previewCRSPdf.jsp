@@ -55,10 +55,13 @@
 <script type="text/javascript">
 var path='<%=basePath %>';
 //var itemIndex=0;
-var outputIndex=0;
+var cloneDivIndex=0;
+var outputImgIndex=0;
 var outputCount=0;
-var pdfSize=10;
+var pdfDivSize=5;
 var t;
+var pdf;
+var pageData;
 $(function(){
 	$.post("getPrePdfJsonByUuid",
 		{uuid:'${param.uuid}'},
@@ -78,97 +81,40 @@ $(function(){
 });
 
 function outputPdf(){
-	outputIndex=0;
+	pdf = new jsPDF('', 'pt', 'a4');
+	cloneDivIndex=0;
 	outputCount=$("#previewPdf_div div[id^='pdf_div']").length;
-    //outputIndex=0;
-    //outputCount=Math.ceil(itemCount/pdfSize);
 	$("#previewPdf_div div[id^='pdf_div']").css("border-color","#fff");
 	$("#outputPdf_div").css("display","block");
     $("#previewPdf_div").css("height","708.75px");
     $("#previewPdf_div div[id^='pdf_div']").css("display","none");
     clonePreItemDiv();
-    
-    /*
-	////
-	$("#outputPdf_div").css("display","block");
-	$("#previewPdf_div div[id^='pdf_div']").each(function(){
-		$(this).css("border-color","#fff");
-		$("#outputPdf_div").append($(this).clone());
-	});
-    $("#outputPdf_div").css("height",pdfHeight+"px");
-	
-	html2canvas(
-        document.getElementById("outputPdf_div"),
-        {
-            dpi: 172,//导出pdf清晰度
-            onrendered: function (canvas) {
-                var contentWidth = canvas.width;
-                var contentHeight = canvas.height;
-
-                //一页pdf显示html页面生成的canvas高度;
-                var pageHeight = contentWidth / 592.28 * 841.89;
-                //未生成pdf的html页面高度
-                var leftHeight = contentHeight;
-                //pdf页面偏移
-                var position = 0;
-                //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
-                var imgWidth = 595.28;
-                var imgHeight = 592.28 / contentWidth * contentHeight;
-
-                var pageData = canvas.toDataURL('image/jpeg', 1.0);
-                var pdf = new jsPDF('', 'pt', 'a4');
-
-                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-                //当内容未超过pdf一页显示的范围，无需分页
-                if (leftHeight < pageHeight) {
-                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
-                } else {
-                    while (leftHeight > 0) {
-                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-                        leftHeight -= pageHeight;
-                        position -= 841.89;
-                        //避免添加空白页
-                        if (leftHeight > 0) {
-                            pdf.addPage();
-                        }
-                    }
-                }
-                pdf.save($("#previewPdf_div #pch_hid").val()+'.pdf');
-                $("#outputPdf_div").empty();
-    		    $("#outputPdf_div").css("height","0px");
-    			$("#outputPdf_div").css("display","none");
-    			$("#previewPdf_div div[id^='pdf_div']").css("border-color","#000");
-            },
-            //背景设为白色（默认为黑色）
-            background: "#fff"  
-        }
-     )
-     */
 }
 
 function clonePreItemDiv(){
 	if(t!=undefined)
 		clearTimeout(t);
-	var preItemDiv=$("#previewPdf_div div[id^='pdf_div']").eq(outputIndex);
+	var preItemDiv=$("#previewPdf_div div[id^='pdf_div']").eq(cloneDivIndex);
 	preItemDiv.css("display","block");
-	if(outputIndex>0){
-		$("#previewPdf_div div[id^='pdf_div']").eq(outputIndex-1).css("display","none");
+	if(cloneDivIndex>0){
+		$("#previewPdf_div div[id^='pdf_div']").eq(cloneDivIndex-1).css("display","none");
 	}
 	$("#outputPdf_div").append(preItemDiv.clone());
-	outputIndex++;
-	if(outputIndex%pdfSize==0){
-		console.log($("#outputPdf_div").html());
-		createPdf();
+	cloneDivIndex++;
+	if(cloneDivIndex%pdfDivSize==0){
+		createPdfImage();
 	}
 	showProDiv(true);
-    if(outputIndex<outputCount){
+    if(cloneDivIndex<outputCount){
 	   	   t=setTimeout("clonePreItemDiv()",1000);
     }
     else{
+       pdf.save($("#previewPdf_div #pch_hid").val()+'.pdf');
+       pdf=null;
        setTimeout(function(){
      	  showProDiv(false);
    	   },1000);
-       outputIndex=0;
+       cloneDivIndex=0;
        outputCount=0;
        $("#outputPdf_div").css("height","0px");
 	   $("#outputPdf_div").css("display","none");
@@ -176,7 +122,7 @@ function clonePreItemDiv(){
     }
 }
 
-function createPdf(){
+function createPdfImage(){
 	resizeOutputPdfDiv(1);
 	html2canvas(
        document.getElementById("outputPdf_div"),
@@ -196,8 +142,7 @@ function createPdf(){
                var imgWidth = 595.28;
                var imgHeight = 592.28 / contentWidth * contentHeight;
 
-               var pageData = canvas.toDataURL('image/jpeg', 1.0);
-               var pdf = new jsPDF('', 'pt', 'a4');
+               pageData = canvas.toDataURL('image/jpeg', 1.0);
 
                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
                //当内容未超过pdf一页显示的范围，无需分页
@@ -207,15 +152,16 @@ function createPdf(){
                    while (leftHeight > 0) {
                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
                        leftHeight -= pageHeight;
+                       outputImgIndex++;
                        position -= 841.89;
                        //避免添加空白页
-                       if (leftHeight > 0) {
+                       //if (leftHeight > 0) {
+                       if(outputImgIndex<outputCount)
                            pdf.addPage();
-                       }
+                       //}
                    }
                }
-               pdf.save($("#previewPdf_div #pch_hid").val()+'.pdf');
-               //outputIndex++;
+               //cloneDivIndex++;
         	   $("#outputPdf_div").empty();
         	   resizeOutputPdfDiv(0);
            },
@@ -423,11 +369,11 @@ function resizeOutputPdfDiv(flag){
 function showProDiv(ifShow){
 	if(ifShow){
 		$("#pro_div").css("display","block");
-		$("#pro_div #outputIndex_div").text("正在导出第"+outputIndex+"个气瓶");
+		$("#pro_div #outputIndex_div").text("正在导出第"+cloneDivIndex+"个气瓶");
 		$("#pro_div #outputCount_div").text("共"+outputCount+"个");
 		var pbdw=$("#proBar_div").css("width");
 		pbdw=pbdw.substring(0,pbdw.length-2);
-		$("#percent_div").css("width",outputIndex/outputCount*pbdw+"px");
+		$("#percent_div").css("width",cloneDivIndex/outputCount*pbdw+"px");
 	}
 	else{
 		$("#pro_div").css("display","none");
