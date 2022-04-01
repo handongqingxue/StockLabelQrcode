@@ -191,6 +191,11 @@ function resizeOutputPdfDiv(flag){
 			pdfItemDivHeight=pdfItemDivHeight*scale;
 			pdfItemDiv.css("height",pdfItemDivHeight+"px");
 			
+			var pdfItemDivBorderWidth=pdfItemDiv.css("border-width");
+			pdfItemDivBorderWidth=pdfItemDivBorderWidth.substring(0,pdfItemDivBorderWidth.length-2);
+			pdfItemDivBorderWidth=pdfItemDivBorderWidth*scale;
+			pdfItemDiv.css("border-width",pdfItemDivBorderWidth+"px");
+			
 			var cpxhSpan=pdfItemDiv.find("#cpxh_span");
 			var cpxhWidth=cpxhSpan.css("width");
 			cpxhWidth=cpxhWidth.substring(0,cpxhWidth.length-2);
