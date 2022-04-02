@@ -108,13 +108,13 @@ function previewPdf(){
 			pdfDiv.empty();
 			pdfDiv.append("<input id=\"id_hid\" type=\"hidden\" value=\""+id+"\"/>"
 					+"<img id=\"qrcode_img\" alt=\"\" src=\""+row.qrcode_crs_url+"\" style=\"width: 130px;height: 130px;margin-top: "+qrcodeTop+"px;margin-left: "+qrcodeLeft+"px;position: absolute;\">"
-					+"<span id=\"cpxh_span\" style=\"margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+row.cpxh+"</span>"
-					+"<span id=\"tybm_span\" style=\"margin-top: "+tybmTop+"px;margin-left: "+tybmLeft+"px;font-size:"+tybmFontSize+"px;font-weight: bold;position: absolute;\">"+row.tybm+"</span>"
-					+"<span id=\"qpbh_span\" style=\"margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+row.qpbh+"</span>"
-					+"<span id=\"gcrj_span\" style=\"margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+row.gcrj+"</span>"
-					+"<span id=\"ndbh_span\" style=\"margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+row.ndbh+"</span>"
-					+"<span id=\"zzrqY_span\" style=\"margin-top: "+zzrqYTop+"px;margin-left: "+zzrqYLeft+"px;position: absolute;\">"+row.zzrq_y+"</span>"
-					+"<span id=\"zzrqM_span\" style=\"margin-top: "+zzrqMTop+"px;margin-left: "+zzrqMLeft+"px;position: absolute;\">"+row.zzrq_m+"</span>");
+					+"<span id=\"cpxh_span\" style=\"width:100px;margin-top: "+cpxhTop+"px;margin-left: "+cpxhLeft+"px;position: absolute;\">"+row.cpxh+"</span>"
+					+"<span id=\"tybm_span\" style=\"width: 150px;margin-top: "+tybmTop+"px;margin-left: "+tybmLeft+"px;font-size:"+tybmFontSize+"px;font-weight: bold;position: absolute;\">"+row.tybm+"</span>"
+					+"<span id=\"qpbh_span\" style=\"width: 150px;margin-top: "+qpbhTop+"px;margin-left: "+qpbhLeft+"px;position: absolute;\">"+row.qpbh+"</span>"
+					+"<span id=\"gcrj_span\" style=\"width: 70px;margin-top: "+gcrjTop+"px;margin-left: "+gcrjLeft+"px;position: absolute;\">"+row.gcrj+"</span>"
+					+"<span id=\"ndbh_span\" style=\"width: 70px;margin-top: "+ndbhTop+"px;margin-left: "+ndbhLeft+"px;position: absolute;\">"+row.ndbh+"</span>"
+					+"<span id=\"zzrqY_span\" style=\"width: 50px;margin-top: "+zzrqYTop+"px;margin-left: "+zzrqYLeft+"px;position: absolute;\">"+row.zzrq_y+"</span>"
+					+"<span id=\"zzrqM_span\" style=\"width: 30px;margin-top: "+zzrqMTop+"px;margin-left: "+zzrqMLeft+"px;position: absolute;\">"+row.zzrq_m+"</span>");
 		}
 	,"json");
 }
@@ -284,8 +284,12 @@ function checkPreviewPdfHtml(){
 function outputPdf(){
 	if(checkPreviewPdfHtml()){
 	   	$("#pdf_div").css("border-color","#fff");
+		$("#outputPdf_div").css("display","block");
+		$("#outputPdf_div").html($("#pdf_div").clone());
+		resizeOutputPdfDiv(1);
 		html2canvas(
-           document.getElementById("pdf_div"),
+           //document.getElementById("outputPdf_div"),
+           $("#outputPdf_div #pdf_div"),
            {
         	   scale: '5',
                dpi: '300',//导出pdf清晰度
@@ -323,17 +327,193 @@ function outputPdf(){
                        }
                    }
                    
-                   var qpbh=$("#pdf_div #qpbh_span").text();
-                   var zzrqY=$("#pdf_div #zzrqY_span").text();
-                   var zzrqM=$("#pdf_div #zzrqM_span").text();
+                   var qpbh=$("#outputPdf_div #qpbh_span").text();
+                   var zzrqY=$("#outputPdf_div #zzrqY_span").text();
+                   var zzrqM=$("#outputPdf_div #zzrqM_span").text();
                    pdf.save(qpbh+zzrqY+zzrqM+'.pdf');
     			   $("#pdf_div").css("border-color","#000");
+
+            	   $("#outputPdf_div").empty();
+    			   resizeOutputPdfDiv(0);
                },
                //背景设为白色（默认为黑色）
                background: "#fff"  
            }
         )
 	}
+}
+
+function resizeOutputPdfDiv(flag){
+	var scale=4;
+	var outputPdfDiv=$("#outputPdf_div");
+	var outputPdfWidth=outputPdfDiv.css("width");
+	outputPdfWidth=outputPdfWidth.substring(0,outputPdfWidth.length-2);
+	if(flag==1){
+		outputPdfWidth=outputPdfWidth*scale;
+
+		var pdfDiv=$("#outputPdf_div #pdf_div");
+		var pdfWidth=pdfDiv.css("width");
+		pdfWidth=pdfWidth.substring(0,pdfWidth.length-2);
+		pdfWidth=pdfWidth*scale;
+		pdfDiv.css("width",pdfWidth+"px");
+		
+		var pdfHeight=pdfDiv.css("height");
+		pdfHeight=pdfHeight.substring(0,pdfHeight.length-2);
+		pdfHeight=pdfHeight*scale;
+		pdfDiv.css("height",pdfHeight+"px");
+
+		var pdfFontSize=pdfDiv.css("font-size");
+		pdfFontSize=pdfFontSize.substring(0,pdfFontSize.length-2);
+		pdfFontSize=pdfFontSize*scale;
+		pdfDiv.css("font-size",pdfFontSize+"px");
+
+		var pdfBorderWidth=pdfDiv.css("border-width");
+		pdfBorderWidth=pdfBorderWidth.substring(0,pdfBorderWidth.length-2);
+		pdfBorderWidth=pdfBorderWidth*scale;
+		pdfDiv.css("border-width",pdfBorderWidth+"px");
+
+		var cpxhSpan=pdfDiv.find("#cpxh_span");
+		var cpxhWidth=cpxhSpan.css("width");
+		cpxhWidth=cpxhWidth.substring(0,cpxhWidth.length-2);
+		cpxhWidth=cpxhWidth*scale;
+		cpxhSpan.css("width",cpxhWidth+"px");
+
+		var cpxhMarginTop=cpxhSpan.css("margin-top");
+		cpxhMarginTop=cpxhMarginTop.substring(0,cpxhMarginTop.length-2);
+		cpxhMarginTop=cpxhMarginTop*scale;
+		cpxhSpan.css("margin-top",cpxhMarginTop+"px");
+
+		var cpxhMarginLeft=cpxhSpan.css("margin-left");
+		cpxhMarginLeft=cpxhMarginLeft.substring(0,cpxhMarginLeft.length-2);
+		cpxhMarginLeft=cpxhMarginLeft*scale;
+		cpxhSpan.css("margin-left",cpxhMarginLeft+"px");
+
+		var tybmSpan=pdfDiv.find("#tybm_span");
+		var tybmWidth=tybmSpan.css("width");
+		tybmWidth=tybmWidth.substring(0,tybmWidth.length-2);
+		tybmWidth=tybmWidth*scale;
+		tybmSpan.css("width",tybmWidth+"px");
+
+		var tybmFontSize=tybmSpan.css("font-size");
+		tybmFontSize=tybmFontSize.substring(0,tybmFontSize.length-2);
+		tybmFontSize=tybmFontSize*scale;
+		tybmSpan.css("font-size",tybmFontSize+"px");
+
+		var tybmMarginTop=tybmSpan.css("margin-top");
+		tybmMarginTop=tybmMarginTop.substring(0,tybmMarginTop.length-2);
+		tybmMarginTop=tybmMarginTop*scale;
+		tybmSpan.css("margin-top",tybmMarginTop+"px");
+
+		var tybmMarginLeft=tybmSpan.css("margin-left");
+		tybmMarginLeft=tybmMarginLeft.substring(0,tybmMarginLeft.length-2);
+		tybmMarginLeft=tybmMarginLeft*scale;
+		tybmSpan.css("margin-left",tybmMarginLeft+"px");
+
+		var qpbhSpan=pdfDiv.find("#qpbh_span");
+		var qpbhWidth=qpbhSpan.css("width");
+		qpbhWidth=qpbhWidth.substring(0,qpbhWidth.length-2);
+		qpbhWidth=qpbhWidth*scale;
+		qpbhSpan.css("width",qpbhWidth+"px");
+
+		var qpbhMarginTop=qpbhSpan.css("margin-top");
+		qpbhMarginTop=qpbhMarginTop.substring(0,qpbhMarginTop.length-2);
+		qpbhMarginTop=qpbhMarginTop*scale;
+		qpbhSpan.css("margin-top",qpbhMarginTop+"px");
+
+		var qpbhMarginLeft=qpbhSpan.css("margin-left");
+		qpbhMarginLeft=qpbhMarginLeft.substring(0,qpbhMarginLeft.length-2);
+		qpbhMarginLeft=qpbhMarginLeft*scale;
+		qpbhSpan.css("margin-left",qpbhMarginLeft+"px");
+
+		var gcrjSpan=pdfDiv.find("#gcrj_span");
+		var gcrjWidth=gcrjSpan.css("width");
+		gcrjWidth=gcrjWidth.substring(0,gcrjWidth.length-2);
+		gcrjWidth=gcrjWidth*scale;
+		gcrjSpan.css("width",gcrjWidth+"px");
+
+		var gcrjMarginTop=gcrjSpan.css("margin-top");
+		gcrjMarginTop=gcrjMarginTop.substring(0,gcrjMarginTop.length-2);
+		gcrjMarginTop=gcrjMarginTop*scale;
+		gcrjSpan.css("margin-top",gcrjMarginTop+"px");
+
+		var gcrjMarginLeft=gcrjSpan.css("margin-left");
+		gcrjMarginLeft=gcrjMarginLeft.substring(0,gcrjMarginLeft.length-2);
+		gcrjMarginLeft=gcrjMarginLeft*scale;
+		gcrjSpan.css("margin-left",gcrjMarginLeft+"px");
+
+		var ndbhSpan=pdfDiv.find("#ndbh_span");
+		var ndbhWidth=ndbhSpan.css("width");
+		ndbhWidth=ndbhWidth.substring(0,ndbhWidth.length-2);
+		ndbhWidth=ndbhWidth*scale;
+		ndbhSpan.css("width",ndbhWidth+"px");
+
+		var ndbhMarginTop=ndbhSpan.css("margin-top");
+		ndbhMarginTop=ndbhMarginTop.substring(0,ndbhMarginTop.length-2);
+		ndbhMarginTop=ndbhMarginTop*scale;
+		ndbhSpan.css("margin-top",ndbhMarginTop+"px");
+
+		var ndbhMarginLeft=ndbhSpan.css("margin-left");
+		ndbhMarginLeft=ndbhMarginLeft.substring(0,ndbhMarginLeft.length-2);
+		ndbhMarginLeft=ndbhMarginLeft*scale;
+		ndbhSpan.css("margin-left",ndbhMarginLeft+"px");
+
+		var zzrqYSpan=pdfDiv.find("#zzrqY_span");
+		var zzrqYWidth=zzrqYSpan.css("width");
+		zzrqYWidth=zzrqYWidth.substring(0,zzrqYWidth.length-2);
+		zzrqYWidth=zzrqYWidth*scale;
+		zzrqYSpan.css("width",zzrqYWidth+"px");
+
+		var zzrqYMarginTop=zzrqYSpan.css("margin-top");
+		zzrqYMarginTop=zzrqYMarginTop.substring(0,zzrqYMarginTop.length-2);
+		zzrqYMarginTop=zzrqYMarginTop*scale;
+		zzrqYSpan.css("margin-top",zzrqYMarginTop+"px");
+
+		var zzrqYMarginLeft=zzrqYSpan.css("margin-left");
+		zzrqYMarginLeft=zzrqYMarginLeft.substring(0,zzrqYMarginLeft.length-2);
+		zzrqYMarginLeft=zzrqYMarginLeft*scale;
+		zzrqYSpan.css("margin-left",zzrqYMarginLeft+"px");
+
+		var zzrqMSpan=pdfDiv.find("#zzrqM_span");
+		var zzrqMWidth=zzrqMSpan.css("width");
+		zzrqMWidth=zzrqMWidth.substring(0,zzrqMWidth.length-2);
+		zzrqMWidth=zzrqMWidth*scale;
+		zzrqMSpan.css("width",zzrqMWidth+"px");
+
+		var zzrqMMarginTop=zzrqMSpan.css("margin-top");
+		zzrqMMarginTop=zzrqMMarginTop.substring(0,zzrqMMarginTop.length-2);
+		zzrqMMarginTop=zzrqMMarginTop*scale;
+		zzrqMSpan.css("margin-top",zzrqMMarginTop+"px");
+
+		var zzrqMMarginLeft=zzrqMSpan.css("margin-left");
+		zzrqMMarginLeft=zzrqMMarginLeft.substring(0,zzrqMMarginLeft.length-2);
+		zzrqMMarginLeft=zzrqMMarginLeft*scale;
+		zzrqMSpan.css("margin-left",zzrqMMarginLeft+"px");
+
+		var qrcodeImg=pdfDiv.find("#qrcode_img");
+		var qrcodeWidth=qrcodeImg.css("width");
+		qrcodeWidth=qrcodeWidth.substring(0,qrcodeWidth.length-2);
+		qrcodeWidth=qrcodeWidth*scale;
+		qrcodeImg.css("width",qrcodeWidth+"px");
+		
+		var qrcodeHeight=qrcodeImg.css("height");
+		qrcodeHeight=qrcodeHeight.substring(0,qrcodeHeight.length-2);
+		qrcodeHeight=qrcodeHeight*scale;
+		qrcodeImg.css("height",qrcodeHeight+"px");
+		
+		var qrcodeMarginTop=qrcodeImg.css("margin-top");
+		qrcodeMarginTop=qrcodeMarginTop.substring(0,qrcodeMarginTop.length-2);
+		qrcodeMarginTop=qrcodeMarginTop*scale;
+		qrcodeImg.css("margin-top",qrcodeMarginTop+"px");
+		
+		var qrcodeMarginLeft=qrcodeImg.css("margin-left");
+		qrcodeMarginLeft=qrcodeMarginLeft.substring(0,qrcodeMarginLeft.length-2);
+		qrcodeMarginLeft=qrcodeMarginLeft*scale;
+		qrcodeImg.css("margin-left",qrcodeMarginLeft+"px");
+	}
+	else{
+		outputPdfWidth=outputPdfWidth/scale;
+	}
+	outputPdfDiv.css("width",outputPdfWidth+"px");
 }
 
 function openBatchOutputDiv(flag){
@@ -446,5 +626,6 @@ function setFitWidthInParent(o){
 	</div>
 	<%@include file="foot.jsp"%>
 </div>
+<div id="outputPdf_div" style="width: 500px;margin:0 auto;display: none;">
 </body>
 </html>

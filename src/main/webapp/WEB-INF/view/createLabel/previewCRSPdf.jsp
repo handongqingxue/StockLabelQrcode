@@ -181,31 +181,31 @@ function resizeOutputPdfDiv(flag){
 		
 		$("#outputPdf_div div[id^='pdf_div']").each(function(){
 			var pdfItemDiv=$(this);
-			var pdfItemDivWidth=pdfItemDiv.css("width");
-			pdfItemDivWidth=pdfItemDivWidth.substring(0,pdfItemDivWidth.length-2);
-			pdfItemDivWidth=pdfItemDivWidth*scale;
-			pdfItemDiv.css("width",pdfItemDivWidth+"px");
+			var pdfItemWidth=pdfItemDiv.css("width");
+			pdfItemWidth=pdfItemWidth.substring(0,pdfItemWidth.length-2);
+			pdfItemWidth=pdfItemWidth*scale;
+			pdfItemDiv.css("width",pdfItemWidth+"px");
 			
-			var pdfItemDivHeight=pdfItemDiv.css("height");
-			pdfItemDivHeight=pdfItemDivHeight.substring(0,pdfItemDivHeight.length-2);
-			pdfItemDivHeight=pdfItemDivHeight*scale;
-			pdfItemDiv.css("height",pdfItemDivHeight+"px");
+			var pdfItemHeight=pdfItemDiv.css("height");
+			pdfItemHeight=pdfItemHeight.substring(0,pdfItemHeight.length-2);
+			pdfItemHeight=pdfItemHeight*scale;
+			pdfItemDiv.css("height",pdfItemHeight+"px");
 			
-			var pdfItemDivBorderWidth=pdfItemDiv.css("border-width");
-			pdfItemDivBorderWidth=pdfItemDivBorderWidth.substring(0,pdfItemDivBorderWidth.length-2);
-			pdfItemDivBorderWidth=pdfItemDivBorderWidth*scale;
-			pdfItemDiv.css("border-width",pdfItemDivBorderWidth+"px");
+			var pdfItemFontSize=pdfItemDiv.css("font-size");
+			pdfItemFontSize=pdfItemFontSize.substring(0,pdfItemFontSize.length-2);
+			pdfItemFontSize=pdfItemFontSize*scale;
+			pdfItemDiv.css("font-size",pdfItemFontSize+"px");
+			
+			var pdfItemBorderWidth=pdfItemDiv.css("border-width");
+			pdfItemBorderWidth=pdfItemBorderWidth.substring(0,pdfItemBorderWidth.length-2);
+			pdfItemBorderWidth=pdfItemBorderWidth*scale;
+			pdfItemDiv.css("border-width",pdfItemBorderWidth+"px");
 			
 			var cpxhSpan=pdfItemDiv.find("#cpxh_span");
 			var cpxhWidth=cpxhSpan.css("width");
 			cpxhWidth=cpxhWidth.substring(0,cpxhWidth.length-2);
 			cpxhWidth=cpxhWidth*scale;
 			cpxhSpan.css("width",cpxhWidth+"px");
-			
-			var cpxhFontSize=cpxhSpan.css("font-size");
-			cpxhFontSize=cpxhFontSize.substring(0,cpxhFontSize.length-2);
-			cpxhFontSize=cpxhFontSize*scale;
-			cpxhSpan.css("font-size",cpxhFontSize+"px");
 			
 			var cpxhMarginTop=cpxhSpan.css("margin-top");
 			cpxhMarginTop=cpxhMarginTop.substring(0,cpxhMarginTop.length-2);
@@ -222,7 +222,7 @@ function resizeOutputPdfDiv(flag){
 			tybmWidth=tybmWidth.substring(0,tybmWidth.length-2);
 			tybmWidth=tybmWidth*scale;
 			tybmSpan.css("width",tybmWidth+"px");
-			
+
 			var tybmFontSize=tybmSpan.css("font-size");
 			tybmFontSize=tybmFontSize.substring(0,tybmFontSize.length-2);
 			tybmFontSize=tybmFontSize*scale;
@@ -243,12 +243,7 @@ function resizeOutputPdfDiv(flag){
 			qpbhWidth=qpbhWidth.substring(0,qpbhWidth.length-2);
 			qpbhWidth=qpbhWidth*scale;
 			qpbhSpan.css("width",qpbhWidth+"px");
-			
-			var qpbhFontSize=qpbhSpan.css("font-size");
-			qpbhFontSize=qpbhFontSize.substring(0,qpbhFontSize.length-2);
-			qpbhFontSize=qpbhFontSize*scale;
-			qpbhSpan.css("font-size",qpbhFontSize+"px");
-	
+
 			var qpbhMarginTop=qpbhSpan.css("margin-top");
 			qpbhMarginTop=qpbhMarginTop.substring(0,qpbhMarginTop.length-2);
 			qpbhMarginTop=qpbhMarginTop*scale;
@@ -264,12 +259,7 @@ function resizeOutputPdfDiv(flag){
 			gcrjWidth=gcrjWidth.substring(0,gcrjWidth.length-2);
 			gcrjWidth=gcrjWidth*scale;
 			gcrjSpan.css("width",gcrjWidth+"px");
-			
-			var gcrjFontSize=gcrjSpan.css("font-size");
-			gcrjFontSize=gcrjFontSize.substring(0,gcrjFontSize.length-2);
-			gcrjFontSize=gcrjFontSize*scale;
-			gcrjSpan.css("font-size",gcrjFontSize+"px");
-	
+
 			var gcrjMarginTop=gcrjSpan.css("margin-top");
 			gcrjMarginTop=gcrjMarginTop.substring(0,gcrjMarginTop.length-2);
 			gcrjMarginTop=gcrjMarginTop*scale;
@@ -285,12 +275,7 @@ function resizeOutputPdfDiv(flag){
 			ndbhWidth=ndbhWidth.substring(0,ndbhWidth.length-2);
 			ndbhWidth=ndbhWidth*scale;
 			ndbhSpan.css("width",ndbhWidth+"px");
-			
-			var ndbhFontSize=ndbhSpan.css("font-size");
-			ndbhFontSize=ndbhFontSize.substring(0,ndbhFontSize.length-2);
-			ndbhFontSize=ndbhFontSize*scale;
-			ndbhSpan.css("font-size",ndbhFontSize+"px");
-	
+
 			var ndbhMarginTop=ndbhSpan.css("margin-top");
 			ndbhMarginTop=ndbhMarginTop.substring(0,ndbhMarginTop.length-2);
 			ndbhMarginTop=ndbhMarginTop*scale;
@@ -306,12 +291,7 @@ function resizeOutputPdfDiv(flag){
 			zzrqYWidth=zzrqYWidth.substring(0,zzrqYWidth.length-2);
 			zzrqYWidth=zzrqYWidth*scale;
 			zzrqYSpan.css("width",zzrqYWidth+"px");
-			
-			var zzrqYFontSize=zzrqYSpan.css("font-size");
-			zzrqYFontSize=zzrqYFontSize.substring(0,zzrqYFontSize.length-2);
-			zzrqYFontSize=zzrqYFontSize*scale;
-			zzrqYSpan.css("font-size",zzrqYFontSize+"px");
-	
+
 			var zzrqYMarginTop=zzrqYSpan.css("margin-top");
 			zzrqYMarginTop=zzrqYMarginTop.substring(0,zzrqYMarginTop.length-2);
 			zzrqYMarginTop=zzrqYMarginTop*scale;
@@ -327,12 +307,7 @@ function resizeOutputPdfDiv(flag){
 			zzrqMWidth=zzrqMWidth.substring(0,zzrqMWidth.length-2);
 			zzrqMWidth=zzrqMWidth*scale;
 			zzrqMSpan.css("width",zzrqMWidth+"px");
-			
-			var zzrqMFontSize=zzrqMSpan.css("font-size");
-			zzrqMFontSize=zzrqMFontSize.substring(0,zzrqMFontSize.length-2);
-			zzrqMFontSize=zzrqMFontSize*scale;
-			zzrqMSpan.css("font-size",zzrqMFontSize+"px");
-	
+
 			var zzrqMMarginTop=zzrqMSpan.css("margin-top");
 			zzrqMMarginTop=zzrqMMarginTop.substring(0,zzrqMMarginTop.length-2);
 			zzrqMMarginTop=zzrqMMarginTop*scale;
