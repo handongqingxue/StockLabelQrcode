@@ -104,9 +104,9 @@ function clonePreItemDiv(){
 	if(cloneDivIndex%pdfDivSize==0){
 		createPdfImage();
 	}
-	showProDiv(true);
-    if(cloneDivIndex<outputCount){
-	   	   t=setTimeout("clonePreItemDiv()",1000);
+    if(cloneDivIndex<=outputCount){
+    	showProDiv(true);
+	   	t=setTimeout("clonePreItemDiv()",1000);
     }
     else{
        pdf.save($("#previewPdf_div #pch_hid").val()+'.pdf');
@@ -149,7 +149,7 @@ function createPdfImage(){
                if (leftHeight < pageHeight) {
                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
                } else {
-                   while (leftHeight > 0) {
+                   while (leftHeight > pageHeight) {
                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
                        leftHeight -= pageHeight;
                        outputImgIndex++;
