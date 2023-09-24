@@ -273,16 +273,23 @@ public class CreateLabelController {
 		//http://localhost:8088/GoodsPublic/createLabel/toQrcode?action=crs&qpbh=CB19001006
 		AirBottle airBottle = createLabelService.getAirBottleByQpbh(qpbh);
 		String url=null;
-		String cjljdz = airBottle.getCjljdz();
-		if(StringUtils.isEmpty(cjljdz)) {
-			request.setAttribute("airBottle", airBottle);
-			if("crs".equals(action))
-				url="/createLabel/qrcodeCRS";
-			else if("hgz".equals(action))
-				url="/createLabel/qrcodeHGZ";
+		System.out.println("airBottle==="+airBottle);
+		if(airBottle==null) {
+			request.setAttribute("message", "气瓶已被删除");
+			url="/createLabel/warn";
 		}
-		else
-			url="redirect:"+cjljdz;
+		else {
+			String cjljdz = airBottle.getCjljdz();
+			if(StringUtils.isEmpty(cjljdz)) {
+				request.setAttribute("airBottle", airBottle);
+				if("crs".equals(action))
+					url="/createLabel/qrcodeCRS";
+				else if("hgz".equals(action))
+					url="/createLabel/qrcodeHGZ";
+			}
+			else
+				url="redirect:"+cjljdz;
+		}
 		return url;
 	}
 	
