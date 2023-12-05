@@ -373,4 +373,10 @@
  		</if>
  		where id=#{id}
  	</update>
+	<select id="getExistQpbhListByQpbhList" resultType="java.lang.String">
+		select qpbh from air_bottle where 1=1
+		<foreach collection="qpbhList" item="qpbh" open=" and cast(qpbh as char) in(" separator="," close=")">
+		#{qpbh}
+		</foreach>
+	</select>
 </mapper>

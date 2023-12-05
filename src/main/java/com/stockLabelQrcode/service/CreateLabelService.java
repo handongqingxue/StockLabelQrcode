@@ -141,4 +141,6 @@ public interface CreateLabelService {
 
 	PreviewPdfJson selectPrePdfJsonByUuid(String uuid);
 
+	List<String> getExistQpbhListByQpbhs(String qpbhs);
+
 }

@@ -142,4 +142,13 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 		return createLabelDao.selectPrePdfJsonByUuid(uuid);
 	}
 
+	@Override
+	public List<String> getExistQpbhListByQpbhs(String qpbhs) {
+		// TODO Auto-generated method stub
+		String[] qpbhArr = qpbhs.split(",");
+		List<String> qpbhList=Arrays.asList(qpbhArr);
+		List<String> existQpbhList=createLabelDao.getExistQpbhListByQpbhList(qpbhList);
+		return existQpbhList;
+	}
+
 }

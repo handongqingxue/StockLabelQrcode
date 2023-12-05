@@ -87,6 +87,9 @@ function initAddDialog(){
 							        		   var pdfDivHtml=$("#previewPdf_div #pdf_div").html();
 							        		   $("#previewPdf_div div[id^='pdf_div']").remove();
 							        		   var pdfHeight=0;
+							        		   
+							        		   var qpbhs="";
+							        		   
 							        		   for(var i = qpqsbhSuf;i <= qpjsbh;i++){
 							                       var qpbhSuf;
 							                       qpbhSuf=i+"";
@@ -95,15 +98,48 @@ function initAddDialog(){
 							                       else if(qpbhSuf.length==1)
 							                    	    qpbhSuf="00"+i;
 							                       var qpbh=qpqsbhPre+qpbhSuf;
-							                       if(!checkQpbhExist(qpbh))
-							                    	   continue;
-							                       var pageHeight=709;
-							                       pdfHeight+=pageHeight;
-							                       previewPDFDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:500px;height: "+pageHeight+"px;border:#000 solid 1px;\">"+pdfDivHtml+"</div>");
-							        			   
-							        			   createCRSQrcode(qpbh,"pdf_div"+qpbh);
-							        			   createHGZQrcode(qpbh,"pdf_div"+qpbh);
+							                       qpbhs+=","+qpbh;
+							                       //if(!checkQpbhExist(qpbh))
+							                    	   //continue;
 							        		   }
+							        		   
+							        		   var noExistQpbhs="";
+							        		   var qpbhs=qpbhs.substring(1);
+							        		   $.ajaxSetup({async:false});
+							        			$.post("getExistQpbhListByQpbhs",
+							        				{qpbhs:qpbhs},
+							        				function(data){
+							        					var qpbhArr=qpbhs.split(",");
+							        					var existQpbhList=data.existQpbhList;
+							        					for(var i=0;i<qpbhArr.length;i++){
+							        						var qpbh=qpbhArr[i];
+							        						for(var j=0;j<existQpbhList.length;j++){
+							        							var existQpbh=existQpbhList[j];
+							        							if(qpbh!=existQpbh){
+							        								noExistQpbhs+=","+qpbh;
+							        								break;
+							        							}
+							        						}
+							        					}
+							        					noExistQpbhs=noExistQpbhs.substring(1);
+							        					//alert("noExistQpbhs="+noExistQpbhs)
+							        					if(noExistQpbhs!=""){
+							        						var noExistQpbhArr=noExistQpbhs.split(",");
+								        					for(var i=0;i<noExistQpbhArr.length;i++){
+								        					   var noExistQpbh=noExistQpbhArr[i];
+								        						
+										                       var pageHeight=709;
+										                       pdfHeight+=pageHeight;
+										                       previewPDFDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:500px;height: "+pageHeight+"px;border:#000 solid 1px;\">"+pdfDivHtml+"</div>");
+										        			   
+										        			   createCRSQrcode(noExistQpbh,"pdf_div"+noExistQpbh);
+										        			   createHGZQrcode(noExistQpbh,"pdf_div"+noExistQpbh);
+								        					}
+							        					}
+							        				}
+							        		   ,"json");
+							        		   
+							        		   //return false;
 							        		   
 							        		   var qpbhsStr="";
 							        		   var qrcodeCRSUrlsStr="";

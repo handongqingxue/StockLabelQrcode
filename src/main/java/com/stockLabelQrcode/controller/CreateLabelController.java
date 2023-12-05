@@ -1,5 +1,6 @@
 package com.stockLabelQrcode.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -382,6 +383,19 @@ public class CreateLabelController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value="/getExistQpbhListByQpbhs")
+	@ResponseBody
+	public Map<String, Object> getExistQpbhListByQpbhs(String qpbhs) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<String> qpbhList=createLabelService.getExistQpbhListByQpbhs(qpbhs);
+		
+		jsonMap.put("existQpbhList", qpbhList);
+		
+		return jsonMap;
+	}
+	
 	/**
 	 * 查询历史记录
 	 * @param qpbh
@@ -729,18 +743,59 @@ public class CreateLabelController {
 	public Map<String, Object> createQrcode(String url, String action, String qpbh) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		String fileName = action+qpbh+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
-		String avaPath="/StockLabelQrcode/upload/"+fileName;
-		String path = "D:/resource/StockLabelQrcode";
-        Qrcode.createQrCode(url, path, fileName);
+		String time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		//System.out.println("time="+time);
+		String folderName = time.substring(0, 6);
+		String fileName = action+qpbh+ time + ".jpg";
+		String avaPath="/StockLabelQrcode/upload/"+folderName+"/"+fileName;
+		String path = "D:/resource/StockLabelQrcode/"+folderName;
+		Qrcode.createQrCode(url, path, fileName);
         
         jsonMap.put("qrcodeUrl", avaPath);
 		
 		return jsonMap;
 	}
+	@RequestMapping(value="/aaa")
+	@ResponseBody
+	public Map<String, Object> aaa() {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		String time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        System.out.println("zzzz="+time);
+		
+		return jsonMap;
+	}
 	
 	public static void main(String[] args) {
-		
+		String qrcodeSrcUrl="/StockLabelQrcode/upload/crsCB2339900120231202235930.jpg";
+		System.out.println("qrcodeSrcUrl="+qrcodeSrcUrl.length());
+		if(qrcodeSrcUrl.length()==56) {
+			String qpbh="CB23399001";
+			int qpbhStartLoc = qrcodeSrcUrl.indexOf(qpbh);
+			int qpbhEndLoc = qpbhStartLoc+qpbh.length();
+			String yyyyMM = qrcodeSrcUrl.substring(qpbhEndLoc, qpbhEndLoc+6);
+			
+			File yyyyMMFolder=new File("D:/resource/StockLabelQrcode/"+yyyyMM);
+			if(!yyyyMMFolder.exists())
+				yyyyMMFolder.mkdir();
+			
+			String crs = "crs";
+			int crsStartLoc = qrcodeSrcUrl.indexOf(crs);
+			String slqStr = qrcodeSrcUrl.substring(0, crsStartLoc);
+			String imgName = qrcodeSrcUrl.substring(crsStartLoc, qrcodeSrcUrl.length());
+			System.out.println("imgName="+imgName);
+			System.out.println("qrcodeSrcUrlNew="+slqStr+yyyyMM+"/"+imgName);
+		}
+		/*
+		File file1=new File("D:/resource/StockLabelQrcode/crsCB2339900120231202235930.jpg");
+		File file2=new File("D:/resource/StockLabelQrcode/202312/crsCB2339900120231202235930.jpg");
+		File dateFolder = new File("D:/resource/StockLabelQrcode/202312");
+		if(!dateFolder.exists())
+			dateFolder.mkdir();
+		boolean success = file1.renameTo(file2);
+		System.out.println("success=="+success);
+		*/
 	}
 
 }

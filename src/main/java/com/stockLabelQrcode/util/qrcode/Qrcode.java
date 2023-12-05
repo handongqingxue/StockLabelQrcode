@@ -36,10 +36,15 @@ public class Qrcode {
             Map<EncodeHintType, String> hints = new HashMap<>();
             hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
             BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 400, 400, hints);
+            
+            File folder=new File(path);
+            if(!folder.exists())
+            	folder.mkdir();
+            
             File file = new File(path, fileName);
             if (file.exists() || ((file.getParentFile().exists() || file.getParentFile().mkdirs()) && file.createNewFile())) {
                 writeToFile(bitMatrix, "jpg", file);
-                System.out.println("�㶨��" + file);
+                System.out.println("文件路径=" + file);
             }
  
         } catch (Exception e) {

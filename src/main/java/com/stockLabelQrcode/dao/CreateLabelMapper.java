@@ -50,4 +50,6 @@ public interface CreateLabelMapper {
 
 	PreviewPdfJson selectPrePdfJsonByUuid(@Param("uuid")String uuid);
 
+	List<String> getExistQpbhListByQpbhList(@Param("qpbhList")List<String> qpbhList);
+
 }
