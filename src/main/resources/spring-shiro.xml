@@ -28,6 +28,7 @@
 				/createLabel/login=anon
 				/createLabel/regist=anon
 				/createLabel/toQrcodeInfo=anon
+				/createLabel/putQrocdeInFolder=anon
 				/resource/**=anon
 				/**=authc
 			</value>

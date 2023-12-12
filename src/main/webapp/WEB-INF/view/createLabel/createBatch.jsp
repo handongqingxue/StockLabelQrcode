@@ -111,18 +111,23 @@ function initAddDialog(){
 							        				function(data){
 							        					var qpbhArr=qpbhs.split(",");
 							        					var existQpbhList=data.existQpbhList;
-							        					for(var i=0;i<qpbhArr.length;i++){
-							        						var qpbh=qpbhArr[i];
-							        						for(var j=0;j<existQpbhList.length;j++){
-							        							var existQpbh=existQpbhList[j];
-							        							if(qpbh!=existQpbh){
-							        								noExistQpbhs+=","+qpbh;
-							        								break;
-							        							}
-							        						}
+							        					if(existQpbhList.length==0){
+							        						noExistQpbhs=qpbhs;
 							        					}
-							        					noExistQpbhs=noExistQpbhs.substring(1);
-							        					//alert("noExistQpbhs="+noExistQpbhs)
+							        					else{
+								        					for(var i=0;i<qpbhArr.length;i++){
+								        						var qpbh=qpbhArr[i];
+								        						for(var j=0;j<existQpbhList.length;j++){
+								        							var existQpbh=existQpbhList[j];
+								        							if(qpbh!=existQpbh){
+								        								noExistQpbhs+=","+qpbh;
+								        								break;
+								        							}
+								        						}
+								        					}
+								        					noExistQpbhs=noExistQpbhs.substring(1);
+							        					}
+							        					//console.log("noExistQpbhs="+noExistQpbhs)
 							        					if(noExistQpbhs!=""){
 							        						var noExistQpbhArr=noExistQpbhs.split(",");
 								        					for(var i=0;i<noExistQpbhArr.length;i++){
@@ -130,7 +135,7 @@ function initAddDialog(){
 								        						
 										                       var pageHeight=709;
 										                       pdfHeight+=pageHeight;
-										                       previewPDFDiv.append("<div id=\"pdf_div"+qpbh+"\" style=\"width:500px;height: "+pageHeight+"px;border:#000 solid 1px;\">"+pdfDivHtml+"</div>");
+										                       previewPDFDiv.append("<div id=\"pdf_div"+noExistQpbh+"\" style=\"width:500px;height: "+pageHeight+"px;border:#000 solid 1px;\">"+pdfDivHtml+"</div>");
 										        			   
 										        			   createCRSQrcode(noExistQpbh,"pdf_div"+noExistQpbh);
 										        			   createHGZQrcode(noExistQpbh,"pdf_div"+noExistQpbh);

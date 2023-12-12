@@ -379,4 +379,35 @@
 		#{qpbh}
 		</foreach>
 	</select>
+	<select id="getQrcodeUrlByQpbhList" resultType="com.stockLabelQrcode.entity.AirBottle">
+		select qpbh,qrcode_crs_url,qrcode_hgz_url from air_bottle where 1=1
+		<foreach collection="qpbhList" item="qpbh" open=" and cast(qpbh as char) in(" separator="," close=")">
+		#{qpbh}
+		</foreach>
+	</select>
+	<select id="getQrcodeUrlByQpbhPre" resultType="com.stockLabelQrcode.entity.AirBottle">
+		select qpbh,qrcode_crs_url,qrcode_hgz_url from air_bottle where qpbh like CONCAT(#{qpbhPre},'%')
+	</select>
+	<update id="updateQrcodeCrsUrl">
+		update air_bottle set qrcode_crs_url=case
+		<foreach collection="airBottleList" item="airBottle">
+			when qpbh=#{airBottle.qpbh} then #{airBottle.qrcode_crs_url}
+		</foreach>
+		 else qrcode_crs_url end
+		 where 
+		<foreach collection="qpbhList" item="qpbh" open="1=1 and cast(qpbh as char) in (" separator="," close=")">
+		#{qpbh}
+		</foreach>
+	</update>
+	<update id="updateQrcodeHgzUrl">
+		update air_bottle set qrcode_hgz_url=case
+		<foreach collection="airBottleList" item="airBottle">
+			when qpbh=#{airBottle.qpbh} then #{airBottle.qrcode_hgz_url}
+		</foreach>
+		 else qrcode_hgz_url end
+		 where 
+		<foreach collection="qpbhList" item="qpbh" open="1=1 and cast(qpbh as char) in (" separator="," close=")">
+		#{qpbh}
+		</foreach>
+	</update>
 </mapper>

@@ -52,4 +52,12 @@ public interface CreateLabelMapper {
 
 	List<String> getExistQpbhListByQpbhList(@Param("qpbhList")List<String> qpbhList);
 
+	List<AirBottle> getQrcodeUrlByQpbhList(@Param("qpbhList")List<String> qpbhList);
+
+	List<AirBottle> getQrcodeUrlByQpbhPre(@Param("qpbhPre")String qpbhPre);
+
+	int updateQrcodeCrsUrl(@Param("airBottleList")List<AirBottle> airBottleList, @Param("qpbhList")List<String> qpbhList);
+
+	int updateQrcodeHgzUrl(@Param("airBottleList")List<AirBottle> airBottleList, @Param("qpbhList")List<String> qpbhList);
+
 }

@@ -755,14 +755,80 @@ public class CreateLabelController {
 		
 		return jsonMap;
 	}
-	@RequestMapping(value="/aaa")
+	
+	@RequestMapping(value="/putQrocdeInFolder")
 	@ResponseBody
-	public Map<String, Object> aaa() {
+	public Map<String, Object> putQrocdeInFolder(HttpServletRequest request) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
-		String time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        System.out.println("zzzz="+time);
+		List<String> qpbhCrsList=new ArrayList<String>();
+		List<String> qpbhHgzList=new ArrayList<String>();
+		
+		List<AirBottle> airBottleCrsList=new ArrayList<AirBottle>();
+		List<AirBottle> airBottleHgzList=new ArrayList<AirBottle>();
+		
+		AirBottle airBottleCrs=null;
+		AirBottle airBottleHgz=null;
+
+		List<AirBottle> airBottleList=null;
+		int updateFlag=Integer.valueOf(request.getParameter("updateFlag"));
+		if(updateFlag==1) {
+			String qpbhs=request.getParameter("qpbhs");
+			System.out.println("qpbhs="+qpbhs);
+			airBottleList=createLabelService.getQrcodeUrlByQpbhs(qpbhs);
+		}
+		else if(updateFlag==2) {
+			String qpbhPre = request.getParameter("qpbhPre");
+			System.out.println("qpbhPre="+qpbhPre);
+			airBottleList=createLabelService.getQrcodeUrlByQpbhPre(qpbhPre);
+		}
+		System.out.println("airBottleListSize="+airBottleList.size());
+		for (AirBottle airBottle : airBottleList) {
+			String qpbh = airBottle.getQpbh();
+			String qrcode_crs_url = airBottle.getQrcode_crs_url();
+			String qrcode_hgz_url = airBottle.getQrcode_hgz_url();
+			
+			System.out.println("qrcode_crs_url.length()="+qrcode_crs_url.length());
+			if(qrcode_crs_url.length()==56) {
+				Map<String,Object> resultMap=Qrcode.putInFolder(qpbh,qrcode_crs_url);
+				Boolean success = Boolean.valueOf(resultMap.get("success").toString());
+				if(success) {
+					qpbhCrsList.add(qpbh);
+					
+					airBottleCrs=new AirBottle();
+					airBottleCrs.setQpbh(qpbh);
+					airBottleCrs.setQrcode_crs_url(resultMap.get("qrcodeSrcUrl").toString());
+					
+					airBottleCrsList.add(airBottleCrs);
+				}
+			}
+			System.out.println("qrcode_hgz_url.length()="+qrcode_hgz_url.length());
+			if(qrcode_hgz_url.length()==56) {
+				Map<String,Object> resultMap=Qrcode.putInFolder(qpbh,qrcode_hgz_url);
+				Boolean success = Boolean.valueOf(resultMap.get("success").toString());
+				if(success) {
+					qpbhHgzList.add(qpbh);
+					
+					airBottleHgz=new AirBottle();
+					airBottleHgz.setQpbh(qpbh);
+					airBottleHgz.setQrcode_hgz_url(resultMap.get("qrcodeSrcUrl").toString());
+					
+					airBottleHgzList.add(airBottleHgz);
+				}
+			}
+		}
+
+		System.out.println("qpbhCrsList.size()==="+qpbhCrsList.size());
+		if(qpbhCrsList.size()>0) {
+			int countCrs=createLabelService.updateQrcodeSrcUrl(airBottleCrsList,qpbhCrsList,AirBottle.CRS);
+			System.out.println("countCrs==="+countCrs);
+		}
+		System.out.println("qpbhHgzList.size()==="+qpbhHgzList.size());
+		if(qpbhHgzList.size()>0) {
+			int countHgz=createLabelService.updateQrcodeSrcUrl(airBottleHgzList,qpbhHgzList,AirBottle.HGZ);
+			System.out.println("countHgz==="+countHgz);
+		}
 		
 		return jsonMap;
 	}
@@ -784,8 +850,17 @@ public class CreateLabelController {
 			int crsStartLoc = qrcodeSrcUrl.indexOf(crs);
 			String slqStr = qrcodeSrcUrl.substring(0, crsStartLoc);
 			String imgName = qrcodeSrcUrl.substring(crsStartLoc, qrcodeSrcUrl.length());
+			String qrcodeSrcUrlNew = slqStr+yyyyMM+"/"+imgName;
 			System.out.println("imgName="+imgName);
-			System.out.println("qrcodeSrcUrlNew="+slqStr+yyyyMM+"/"+imgName);
+			System.out.println("qrcodeSrcUrlNew="+qrcodeSrcUrlNew);
+			
+			File oldFile=new File("D:/resource/StockLabelQrcode/"+imgName);
+			File newFile=new File("D:/resource/StockLabelQrcode/"+yyyyMM+"/"+imgName);
+			File dateFolder = new File("D:/resource/StockLabelQrcode/"+yyyyMM);
+			if(!dateFolder.exists())
+				dateFolder.mkdir();
+			boolean success = oldFile.renameTo(newFile);
+			System.out.println("success=="+success);
 		}
 		/*
 		File file1=new File("D:/resource/StockLabelQrcode/crsCB2339900120231202235930.jpg");

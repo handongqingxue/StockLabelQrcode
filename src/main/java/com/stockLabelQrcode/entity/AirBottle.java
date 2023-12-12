@@ -8,6 +8,13 @@ public class AirBottle implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public static final int CRS=1;
+	public static final int HGZ=2;
+	
+	public static final String CRS_TEXT="crs";
+	public static final String HGZ_TEXT="hgz";
+	
 	private int id;//主键
 	public int getId() {
 		return id;

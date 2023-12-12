@@ -143,4 +143,10 @@ public interface CreateLabelService {
 
 	List<String> getExistQpbhListByQpbhs(String qpbhs);
 
+	List<AirBottle> getQrcodeUrlByQpbhs(String qpbhs);
+
+	List<AirBottle> getQrcodeUrlByQpbhPre(String qpbhPre);
+
+	int updateQrcodeSrcUrl(List<AirBottle> airBottleList, List<String> qpbhList, int qrcodeFlag);
+
 }

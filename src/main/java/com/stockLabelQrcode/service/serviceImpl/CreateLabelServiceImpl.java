@@ -151,4 +151,29 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 		return existQpbhList;
 	}
 
+	@Override
+	public List<AirBottle> getQrcodeUrlByQpbhs(String qpbhs) {
+		// TODO Auto-generated method stub
+		String[] qpbhArr = qpbhs.split(",");
+		List<String> qpbhList = Arrays.asList(qpbhArr);
+		return createLabelDao.getQrcodeUrlByQpbhList(qpbhList);
+	}
+
+	@Override
+	public List<AirBottle> getQrcodeUrlByQpbhPre(String qpbhPre) {
+		// TODO Auto-generated method stub
+		return createLabelDao.getQrcodeUrlByQpbhPre(qpbhPre);
+	}
+
+	@Override
+	public int updateQrcodeSrcUrl(List<AirBottle> airBottleList, List<String> qpbhList, int qrcodeFlag) {
+		// TODO Auto-generated method stub
+		int count=0;
+		if(qrcodeFlag==AirBottle.CRS)
+			count=createLabelDao.updateQrcodeCrsUrl(airBottleList,qpbhList);
+		else if(qrcodeFlag==AirBottle.HGZ)
+			count=createLabelDao.updateQrcodeHgzUrl(airBottleList,qpbhList);
+		return count;
+	}
+
 }

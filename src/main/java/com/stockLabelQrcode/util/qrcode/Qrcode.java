@@ -21,6 +21,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
+import com.stockLabelQrcode.entity.AirBottle;
 
 public class Qrcode {
 
@@ -81,4 +82,47 @@ public class Qrcode {
         }
         return image;
     }
+
+	public static Map<String, Object> putInFolder(String qpbh, String qrcodeSrcUrl) {
+		// TODO Auto-generated method stub
+		Map<String, Object> resultMap=new HashMap<String, Object>();
+		
+		int qpbhStartLoc = qrcodeSrcUrl.indexOf(qpbh);
+		int qpbhEndLoc = qpbhStartLoc+qpbh.length();
+		String yyyyMM = qrcodeSrcUrl.substring(qpbhEndLoc, qpbhEndLoc+6);
+		
+		File yyyyMMFolder=new File("D:/resource/StockLabelQrcode/"+yyyyMM);
+		if(!yyyyMMFolder.exists())
+			yyyyMMFolder.mkdir();
+		
+		String qrcodeFlag = null;
+		if(qrcodeSrcUrl.contains(AirBottle.CRS_TEXT))
+			qrcodeFlag = AirBottle.CRS_TEXT;
+		else if(qrcodeSrcUrl.contains(AirBottle.HGZ_TEXT))
+			qrcodeFlag = AirBottle.HGZ_TEXT;
+		
+		int qrcodeFlagStartLoc = qrcodeSrcUrl.indexOf(qrcodeFlag);
+		String slqStr = qrcodeSrcUrl.substring(0, qrcodeFlagStartLoc);
+		String imgName = qrcodeSrcUrl.substring(qrcodeFlagStartLoc, qrcodeSrcUrl.length());
+		String qrcodeSrcUrlNew = slqStr+yyyyMM+"/"+imgName;
+		System.out.println("imgName="+imgName);
+		System.out.println("qrcodeSrcUrlNew="+qrcodeSrcUrlNew);
+		
+		File oldFile=new File("D:/resource/StockLabelQrcode/"+imgName);
+		File newFile=new File("D:/resource/StockLabelQrcode/"+yyyyMM+"/"+imgName);
+		File dateFolder = new File("D:/resource/StockLabelQrcode/"+yyyyMM);
+		if(!dateFolder.exists())
+			dateFolder.mkdir();
+		boolean success = oldFile.renameTo(newFile);
+		System.out.println("success=="+success);
+		if(success) {
+			resultMap.put("success", success);
+			resultMap.put("qrcodeSrcUrl", qrcodeSrcUrlNew);
+		}
+		else {
+			resultMap.put("success", success);
+		}
+		
+		return resultMap;
+	}
 }
