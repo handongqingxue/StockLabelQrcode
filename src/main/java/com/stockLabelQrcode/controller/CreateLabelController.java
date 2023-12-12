@@ -445,45 +445,54 @@ public class CreateLabelController {
 		int count = 0;
 		
         try {
+        	List<AirBottle> airBottleList=new ArrayList<AirBottle>();
+        	
         	String[] qpbhArr = qpbhsStr.split(",");//这是上方表格里选中的数据
         	JSONArray qpJA = new JSONArray(qpJAStr);//这是下方Excel表格里的数据
         	
-			    for (int i = 0; i < qpJA.length(); i++) {  
-			    	JSONObject qpJO = (JSONObject)qpJA.get(i);
-			    	String qpbh1 = qpJO.get("qpbh").toString();
-			    	if(StringUtils.isEmpty(qpbh1))
-			    		continue;
-			    	for (String qpbh : qpbhArr) {
-				        if(qpbh.equals(qpbh1)) {
-				        	String cpxh_qc = qpJO.get("cpxh_qc").toString();
-				        	String zl = qpJO.get("zl").toString().replaceAll("\"", "");
-				        	String scrj = qpJO.get("scrj").toString().replaceAll("\"", "");
-				        	String qpzjxh = qpJO.get("qpzjxh").toString();
-				        	String qpzzdw = qpJO.get("qpzzdw").toString();
-				        	String cjljdz = qpJO.get("cjljdz").toString();
-				        	String tybm = qpJO.get("tybm").toString();
-				        	/*
-					        System.out.println("zl==="+zl);
-					        System.out.println("scrj==="+scrj);
-					        System.out.println("qpzjxh==="+qpzjxh);
-					        System.out.println("qpzzdw==="+qpzzdw);
-					        System.out.println("cjljdz==="+cjljdz);
-					        System.out.println("tybm==="+tybm);
-					        */
-					        
-					        AirBottle airBottle=new AirBottle();
-					        airBottle.setQpbh(qpbh);
-					        airBottle.setCpxh_qc(cpxh_qc);
-					        airBottle.setZl(zl);
-					        airBottle.setScrj(scrj);
-					        airBottle.setQpzjxh(qpzjxh);
-					        airBottle.setQpzzdw(qpzzdw);
-					        airBottle.setCjljdz(cjljdz);
-					        airBottle.setTybm(tybm);
-					        count += createLabelService.updateAirBottle(airBottle);
-				        }
-					}
-			    }  
+		    for (int i = 0; i < qpJA.length(); i++) {  
+		    	JSONObject qpJO = (JSONObject)qpJA.get(i);
+		    	String qpbh1 = qpJO.get("qpbh").toString();
+		    	if(StringUtils.isEmpty(qpbh1))
+		    		continue;
+		    	for (String qpbh : qpbhArr) {
+			        if(qpbh.equals(qpbh1)) {
+			        	String cpxh_qc = qpJO.get("cpxh_qc").toString();
+			        	String zl = qpJO.get("zl").toString().replaceAll("\"", "");
+			        	String scrj = qpJO.get("scrj").toString().replaceAll("\"", "");
+			        	String qpzjxh = qpJO.get("qpzjxh").toString();
+			        	String qpzzdw = qpJO.get("qpzzdw").toString();
+			        	String cjljdz = qpJO.get("cjljdz").toString();
+			        	String tybm = qpJO.get("tybm").toString();
+			        	/*
+				        System.out.println("zl==="+zl);
+				        System.out.println("scrj==="+scrj);
+				        System.out.println("qpzjxh==="+qpzjxh);
+				        System.out.println("qpzzdw==="+qpzzdw);
+				        System.out.println("cjljdz==="+cjljdz);
+				        System.out.println("tybm==="+tybm);
+				        */
+				        
+				        AirBottle airBottle=new AirBottle();
+				        airBottle.setQpbh(qpbh);
+				        airBottle.setCpxh_qc(cpxh_qc);
+				        airBottle.setZl(zl);
+				        airBottle.setScrj(scrj);
+				        airBottle.setQpzjxh(qpzjxh);
+				        airBottle.setQpzzdw(qpzzdw);
+				        airBottle.setCjljdz(cjljdz);
+				        airBottle.setTybm(tybm);
+				        
+				        airBottleList.add(airBottle);
+				        //count += createLabelService.updateAirBottle(airBottle);
+			        }
+				}
+		    }  
+			    
+		    if(airBottleList.size()>0) {
+		    	count = createLabelService.updateAirBottle(airBottleList);
+		        System.out.println("count==="+count);
+		    }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -823,11 +832,13 @@ public class CreateLabelController {
 		if(qpbhCrsList.size()>0) {
 			int countCrs=createLabelService.updateQrcodeSrcUrl(airBottleCrsList,qpbhCrsList,AirBottle.CRS);
 			System.out.println("countCrs==="+countCrs);
+			jsonMap.put("缠绕式标签移动数量", countCrs);
 		}
 		System.out.println("qpbhHgzList.size()==="+qpbhHgzList.size());
 		if(qpbhHgzList.size()>0) {
 			int countHgz=createLabelService.updateQrcodeSrcUrl(airBottleHgzList,qpbhHgzList,AirBottle.HGZ);
 			System.out.println("countHgz==="+countHgz);
+			jsonMap.put("合格证标签移动数量", countHgz);
 		}
 		
 		return jsonMap;

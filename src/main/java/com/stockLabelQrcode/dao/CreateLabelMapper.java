@@ -30,6 +30,8 @@ public interface CreateLabelMapper {
 
 	int updateAirBottle(AirBottle airBottle);
 
+	int updateAirBottleByList(@Param("airBottleList")List<AirBottle> airBottleList, @Param("qpbhList")List<String> qpbhList);
+
 	AirBottle getAirBottleById(@Param("id")String id);
 
 	AirBottle getAirBottleByQpbh(@Param("qpbh")String qpbh);

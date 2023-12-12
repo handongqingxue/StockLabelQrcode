@@ -296,6 +296,51 @@
  		input=1
  		where qpbh=#{qpbh}
  	</update>
+ 	<update id="updateAirBottleByList">
+ 		update air_bottle set 
+		<trim suffixOverrides=",">
+			cpxh_qc=case
+			<foreach collection="airBottleList" item="airBottle">
+				when qpbh=#{airBottle.qpbh} then #{airBottle.cpxh_qc}
+			</foreach>
+			else cpxh_qc end,
+			zl=case
+			<foreach collection="airBottleList" item="airBottle">
+				when qpbh=#{airBottle.qpbh} then #{airBottle.zl}
+			</foreach>
+			else zl end,
+			scrj=case
+			<foreach collection="airBottleList" item="airBottle">
+				when qpbh=#{airBottle.qpbh} then #{airBottle.scrj}
+			</foreach>
+			else scrj end,
+			qpzjxh=case
+			<foreach collection="airBottleList" item="airBottle">
+				when qpbh=#{airBottle.qpbh} then #{airBottle.qpzjxh}
+			</foreach>
+			else qpzjxh end,
+			qpzzdw=case
+			<foreach collection="airBottleList" item="airBottle">
+				when qpbh=#{airBottle.qpbh} then #{airBottle.qpzzdw}
+			</foreach>
+			else qpzzdw end,
+			cjljdz=case
+			<foreach collection="airBottleList" item="airBottle">
+				when qpbh=#{airBottle.qpbh} then #{airBottle.cjljdz}
+			</foreach>
+			else cjljdz end,
+			tybm=case
+			<foreach collection="airBottleList" item="airBottle">
+				when qpbh=#{airBottle.qpbh} then #{airBottle.tybm}
+			</foreach>
+			else tybm end,
+			input=1
+		 </trim>
+		 where 
+		<foreach collection="qpbhList" item="qpbh" open="1=1 and cast(qpbh as char) in (" separator="," close=")">
+		#{qpbh}
+		</foreach>
+ 	</update>
  	<update id="editAirBottle" parameterType="com.stockLabelQrcode.entity.AirBottle">
  		update air_bottle set 
  		<if test="zl!=null">

@@ -1,5 +1,6 @@
 package com.stockLabelQrcode.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,6 +73,17 @@ public class CreateLabelServiceImpl implements CreateLabelService {
 	public int updateAirBottle(AirBottle airBottle) {
 		// TODO Auto-generated method stub
 		return createLabelDao.updateAirBottle(airBottle);
+	}
+
+	@Override
+	public int updateAirBottle(List<AirBottle> airBottleList) {
+		// TODO Auto-generated method stub
+		List<String> qpbhList=new ArrayList<String>();
+		for (AirBottle airBottle : airBottleList) {
+			String qpbh = airBottle.getQpbh();
+			qpbhList.add(qpbh);
+		}
+		return createLabelDao.updateAirBottleByList(airBottleList,qpbhList);
 	}
 
 	@Override

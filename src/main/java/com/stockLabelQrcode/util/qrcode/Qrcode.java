@@ -70,6 +70,7 @@ public class Qrcode {
  
     private static final int BLACK = 0xFF000000;
     private static final int WHITE = 0xFFFFFFFF;
+    private static final String SLQ_FOLDER_DIR="D:/resource/StockLabelQrcode/";
  
     private static BufferedImage toBufferedImage(BitMatrix matrix) {
         int width = matrix.getWidth();
@@ -91,7 +92,7 @@ public class Qrcode {
 		int qpbhEndLoc = qpbhStartLoc+qpbh.length();
 		String yyyyMM = qrcodeSrcUrl.substring(qpbhEndLoc, qpbhEndLoc+6);
 		
-		File yyyyMMFolder=new File("D:/resource/StockLabelQrcode/"+yyyyMM);
+		File yyyyMMFolder=new File(SLQ_FOLDER_DIR+yyyyMM);
 		if(!yyyyMMFolder.exists())
 			yyyyMMFolder.mkdir();
 		
@@ -108,9 +109,9 @@ public class Qrcode {
 		System.out.println("imgName="+imgName);
 		System.out.println("qrcodeSrcUrlNew="+qrcodeSrcUrlNew);
 		
-		File oldFile=new File("D:/resource/StockLabelQrcode/"+imgName);
-		File newFile=new File("D:/resource/StockLabelQrcode/"+yyyyMM+"/"+imgName);
-		File dateFolder = new File("D:/resource/StockLabelQrcode/"+yyyyMM);
+		File oldFile=new File(SLQ_FOLDER_DIR+imgName);
+		File newFile=new File(SLQ_FOLDER_DIR+yyyyMM+"/"+imgName);
+		File dateFolder = new File(SLQ_FOLDER_DIR+yyyyMM);
 		if(!dateFolder.exists())
 			dateFolder.mkdir();
 		boolean success = oldFile.renameTo(newFile);

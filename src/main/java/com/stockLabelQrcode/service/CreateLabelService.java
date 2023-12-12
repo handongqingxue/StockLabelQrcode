@@ -91,6 +91,8 @@ public interface CreateLabelService {
 	 */
 	int updateAirBottle(AirBottle airBottle);
 
+	int updateAirBottle(List<AirBottle> airBottleList);
+
 	/**
 	 * 根据id，获得气瓶信息
 	 * @param id
